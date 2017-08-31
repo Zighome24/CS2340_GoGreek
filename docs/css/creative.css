@@ -220,6 +220,10 @@ header .header-content .header-content-inner h3 {
 .service-box p {
   margin-bottom: 0;
 }
+
+.service-box h5 {
+    color: rgba(1, 1, 1, .5);
+}
 .portfolio-box {
   position: relative;
   display: block;
