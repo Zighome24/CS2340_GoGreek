@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.gatech.cs2340.rattracker2k17.OpenActivity"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    android:background="@drawable/home_image"
+    tools:context="edu.gatech.cs2340.rattracker2k17.Controller.HomeScreenController"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="126dp"
+        android:padding="20dp"
+        android:text="@string/login"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btn_newUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:padding="20dp"
+        android:text="@string/new_user"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        tools:layout_editor_absoluteY="248dp"
-        tools:layout_editor_absoluteX="154dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="21dp"
+        android:fontFamily="cursive"
+        android:text="@string/app_name"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="30sp"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView" />
-
+        android:layout_alignEnd="@+id/btn_login"
+        android:layout_marginTop="56dp" />
 </RelativeLayout>

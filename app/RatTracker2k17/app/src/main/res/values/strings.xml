@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Rat Tracker 2k17</string>
+    <string name="login">Login</string>
+    <string name="new_user">New User</string>
 </resources>
