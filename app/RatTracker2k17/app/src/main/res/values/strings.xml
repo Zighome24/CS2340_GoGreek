@@ -2,4 +2,5 @@
     <string name="app_name">Rat Tracker 2k17</string>
     <string name="login">Login</string>
     <string name="new_user">New User</string>
+    <string name="login_guest">Login as a guest!</string>
 </resources>

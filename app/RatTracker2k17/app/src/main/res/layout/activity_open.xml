@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="37dp"
         android:padding="20dp"
         android:text="@string/new_user"
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
@@ -44,4 +44,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/btn_login"
         android:layout_marginTop="56dp" />
+
+    <Button
+        android:id="@+id/btn_LoginGuest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="68dp"
+        android:text="@string/login_guest" />
 </RelativeLayout>
