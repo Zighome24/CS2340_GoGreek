@@ -28,8 +28,7 @@ public class HomeScreenController extends AppCompatActivity {
 
     // change to log in screen (connect in the "onClick" field in layout)
     public void launchNewUser(View view) {
-        // TODO change when new user implemented
-        Intent intent = new Intent(this, LogInScreenController.class);
+        Intent intent = new Intent(this, NewUserScreenController.class);
         startActivity(intent);
     }
 }
