@@ -15,12 +15,13 @@
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="126dp"
+        android:onClick="launchLogIn"
         android:padding="20dp"
         android:text="@string/login"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark" />
 
     <Button
         android:id="@+id/btn_newUser"
@@ -29,6 +30,7 @@
         android:layout_below="@+id/btn_login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="37dp"
+        android:onClick="launchNewUser"
         android:padding="20dp"
         android:text="@string/new_user"
         android:theme="@style/ThemeOverlay.AppCompat.Dark" />
@@ -52,5 +54,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="68dp"
+        android:onClick="launchNewUser"
         android:text="@string/login_guest" />
 </RelativeLayout>
