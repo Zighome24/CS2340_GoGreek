@@ -10,8 +10,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="First Name" />
+        android:hint="First Name"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_username"
@@ -21,8 +21,8 @@
         android:layout_below="@+id/txt_email"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Username" />
+        android:hint="Username"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_lastName"
@@ -32,8 +32,8 @@
         android:layout_below="@+id/txt_firstName"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Last Name" />
+        android:hint="Last Name"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_password"
@@ -43,8 +43,8 @@
         android:layout_below="@+id/txt_username"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Password" />
+        android:hint="Password"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_email"
@@ -54,17 +54,18 @@
         android:layout_below="@+id/txt_lastName"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Email" />
+        android:hint="Email"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/btn_createUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create User"
         android:layout_below="@+id/txt_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        android:onClick="createUser"
+        android:text="Create User" />
 
     <Button
         android:id="@+id/btn_returnHome"
@@ -73,5 +74,6 @@
         android:layout_below="@+id/btn_createUser"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
+        android:onClick="back"
         android:text="Return to Home Screen" />
 </RelativeLayout>

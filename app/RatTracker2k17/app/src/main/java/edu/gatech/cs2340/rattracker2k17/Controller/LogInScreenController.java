@@ -17,6 +17,9 @@ import edu.gatech.cs2340.rattracker2k17.R;
 
 public class LogInScreenController extends AppCompatActivity {
 
+    private static final String LOG_ID = "LogInScreenController";
+
+
     private Button btn_login, btn_return;
     private EditText username, password;
 

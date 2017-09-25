@@ -11,6 +11,9 @@ import edu.gatech.cs2340.rattracker2k17.R;
 
 public class HomeScreenController extends AppCompatActivity {
 
+    private static final String LOG_ID = "HomeScreenController";
+
+
     private Button btn_Login, btn_NewUser;
 
     @Override

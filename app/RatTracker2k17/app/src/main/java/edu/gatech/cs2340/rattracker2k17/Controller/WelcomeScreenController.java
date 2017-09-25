@@ -14,6 +14,9 @@ import edu.gatech.cs2340.rattracker2k17.R;
 
 public class WelcomeScreenController extends AppCompatActivity {
 
+    private static final String LOG_ID = "WelcomeScreenController";
+
+
     private Button btn_logout;
 
     @Override
