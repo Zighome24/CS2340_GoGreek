@@ -18,7 +18,7 @@ tools:layout_editor_absoluteY="81dp">
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
         android:fontFamily="cursive"
-        android:text="Welcome!"
+        android:text="@string/welcome"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -31,5 +31,5 @@ tools:layout_editor_absoluteY="81dp">
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="68dp"
         android:onClick="logout"
-        android:text="Logout" />
+        android:text="@string/logout" />
 </RelativeLayout>
