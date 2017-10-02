@@ -4,32 +4,59 @@ import edu.gatech.cs2340.rattracker2k17.Data.Types;
 
 /**
  * Created by Justin on 9/22/2017.
+ *
+ * Represents the model for a user of the application, containing the users information,
+ * security level, and userID (a unique identifier for every user).
  */
 
 public class User {
 
+    //Constants
+    public static final String NO_UID = "NO_UID";
+
     //Properties
     private String firstName;
-    private void setFirstName(String firstName) { this.firstName = firstName;}
-    //private String getFirstName() { return this.firstName;}
+    public void setFirstName(String firstName) { this.firstName = firstName;}
+    public String getFirstName() { return this.firstName;}
 
     private String lastName;
-    private void setLastName(String lastName) { this.lastName = lastName;}
-    //private String getLastName() { return this.lastName;}
+    public void setLastName(String lastName) { this.lastName = lastName;}
+    public String getLastName() { return this.lastName;}
 
-    private String userName;
-    private void setUserName(String userName) { this.userName = userName;}
-    //private String getUserName() { return this.userName;}
+    private String email;
+    public void setEmail(String email) { this.email = email;}
+    public String getEmail() { return this.email;}
 
     private Types.SecurityLevel securityLevel;
-    private void setSecurityLevel(Types.SecurityLevel securityLevel) { this.securityLevel = securityLevel;}
+    public void setSecurityLevel(Types.SecurityLevel securityLevel) { this.securityLevel = securityLevel;}
+    public void setSecurityLevel(int securityLevel) {
+        this.securityLevel = Types.SecurityLevel.parseSecurityLevel(securityLevel);
+    }
+    public Types.SecurityLevel getSecurityLevel() { return this.securityLevel;}
 
-    /**
-     * Creates a new user and syncs their informaton with the database.
-     * @return Whether or not the User was properly configured and added
-     */
-    public boolean newUser() {
-        return false;
+    private String userID;
+    public void setUserID(String userID) { this.userID = userID;}
+    public String getUserID() { return this.userID;}
+
+    private String password;
+    public void setPassword(String password) { this.password = password;}
+    public String getPassword() { return this.password;}
+
+    public User() {}
+
+    public User(String firstName, String lastName, String email,
+                Types.SecurityLevel securityLevel, String userID, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.securityLevel = securityLevel;
+        this.userID = userID;
+        this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "First Name: " + firstName + ", Last Name: " + lastName + ", Email: " + email
+                + ", UserID: " + userID;
+    }
 }
