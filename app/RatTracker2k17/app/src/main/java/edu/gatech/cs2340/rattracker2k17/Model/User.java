@@ -1,5 +1,7 @@
 package edu.gatech.cs2340.rattracker2k17.Model;
 
+import java.io.Serializable;
+
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 
 /**
@@ -9,7 +11,7 @@ import edu.gatech.cs2340.rattracker2k17.Data.Types;
  * security level, and userID (a unique identifier for every user).
  */
 
-public class User {
+public class User implements Serializable {
 
     //Constants
     public static final String NO_UID = "NO_UID";

@@ -3,6 +3,7 @@ package edu.gatech.cs2340.rattracker2k17.Controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,6 +25,7 @@ public class WelcomeScreenController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomescreen);
 
+        Log.d(LOG_ID, "onCreate:WelcomeScreenController");
 
         btn_logout = (Button) findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {

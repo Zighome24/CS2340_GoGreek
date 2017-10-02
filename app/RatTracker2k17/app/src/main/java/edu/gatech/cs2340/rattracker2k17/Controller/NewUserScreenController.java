@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
+import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 
 /**
@@ -25,31 +26,30 @@ public class NewUserScreenController extends AppCompatActivity {
 
     private static final String LOG_ID = "NewUserScreenController";
 
-    private Button btn_createUser, btn_returnHome;
-    private EditText firstName, lastName, email, username, password, cPassword;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private EditText firstName, lastName, email,password;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newuser);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     // change view back home (connect in the "onClick" field in layout)
     public void back(View view) {
         Intent intent = new Intent(this, HomeScreenController.class);
         startActivity(intent);
+        finish();
     }
 
-    // change view back home (connect in the "onClick" field in layout)
+    // creates a new User (connect in the "onClick" field in layout)
     public void createUser(View view) {
-        //Intent intent = new Intent(this, HomeScreenController.class);
-        //startActivity(intent);
 
-        firstName = (EditText) findViewById(R.id.txt_firstName);
-        lastName = (EditText) findViewById(R.id.txt_lastName);
-        email = (EditText) findViewById(R.id.txt_email);
-        password = (EditText) findViewById(R.id.txt_password);
+        EditText firstName = findViewById(R.id.txt_firstName);
+        EditText lastName = findViewById(R.id.txt_lastName);
+        EditText email = findViewById(R.id.txt_email);
+        EditText password = findViewById(R.id.txt_password);
 
 
         final User nUser = new User(firstName.getText().toString(), lastName.getText().toString(),
@@ -63,13 +63,20 @@ public class NewUserScreenController extends AppCompatActivity {
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() != null) {
+                Log.d(LOG_ID, "logged user: " + firebaseAuth.getCurrentUser().getEmail());
+                if (firebaseAuth.getCurrentUser() != null
+                        && firebaseAuth.getCurrentUser().getEmail() != null
+                        && firebaseAuth.getCurrentUser().getEmail().equals(nUser.getEmail())) {
                     nUser.setUserID(firebaseAuth.getCurrentUser().getUid());
                     try {
                         userBL.addNewUser(nUser);
                     } catch (Exception e) {
                         Log.d(LOG_ID, e.getMessage());
                     }
+                    Intent intent = new Intent(NewUserScreenController.this,
+                            WelcomeScreenController.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(NewUserScreenController.this,
                             "The user could not be created. "
@@ -78,5 +85,13 @@ public class NewUserScreenController extends AppCompatActivity {
                 }
             }
         });
+
+        LoginBL loginBL = new LoginBL(mAuth);
+        try {
+            loginBL.createUser(nUser);
+        } catch (Exception e) {
+
+        }
+
     }
 }

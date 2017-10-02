@@ -20,25 +20,14 @@ import edu.gatech.cs2340.rattracker2k17.Model.User;
 public class LoginBL {
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDataBase;
     private static final String TAG = "LoginBL";
 
     public LoginBL() {
         mAuth = FirebaseAuth.getInstance();
-        mDataBase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public LoginBL(DatabaseReference mDataBase, FirebaseAuth mAuth) {
-        if (mAuth != null) {
-            this.mAuth = mAuth;
-        } else {
-            this.mAuth = FirebaseAuth.getInstance();
-        }
-        if (mDataBase != null) {
-            this.mDataBase = mDataBase;
-        } else {
-            this.mDataBase = FirebaseDatabase.getInstance().getReference();
-        }
+    public LoginBL(FirebaseAuth mAuth) {
+        this.mAuth = mAuth;
     }
 
     public void login(User user) {

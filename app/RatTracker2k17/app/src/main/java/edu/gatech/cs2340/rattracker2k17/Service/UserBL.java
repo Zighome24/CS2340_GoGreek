@@ -21,6 +21,7 @@ public class UserBL {
         mDataBase = database;
     }
 
+    // TODO: 10/2/2017 Add new users to the database if they don't exist already, otherwise update
     public void addNewUser(User user) {
 
     }
