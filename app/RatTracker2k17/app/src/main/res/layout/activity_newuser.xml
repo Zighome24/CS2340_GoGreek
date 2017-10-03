@@ -66,4 +66,12 @@
         android:onClick="back"
         android:text="@string/return_home" />
 
+    <Spinner
+        android:id="@+id/spinner_role"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_returnHome"
+        android:layout_marginTop="31dp" />
+
 </RelativeLayout>

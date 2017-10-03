@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+
+import java.util.Arrays;
 
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.User;
@@ -33,7 +37,7 @@ public class NewUserScreenController extends AppCompatActivity {
 
     private static final String LOG_ID = "NewUserScreenController";
 
-    private EditText firstName, lastName, email,password;
+    private Spinner spinner;
     private FirebaseAuth mAuth;
 
     @Override
@@ -44,6 +48,12 @@ public class NewUserScreenController extends AppCompatActivity {
         Log.d(LOG_ID, "NewUserScreenController:onCreate: new user screen created");
 
         mAuth = FirebaseAuth.getInstance();
+
+        spinner = findViewById(R.id.spinner_role);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, Arrays.asList("Admin", "User"));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     // change view back home (connect in the "onClick" field in layout)
