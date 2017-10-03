@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "667069571681",
+    "firebase_url": "https://rat-tracker-2k17.firebaseio.com",
+    "project_id": "rat-tracker-2k17",
+    "storage_bucket": "rat-tracker-2k17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667069571681:android:cd9540ae374e21bb",
+        "android_client_info": {
+          "package_name": "edu.gatech.cs2340.rattracker2k17"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667069571681-rbjf6csstakr5u2aki1asflvvc0fd51g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8aqVcg_tZbisbF1irLrZOsWr8-yhMbdE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
