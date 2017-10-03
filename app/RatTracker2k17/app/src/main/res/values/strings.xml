@@ -25,4 +25,5 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="return_home">Return to Home Screen</string>
+    <string name="system_error">There has been an error.</string>
 </resources>

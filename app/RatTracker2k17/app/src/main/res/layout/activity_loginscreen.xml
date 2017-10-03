@@ -6,14 +6,14 @@
     android:background="@drawable/home_image">
 
     <EditText
-        android:id="@+id/txt_userName"
+        android:id="@+id/txt_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="188dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Email"
         android:inputType="text"
         tools:textColor="@color/colorPrimaryDark" />
 
@@ -21,7 +21,7 @@
         android:id="@+id/txt_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_userName"
+        android:layout_alignStart="@+id/txt_email"
         android:layout_centerVertical="true"
         android:ems="10"
         android:hint="Password"
@@ -55,10 +55,10 @@
         android:id="@+id/txtView_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txt_userName"
-        android:layout_alignStart="@+id/txt_userName"
+        android:layout_alignBottom="@+id/txt_email"
+        android:layout_alignStart="@+id/txt_email"
         android:layout_marginBottom="57dp"
-        android:text="Username:"
+        android:text="Email:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:textColor="@color/colorPrimaryDark"
         tools:textSize="18sp" />
