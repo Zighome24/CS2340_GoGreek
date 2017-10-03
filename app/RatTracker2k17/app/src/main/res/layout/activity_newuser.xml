@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/txt_firstName"
+        android:id="@+id/txt_NewUserFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,43 +14,43 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/txt_lastName"
+        android:id="@+id/txt_NewUserLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_firstName"
-        android:layout_below="@+id/txt_firstName"
+        android:layout_alignStart="@+id/txt_NewUserFirstName"
+        android:layout_below="@+id/txt_NewUserFirstName"
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/last_name"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/txt_password"
+        android:id="@+id/txt_NewUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_email"
-        android:layout_below="@+id/txt_email"
+        android:layout_alignStart="@+id/txt_NewUserLastName"
+        android:layout_below="@+id/txt_NewUserLastName"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/txt_NewUserPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txt_NewUserEmail"
+        android:layout_below="@+id/txt_NewUserEmail"
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/txt_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:layout_below="@+id/txt_lastName"
-        android:layout_alignStart="@+id/txt_lastName" />
-
     <Button
         android:id="@+id/btn_createUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_password"
+        android:layout_below="@+id/txt_NewUserPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:onClick="createUser"
