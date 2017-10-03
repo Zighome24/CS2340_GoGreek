@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Rat Tracker 2k17</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="new_user">New User</string>
     <string name="login_guest">Login as a guest!</string>
     <string name="title_activity_login">Sign in</string>
@@ -17,4 +18,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="create_user">Create User</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="welcome">Welcome!</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="return_home">Return to Home Screen</string>
+    <string name="system_error">There has been an error.</string>
 </resources>

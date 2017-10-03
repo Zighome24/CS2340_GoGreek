@@ -6,22 +6,11 @@
         android:id="@+id/txt_firstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:id="@+id/txt_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_email"
-        android:layout_below="@+id/txt_email"
-        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/first_name"
         android:inputType="textPersonName" />
 
     <EditText
@@ -32,30 +21,30 @@
         android:layout_below="@+id/txt_firstName"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:hint="Last Name"
+        android:hint="@string/last_name"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txt_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_username"
-        android:layout_below="@+id/txt_username"
+        android:layout_alignStart="@+id/txt_email"
+        android:layout_below="@+id/txt_email"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName" />
+        android:hint="@string/password"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/txt_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_lastName"
-        android:layout_below="@+id/txt_lastName"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName" />
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:layout_below="@+id/txt_lastName"
+        android:layout_alignStart="@+id/txt_lastName" />
 
     <Button
         android:id="@+id/btn_createUser"
@@ -65,7 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:onClick="createUser"
-        android:text="Create User" />
+        android:text="@string/create_user" />
 
     <Button
         android:id="@+id/btn_returnHome"
@@ -75,5 +64,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:onClick="back"
-        android:text="Return to Home Screen" />
+        android:text="@string/return_home" />
+
 </RelativeLayout>
