@@ -31,14 +31,13 @@ public class LoginBL {
         this.mAuth = mAuth;
     }
 
-    public Task<AuthResult> login(String email, String password) throws FirebaseAuthException {
+    public Task<AuthResult> login(String email, String password) {
         Log.d(TAG, "Logging in the user: " + email);
         return mAuth.signInWithEmailAndPassword(email, password);
     }
 
-    // TODO: 10/2/2017 Add support for exceptions that could share more information
-    //  such as an existing account or bad email.
-    public Task<AuthResult> createUser(User user) throws FirebaseAuthException {
+
+    public Task<AuthResult> createUser(User user) {
         Log.d(TAG, "Creating a new user: " + user.toString());
         return mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword());
     }
