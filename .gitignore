@@ -25,3 +25,4 @@ local.properties
 *.iml
 .idea
 .gradle
+app/RatTracker2k17/app/google-services.json
