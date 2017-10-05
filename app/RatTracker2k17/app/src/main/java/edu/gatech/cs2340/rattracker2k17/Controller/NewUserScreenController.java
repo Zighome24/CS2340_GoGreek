@@ -29,6 +29,7 @@ import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
+import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
  * Created by wepperson on 9/24/17.
@@ -82,6 +83,12 @@ public class NewUserScreenController extends AppCompatActivity {
         final User nUser = new User(firstName.getText().toString(), lastName.getText().toString(),
                                 email.getText().toString(), Types.SecurityLevel.User, User.NO_UID,
                                 password.getText().toString());
+
+        if (!ValidateForm(nUser)) {
+            Toast.makeText(this, "Not all of the fields listed above are filled out, please "
+                    + "fill them all out before you create a new user.", Toast.LENGTH_SHORT);
+            return;
+        }
 
         Log.d(LOG_ID, "createUser: " + nUser.toString());
 
@@ -151,5 +158,17 @@ public class NewUserScreenController extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Validate Form:
+     * @param user - the user object containing the information to validate
+     * @return - returns true if the form has no empty fields and false if it does not.
+     */
+    private boolean ValidateForm(User user) {
+        return !(Utility.isNullOrWhitespace(user.getFirstName())
+                | Utility.isNullOrWhitespace(user.getLastName())
+                | Utility.isNullOrWhitespace(user.getEmail())
+                | Utility.isNullOrWhitespace(user.getPassword()));
     }
 }
