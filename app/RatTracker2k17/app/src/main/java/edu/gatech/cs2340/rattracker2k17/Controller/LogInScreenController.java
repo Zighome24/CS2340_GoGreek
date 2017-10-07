@@ -57,7 +57,11 @@ public class LogInScreenController extends AppCompatActivity {
 
         final String str_email = email.getText().toString();
 
-
+        if (!ValidateForm(str_email, password.getText().toString())) {
+            Toast.makeText(this, "Not all of the fields listed above are filled out, please "
+                    + "fill them all out before you login.", Toast.LENGTH_SHORT);
+            return;
+        }
 
         LoginBL loginBL = new LoginBL(mAuth);
         loginBL.login(str_email, password.getText().toString())
