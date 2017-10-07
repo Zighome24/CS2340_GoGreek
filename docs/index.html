@@ -11,11 +11,11 @@
 
     <title>Team Go Greek - CS2340</title>
 
-    <link rel="stylesheet" href="styles/page.min.css" type="text/css">
+    <link rel="stylesheet" href="styles/signin.min.css" type="text/css">
 
 </head>
 
-<body id="page-top">
+<body>
 
     <script src="http://localhost:35729/livereload.js"></script>
 
@@ -38,7 +38,7 @@
             <img src="img/selfie.png" alt="" class="card-img">
             <h2 class="card-title">Justin Ziegler - <i>Team Leader and Head Developer</i></h2>
             <div class="card-content">
-                <p>Justin Ziegler is a second year in the College of Computing. He recently got back from a trip through Switzerland and Northern Italy where he got to enjoy one of his other major hobbies: traveling. Justin plans to study abroad in Australia and New Zealand next spring with his friends. Outside of school and traveling, Justin likes working with smart devices, skeet shooting, and playing golf with the Georgia Tech club team.</p>
+                <p>Justin Ziegler is a second year in the College of Computing. He recently got back from a trip through Switzerland and Northern Italy where he got to enjoy one of his other major hobbies: traveling. Justin plans to study abroad in Australia and New Zealand next spring with his friends. Outside of school and traveling, Justin likes working with smart devices, skeet shooting, and playing golf with the Georgia Tech club golf team.</p>
             </div>
         </div>
         <div class="card">
@@ -81,14 +81,68 @@
             <label>Password:</label>
             <input type="password" accept="text/plain" id="password"/>
         </div>
-        <button type="submit" name="button" onclick="onButtonSubmit()">Login!</button>
+        <button type="submit" name="button" onclick="onClickLogin()">Login!</button>
     </aside>
 
     <footer id="repo">
         <h1 class="footer-title"><a href="https://github.com/Zighome24/CS2340_GoGreek">Our Github Repository</a></h1>
     </footer>
 
-    <script src="js/built.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
+
+    <script>
+    var config = {
+      apiKey: "AIzaSyBuAYus-0pVXPmQOon1GnMcdTpviXy3_pA",
+      authDomain: "rat-tracker-2k17.firebaseapp.com",
+      databaseURL: "https://rat-tracker-2k17.firebaseio.com",
+      projectId: "rat-tracker-2k17",
+      storageBucket: "rat-tracker-2k17.appspot.com",
+      messagingSenderId: "667069571681"
+    };
+
+    firebase.initializeApp(config);
+
+    function onClickLogin() {
+        debugger;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        if (isNullOrWhitespace(email) || isNullOrWhitespace(password)) {
+            alert("Neither the email or password can be empty or whitespace");
+            return;
+        }
+
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // [START_EXCLUDE]
+              if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+              } else {
+                alert(errorMessage);
+              }
+              console.log(error);
+              document.getElementById('quickstart-sign-in').disabled = false;
+              // [END_EXCLUDE]
+        });
+    }
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            window.location = 'home.html'
+        }
+    })
+
+    function isNullOrWhitespace( input ) {
+
+        if (typeof input === 'undefined' || input == null) return true;
+
+        return input.replace(/\s/g, '').length < 1;
+    }
+    </script>
 
 </body>
 
