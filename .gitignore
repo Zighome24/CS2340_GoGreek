@@ -26,3 +26,5 @@ local.properties
 .idea
 .gradle
 app/RatTracker2k17/app/google-services.json
+
+node_modules/
