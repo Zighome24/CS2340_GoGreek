@@ -1,5 +1,8 @@
 package edu.gatech.cs2340.rattracker2k17.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 
 /**
@@ -63,5 +66,16 @@ public class User {
     public String toString() {
         return "First Name: " + firstName + ", Last Name: " + lastName + ", Email: " + email
                 + ", UserID: " + userID;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
+        map.put("firstName", firstName);
+        map.put("lastName", lastName);
+        map.put("password", password);
+        map.put("securityLevel", securityLevel.getLevel());
+
+        return map;
     }
 }

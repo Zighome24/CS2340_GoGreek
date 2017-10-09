@@ -55,20 +55,12 @@ public class NewUserScreenController extends AppCompatActivity {
         email = findViewById(R.id.txt_NewUserEmail);
         password = findViewById(R.id.txt_NewUserPassword);
 
-
-
         if (getIntent().getExtras() != null) {
             Log.d(LOG_ID, getIntent().getExtras().getString("email"));
             email.setText(getIntent().getExtras().getString("email"), TextView.BufferType.EDITABLE);
         }
 
         mAuth = FirebaseAuth.getInstance();
-
-        spinner = findViewById(R.id.spinner_role);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, Arrays.asList("Admin", "User"));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
     }
 
     // change view back home (connect in the "onClick" field in layout)
@@ -102,6 +94,7 @@ public class NewUserScreenController extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Log.d(LOG_ID, "New User Log: " + task.getResult().getUser().toString());
                     try {
+                        nUser.setUserID(task.getResult().getUser().getUid());
                         userBL.addNewUser(nUser);
                     } catch (Exception e) {
                         Log.d(LOG_ID, e.getMessage());
