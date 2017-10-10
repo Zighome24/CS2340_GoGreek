@@ -70,6 +70,8 @@ public class WelcomeScreenController extends AppCompatActivity {
     public void getRatData(View view) {
 
         ArrayList<RatSpotting> arrayOfUsers = new ArrayList<>();
+
+        Log.d(LOG_ID, "Importing Rat Data...");
 //
 //
 //
