@@ -69,8 +69,7 @@ public class WelcomeScreenController extends AppCompatActivity {
 
     public void getRatData(View view) {
 
-        ArrayList<RatSpotting> arrayOfUsers = new ArrayList<>();
-
+        ArrayList<RatSpotting> arrayOfRats = new ArrayList<>();
         Log.d(LOG_ID, "Importing Rat Data...");
 //
 //
@@ -83,7 +82,7 @@ public class WelcomeScreenController extends AppCompatActivity {
 //
 //        
 
-        UsersAdapter adapter = new UsersAdapter(this, arrayOfUsers);
+        UsersAdapter adapter = new UsersAdapter(this, arrayOfRats);
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
     }
