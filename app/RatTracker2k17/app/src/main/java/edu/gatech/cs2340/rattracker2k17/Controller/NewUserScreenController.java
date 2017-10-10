@@ -29,6 +29,7 @@ import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
+import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
  * Created by wepperson on 9/24/17.
@@ -54,20 +55,12 @@ public class NewUserScreenController extends AppCompatActivity {
         email = findViewById(R.id.txt_NewUserEmail);
         password = findViewById(R.id.txt_NewUserPassword);
 
-
-
         if (getIntent().getExtras() != null) {
             Log.d(LOG_ID, getIntent().getExtras().getString("email"));
             email.setText(getIntent().getExtras().getString("email"), TextView.BufferType.EDITABLE);
         }
 
         mAuth = FirebaseAuth.getInstance();
-
-        spinner = findViewById(R.id.spinner_role);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, Arrays.asList("Admin", "User"));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
     }
 
     // change view back home (connect in the "onClick" field in layout)
@@ -83,6 +76,12 @@ public class NewUserScreenController extends AppCompatActivity {
                                 email.getText().toString(), Types.SecurityLevel.User, User.NO_UID,
                                 password.getText().toString());
 
+        if (!ValidateForm(nUser)) {
+            Toast.makeText(this, "Not all of the fields listed above are filled out, please "
+                    + "fill them all out before you create a new user.", Toast.LENGTH_SHORT);
+            return;
+        }
+
         Log.d(LOG_ID, "createUser: " + nUser.toString());
 
         final UserBL userBL = new UserBL();
@@ -95,6 +94,7 @@ public class NewUserScreenController extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Log.d(LOG_ID, "New User Log: " + task.getResult().getUser().toString());
                     try {
+                        nUser.setUserID(task.getResult().getUser().getUid());
                         userBL.addNewUser(nUser);
                     } catch (Exception e) {
                         Log.d(LOG_ID, e.getMessage());
@@ -151,5 +151,17 @@ public class NewUserScreenController extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * Validate Form:
+     * @param user - the user object containing the information to validate
+     * @return - returns true if the form has no empty fields and false if it does not.
+     */
+    private boolean ValidateForm(User user) {
+        return !(Utility.isNullOrWhitespace(user.getFirstName())
+                | Utility.isNullOrWhitespace(user.getLastName())
+                | Utility.isNullOrWhitespace(user.getEmail())
+                | Utility.isNullOrWhitespace(user.getPassword()));
     }
 }

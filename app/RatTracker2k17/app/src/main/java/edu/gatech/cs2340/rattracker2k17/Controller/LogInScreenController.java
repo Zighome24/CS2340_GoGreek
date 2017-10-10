@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
+import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
  * Created by wepperson on 9/24/17.
@@ -55,6 +56,12 @@ public class LogInScreenController extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.txt_LoginPassword);
 
         final String str_email = email.getText().toString();
+
+        if (!ValidateForm(str_email, password.getText().toString())) {
+            Toast.makeText(this, "Not all of the fields listed above are filled out, please "
+                    + "fill them all out before you login.", Toast.LENGTH_SHORT);
+            return;
+        }
 
         LoginBL loginBL = new LoginBL(mAuth);
         loginBL.login(str_email, password.getText().toString())
@@ -142,6 +149,11 @@ public class LogInScreenController extends AppCompatActivity {
         Intent intent = new Intent(this, HomeScreenController.class);
         startActivity(intent);
         finish();
+    }
+
+    private boolean ValidateForm(String email, String password) {
+        return !(Utility.isNullOrWhitespace(email)
+                | Utility.isNullOrWhitespace(password));
     }
 
     /**

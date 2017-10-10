@@ -1,0 +1,195 @@
+// Google font
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300,900|Six+Caps');
+
+
+// ===== Variables ===== //
+
+// Fonts stuff
+$six-caps: 'Six Caps', sans-serif;
+$merriweather: 'Merriweather', serif;
+
+$ff-base: $merriweather;
+$ff-alt: $six-caps;
+
+$fs-base: 1rem;
+$fs-h1: 3.75rem;
+$fs-h2: 2.875rem;
+$fs-h3: 2.25rem;
+$fs-xl: 6rem;
+
+// Colours
+$black: #252525;
+$yellow: #e9d20f;
+$light-gray: #c2c2c2;
+$dark-gray: #e8e8e8;
+$green: #4CAF50;
+$white: #fff;
+
+
+// ===== Mixins ===== //
+
+@mixin font-base($font-size: $fs-base, $font-weight: 300, $color: $black) {
+  font: {
+    family: $ff-base;
+    size: $font-size;
+    weight: $font-weight;
+  }
+  color: $color;
+}
+
+@mixin font-alt($font-size: $fs-base, $color: $black) {
+  font: {
+    family: $ff-alt;
+    size: $font-size;
+  }
+  color: $color;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+
+
+// ===== Styles ===== //
+
+body {
+  @include font-base;
+  line-height: 1.6;
+
+  margin: 0;
+
+  display: grid;
+  grid-template:
+    "header header header header" 10em
+    "links links links links" 6em
+    "hero hero hero hero" 50vh
+    ". main sidebar ." auto
+    "footer footer footer footer" 10em
+    / 1fr minmax(30em, 5fr) minmax(15em, 2fr) 1fr;
+    grid-column-gap: 1.5em;
+}
+
+header {
+  grid-area: header;
+}
+
+header,
+footer {
+  background: $black;
+  color: $yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav {
+    background: $yellow;
+    grid-area: links;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @include font-alt(1.5rem);
+
+    a {
+       color: $black;
+       text-decoration: underline;
+   }
+}
+
+
+.header-title,
+.footer-title {
+  @include font-alt($color: $yellow, $font-size: $fs-h2 );
+}
+
+.hero {
+  grid-area: hero;
+  background: url(../img/header.jpg);
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-title {
+  @include font-alt($fs-xl);
+  color: $yellow;
+  margin: 0;
+}
+
+.hero-subtitle {
+  @include font-base($color: $white, $font-size: $fs-h2);
+  margin: 0;
+}
+
+main {
+  grid-area: main;
+}
+
+aside {
+  grid-area: sidebar;
+  background: $dark-gray;
+  padding: 2em;
+
+  input {
+      width: 100%;
+      margin-bottom: 2rem;
+  }
+  button {
+      padding: 2px;
+      padding-left: .5rem;
+      padding-right: .5rem;
+      background: $green;
+      border-radius: 8px;
+      border: 2px solid $black;
+  }
+}
+
+footer {
+  grid-area: footer;
+  text-decoration: underline;
+
+  a {
+      color: $yellow;
+      text-decoration: underline;
+  }
+}
+
+
+// Cards
+
+.card {
+  display: grid;
+  grid-template:
+    "img title" min-content
+    "img content" auto / 1fr 3fr;
+  grid-column-gap: 1.5em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  padding: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.card-img {
+  grid-area: img;
+  max-width: 100%;
+}
+
+.card-title {
+  grid-area: title;
+  margin: 0;
+  font-weight: 300;
+
+  i {
+      font-weight: 200;
+      font-size: 1.25rem;
+  }
+}
+
+.card-content {
+  grid-area: content;
+
+  a {
+    color: $yellow;
+    font-size: 1.1em;
+  }
+}
