@@ -1,6 +1,8 @@
 package edu.gatech.cs2340.rattracker2k17.Model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Chris on 10/9/2017.
@@ -57,7 +59,19 @@ public class RatSpotting implements Serializable {
         this.lon = lon;
     }
 
-    public RatSpotting() {}
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", key);
+        map.put("date", date);
+        map.put("locationType", locationType);
+        map.put("zip", zip);
+        map.put("address", address);
+        map.put("city", city);
+        map.put("borough", borough);
+        map.put("latitude", lat);
+        map.put("longitude", lon);
+        return map;
+    }
 
     @Override
     public String toString() {

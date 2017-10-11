@@ -41,10 +41,11 @@ public class WelcomeScreenController extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         Log.d(LOG_ID, "WelcomeScreenController:onCreate: welcome screen created");
+        getRatData();
     }
 
-    public class UsersAdapter extends ArrayAdapter<RatSpotting> {
-        public UsersAdapter(Context context, ArrayList<RatSpotting> spots) {
+    public class RatSpottingAdapter extends ArrayAdapter<RatSpotting> {
+        public RatSpottingAdapter(Context context, ArrayList<RatSpotting> spots) {
             super(context, 0, spots);
         }
 
@@ -80,7 +81,7 @@ public class WelcomeScreenController extends AppCompatActivity {
         }
     }
 
-    public void getRatData(View view) {
+    public void getRatData() {
 
         ArrayList<RatSpotting> arrayOfRats = new ArrayList<>();
         Log.d(LOG_ID, "Importing Rat Data...");
@@ -111,7 +112,7 @@ public class WelcomeScreenController extends AppCompatActivity {
             Log.e(LOG_ID, "error reading assets", e);
         }
 
-        UsersAdapter adapter = new UsersAdapter(this, arrayOfRats);
+        RatSpottingAdapter adapter = new RatSpottingAdapter(this, arrayOfRats);
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
     }

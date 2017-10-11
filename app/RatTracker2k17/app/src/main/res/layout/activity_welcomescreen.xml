@@ -1,54 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@drawable/home_image"
-tools:context="edu.gatech.cs2340.rattracker2k17.Controller.HomeScreenController"
-tools:layout_editor_absoluteX="0dp"
-tools:layout_editor_absoluteY="81dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.gatech.cs2340.rattracker2k17.Controller.HomeScreenController"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:fontFamily="cursive"
         android:text="@string/welcome"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/btn_getRatData"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_addRSP"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btn_logout" />
+        android:layout_below="@+id/textView" />
 
     <Button
-        android:id="@+id/btn_getRatData"
+        android:id="@+id/btn_addRSP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="getRatData"
-        android:text="@string/get_rat_data"
+        android:text="@string/add_spotting"
+        android:layout_above="@+id/btn_logout"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textView" />
+        android:layout_marginBottom="22dp" />
 
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
-        android:onClick="logout"
-        android:text="@string/logout"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="60dp"
+        android:layout_toEndOf="@+id/textView"
+        android:onClick="logout"
+        android:text="@string/logout" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_logout"
+        android:layout_alignBottom="@+id/btn_logout"
+        android:layout_marginEnd="7dp"
+        android:layout_toStartOf="@+id/textView"
+        android:text="@string/view_map" />
 </RelativeLayout>
 
