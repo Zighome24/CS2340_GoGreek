@@ -35,4 +35,9 @@ public class HomeScreenController extends AppCompatActivity {
         Intent intent = new Intent(this, NewUserScreenController.class);
         startActivity(intent);
     }
+
+    public void launchGuestUser(View view) {
+        Intent intent = new Intent(this, WelcomeScreenController.class);
+        startActivity(intent);
+    }
 }

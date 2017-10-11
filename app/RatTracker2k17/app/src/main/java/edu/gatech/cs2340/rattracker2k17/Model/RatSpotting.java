@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 public class RatSpotting implements Serializable {
 
-    private String key;
-    public void setKey(String key) { this.key = key;}
-    public String getKey() { return key;}
+    private int key;
+    public void setKey(int key) { this.key = key;}
+    public int getKey() { return key;}
 
     private String date;
     public void setDate(String date) { this.date = date;}
@@ -44,7 +44,7 @@ public class RatSpotting implements Serializable {
     public void setLong(double lon) { this.lon = lon;}
     public double getLong() { return lon;}
 
-    public RatSpotting(String key, String date, String locationType, int zip,
+    public RatSpotting(int key, String date, String locationType, int zip,
                        String address, String city, String borough, double lat, double lon) {
         this.key = key;
         this.date = date;

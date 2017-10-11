@@ -68,7 +68,7 @@ public class LogInScreenController extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(LOG_ID, "createUser:onComplete:" + task.isSuccessful());
+                        Log.d(LOG_ID, "loginUser:onComplete:" + task.isSuccessful());
                         if (task.isSuccessful()) {
                             Log.d(LOG_ID, "User Logged in: " + task.getResult().getUser().toString());
                             Intent intent = new Intent(LogInScreenController.this,

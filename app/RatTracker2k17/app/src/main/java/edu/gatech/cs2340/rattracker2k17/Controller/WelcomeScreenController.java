@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
@@ -55,8 +60,9 @@ public class WelcomeScreenController extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
                         Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
-                        Bundle bundle = intent.getExtras();
+                        Bundle bundle = new Bundle();
                         bundle.putSerializable("spotting", spot);
+                        intent.putExtras(bundle);
                         startActivity(intent);
                     }
                 });
@@ -66,9 +72,9 @@ public class WelcomeScreenController extends AppCompatActivity {
             TextView rsLocationType = (TextView) convertView.findViewById(R.id.rsLocationType);
             TextView rsBorough = (TextView) convertView.findViewById(R.id.rsBorough);
 
-            rsDate.setText(spot.getDate());
-            rsLocationType.setText(spot.getLocationType());
-            rsBorough.setText(spot.getBorough());
+            rsDate.setText("Key: " + Integer.toString(spot.getKey()) + "       ");
+            rsLocationType.setText("Zip: " + Integer.toString(spot.getZip()) + "       ");
+            rsBorough.setText("Borough: " + spot.getBorough());
 
             return convertView;
         }
@@ -78,16 +84,32 @@ public class WelcomeScreenController extends AppCompatActivity {
 
         ArrayList<RatSpotting> arrayOfRats = new ArrayList<>();
         Log.d(LOG_ID, "Importing Rat Data...");
-//
-//
-//
-//
-//        IMPORT RAT DATA HERE
-//
-//
-//
-//
-//        
+        try {
+            InputStream is = getResources().openRawResource(R.raw.ratsightings);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            int counter = 0;
+            String line;
+            br.readLine(); //get rid of header line
+            while ((line = br.readLine()) != null && counter < 50) {
+                counter++;
+                Log.d(LOG_ID, line);
+                String[] tokens = line.split(",");
+                arrayOfRats.add(new RatSpotting(
+                    Integer.parseInt(tokens[0]),
+                    tokens[1],
+                    tokens[7],
+                    tokens[8].isEmpty() ? 0 : Integer.parseInt(tokens[8]),
+                    tokens[9],
+                    tokens[16],
+                    tokens[23],
+                    tokens.length >= 49 ? Double.parseDouble(tokens[49]) : 33.777292,
+                    tokens.length >= 50 ? Double.parseDouble(tokens[50]) : -84.398103));
+                // TODO: 10/11/2017 Make sure the google maps zoom feature doesn't get screwed by rats in howey
+            }
+            br.close();
+        } catch (IOException e) {
+            Log.e(LOG_ID, "error reading assets", e);
+        }
 
         UsersAdapter adapter = new UsersAdapter(this, arrayOfRats);
         ListView listView = findViewById(R.id.list_view);
