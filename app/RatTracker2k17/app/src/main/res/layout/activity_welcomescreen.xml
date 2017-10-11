@@ -60,4 +60,3 @@
         android:layout_toStartOf="@+id/textView"
         android:text="@string/view_map" />
 </RelativeLayout>
-
