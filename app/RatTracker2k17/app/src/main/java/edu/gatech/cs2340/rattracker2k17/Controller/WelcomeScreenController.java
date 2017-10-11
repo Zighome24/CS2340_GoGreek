@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,8 +18,6 @@ import java.util.ArrayList;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
-
-import static edu.gatech.cs2340.rattracker2k17.R.id.list_view;
 
 /**
  * Created by wepperson on 9/24/17.
@@ -49,10 +46,19 @@ public class WelcomeScreenController extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            RatSpotting spot = getItem(position);
+            final RatSpotting spot = getItem(position);
 
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_rat, parent, false);
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("spotting", spot);
+                    }
+                });
             }
 
             TextView rsDate = (TextView) convertView.findViewById(R.id.rsDate);

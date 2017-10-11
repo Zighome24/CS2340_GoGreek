@@ -1,10 +1,12 @@
 package edu.gatech.cs2340.rattracker2k17.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Chris on 10/9/2017.
  */
 
-public class RatSpotting {
+public class RatSpotting implements Serializable {
 
     private String key;
     public void setKey(String key) { this.key = key;}
@@ -39,8 +41,8 @@ public class RatSpotting {
     public double getLat() { return lat;}
 
     private double lon;
-    public void setLon(double lon) { this.lon = lon;}
-    public double getLon() { return lon;}
+    public void setLong(double lon) { this.lon = lon;}
+    public double getLong() { return lon;}
 
     public RatSpotting(String key, String date, String locationType, int zip,
                        String address, String city, String borough, double lat, double lon) {
