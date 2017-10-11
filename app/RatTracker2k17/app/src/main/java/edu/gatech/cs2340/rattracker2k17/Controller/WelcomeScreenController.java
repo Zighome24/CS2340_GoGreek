@@ -53,10 +53,11 @@ public class WelcomeScreenController extends AppCompatActivity {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
                         Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
-                        Bundle bundle = new Bundle();
+                        Bundle bundle = intent.getExtras();
                         bundle.putSerializable("spotting", spot);
+                        startActivity(intent);
                     }
                 });
             }
