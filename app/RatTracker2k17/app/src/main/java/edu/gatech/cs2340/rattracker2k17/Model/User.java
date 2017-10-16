@@ -73,7 +73,6 @@ public class User {
         map.put("email", email);
         map.put("firstName", firstName);
         map.put("lastName", lastName);
-        map.put("password", password);
         map.put("securityLevel", securityLevel.getLevel());
 
         return map;

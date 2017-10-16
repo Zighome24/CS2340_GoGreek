@@ -29,4 +29,5 @@
     <string name="system_error">There has been an error.</string>
     <string name="add_spotting">Add a Rat Spotting</string>
     <string name="view_map">View Map</string>
+    <string name="addRatSpotting">Add Rat Spotting</string>
 </resources>

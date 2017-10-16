@@ -73,7 +73,7 @@ public class WelcomeScreenController extends AppCompatActivity {
             TextView rsLocationType = (TextView) convertView.findViewById(R.id.rsLocationType);
             TextView rsBorough = (TextView) convertView.findViewById(R.id.rsBorough);
 
-            rsDate.setText("Key: " + Integer.toString(spot.getKey()) + "       ");
+            rsDate.setText("Key: " + spot.getKey() + "       ");
             rsLocationType.setText("Zip: " + Integer.toString(spot.getZip()) + "       ");
             rsBorough.setText("Borough: " + spot.getBorough());
 
@@ -96,7 +96,7 @@ public class WelcomeScreenController extends AppCompatActivity {
                 Log.d(LOG_ID, line);
                 String[] tokens = line.split(",");
                 arrayOfRats.add(new RatSpotting(
-                    Integer.parseInt(tokens[0]),
+                    tokens[0],
                     tokens[1],
                     tokens[7],
                     tokens[8].isEmpty() ? 0 : Integer.parseInt(tokens[8]),
@@ -123,6 +123,16 @@ public class WelcomeScreenController extends AppCompatActivity {
         mAuth.signOut();
         Intent intent = new Intent(this, HomeScreenController.class);
         startActivity(intent);
+        finish();
+    }
+
+    /**
+     * newRatSpotting - changes the activity to the rat-spotting creation screen
+     * @param view - the view object that is calling the newRatSpotting() method
+     */
+    public void newRatSpotting(View view) {
+        Intent intent = new Intent(this, NewRatSpottingController.class);
+        startActivityForResult(intent, -1);
     }
 }
 
