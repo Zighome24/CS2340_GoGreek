@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
 
 public class HomeScreenController extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class HomeScreenController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open);
+        RatSpotting.generateNextKey();
         Log.d(LOG_ID, "onCreate:HomeScreenController");
     }
 

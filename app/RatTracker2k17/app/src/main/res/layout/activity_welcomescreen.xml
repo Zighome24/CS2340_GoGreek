@@ -38,7 +38,8 @@
         android:text="@string/add_spotting"
         android:layout_above="@+id/btn_logout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp" />
+        android:layout_marginBottom="22dp"
+        android:onClick="newRatSpotting"/>
 
     <Button
         android:id="@+id/btn_logout"
@@ -60,4 +61,3 @@
         android:layout_toStartOf="@+id/textView"
         android:text="@string/view_map" />
 </RelativeLayout>
-
