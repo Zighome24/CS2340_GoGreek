@@ -8,33 +8,13 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="50dp"
-            android:text="Key:"
-            android:textSize="14sp"
-            android:id="@+id/textView5" />
-
-        <EditText
-            android:id="@+id/txt_ERSKey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView5"
-            android:layout_below="@+id/textView5"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="10dp"
-            android:text="" />
-
-        <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/txt_ERSKey"
-            android:layout_below="@+id/txt_ERSKey"
-            android:layout_marginTop="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="50dp"
             android:text="Date:" />
 
         <EditText
@@ -190,10 +170,18 @@
             android:id="@+id/btn_actionRat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/txt_ERSLat"
             android:layout_below="@+id/txt_ERSLat"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btn_actionRat"
+            android:layout_marginBottom="120dp" />
 
     </RelativeLayout>
 

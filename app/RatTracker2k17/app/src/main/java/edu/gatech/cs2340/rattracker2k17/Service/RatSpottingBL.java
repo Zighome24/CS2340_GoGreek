@@ -33,7 +33,7 @@ public class RatSpottingBL {
      */
     public void addNewRatSpotting(RatSpotting ratSpotting) {
         if (Utility.isNullOrWhitespace(ratSpotting.getKey())) {
-            ratSpotting.setKey(Integer.toString(RatSpotting.getNextKey()));
+            ratSpotting.setKey(Long.toString(RatSpotting.getNextKey()));
         }
     }
 
@@ -45,26 +45,36 @@ public class RatSpottingBL {
         mDatabase.child(ratSpotting.getKey()).updateChildren(ratSpotting.toMap());
     }
 
+    /**
+     * getCurrentKey() an asynchronous method called at startup to make sure
+     * we have retrieved the next key in the
+     */
     public static void getCurrentKey() {
-        FirebaseDatabase.getInstance().getReference("ratspottings/")
-                .orderByKey().limitToLast(1)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(LOG_ID, dataSnapshot.toString());
-                        int key = 0;
-                        key++;
-                        RatSpotting.setNextKey(key);
-                        Log.d(LOG_ID,
-                                "The generated next key for the RatSpotting is "
-                                    + Integer.toString(key));
-                    }
+        FirebaseDatabase.getInstance().getReference()
+                .child("nextUniqueKey").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(LOG_ID, "getCurrentKey():onDataChange():dataSnapshot -> "
+                        + dataSnapshot.toString());
+                RatSpotting.setNextKey(dataSnapshot.getValue() != null
+                        ? (Long) dataSnapshot.getValue() : 1);
+                Log.d(LOG_ID, "The next key has been set to " + RatSpotting.seeNextKey());
+            }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d(LOG_ID, "The Value Event Listener for RatSpottingBL:getCurrentKey() "
-                            + "has been canceled with error: " + databaseError.getMessage());
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(LOG_ID, "getCurrentKey():onCancelled() the request has been cancelled, "
+                        + "the given error is " + databaseError.getMessage());
+            }
+        });
+        Log.d(LOG_ID, "Query for highest key has been made. Waiting response...");
+    }
+
+    /**
+     * pushCurrentKey() - pushes the current unique key for RatSpottings to the server
+     */
+    public static void pushCurrentKey() {
+        FirebaseDatabase.getInstance().getReference().child("nextUniqueKey")
+                .setValue(RatSpotting.seeNextKey());
     }
 }

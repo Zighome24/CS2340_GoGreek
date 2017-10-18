@@ -13,14 +13,18 @@ import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 public class RatSpotting implements Serializable {
 
     //Static Properties
-    private static int nextKey = -1;
+    private static long nextKey = -1;
     public static void generateNextKey() {
         RatSpottingBL.getCurrentKey();
     }
-    public static int getNextKey() {
+    public static long getNextKey() {
+        nextKey++;
+        return nextKey - 1;
+    }
+    public static long seeNextKey() {
         return nextKey;
     }
-    public static void setNextKey(int nextKey) {
+    public static void setNextKey(long nextKey) {
         RatSpotting.nextKey = nextKey;
     }
 

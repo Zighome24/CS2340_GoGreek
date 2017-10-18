@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
+import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 
 /**
  * Created by wepperson on 9/24/17.
@@ -93,7 +94,7 @@ public class WelcomeScreenController extends AppCompatActivity {
             br.readLine(); //get rid of header line
             while ((line = br.readLine()) != null && counter < 50) {
                 counter++;
-                Log.d(LOG_ID, line);
+                //Log.d(LOG_ID, line);
                 String[] tokens = line.split(",");
                 arrayOfRats.add(new RatSpotting(
                     tokens[0],
@@ -118,11 +119,15 @@ public class WelcomeScreenController extends AppCompatActivity {
     }
 
 
-    // change view back home (connect in the "onClick" field in layout)
+    /**
+     * logout - logs the user out and returns to the homescreen
+     * @param view - the view object that is calling the logout method()
+     */
     public void logout(View view) {
         mAuth.signOut();
         Intent intent = new Intent(this, HomeScreenController.class);
         startActivity(intent);
+        RatSpottingBL.pushCurrentKey();
         finish();
     }
 
@@ -132,7 +137,7 @@ public class WelcomeScreenController extends AppCompatActivity {
      */
     public void newRatSpotting(View view) {
         Intent intent = new Intent(this, NewRatSpottingController.class);
-        startActivityForResult(intent, -1);
+        startActivityForResult(intent, 1);
     }
 }
 
