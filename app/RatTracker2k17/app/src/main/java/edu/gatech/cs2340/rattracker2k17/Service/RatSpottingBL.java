@@ -1,11 +1,15 @@
 package edu.gatech.cs2340.rattracker2k17.Service;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
@@ -35,6 +39,18 @@ public class RatSpottingBL {
         if (Utility.isNullOrWhitespace(ratSpotting.getKey())) {
             ratSpotting.setKey(Long.toString(RatSpotting.getNextKey()));
         }
+        Log.d(LOG_ID, "Adding rat: " + ratSpotting.getKey() + " to the database");
+        mDatabase.child(ratSpotting.getKey()).updateChildren(ratSpotting.toMap())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(LOG_ID, "The RatSpotting has been added to the database.");
+                        } else {
+                            Log.d(LOG_ID, task.getException().getMessage());
+                        }
+                    }
+                });
     }
 
     /**
@@ -43,6 +59,16 @@ public class RatSpottingBL {
      */
     public void updateRatSpotting(RatSpotting ratSpotting) {
         mDatabase.child(ratSpotting.getKey()).updateChildren(ratSpotting.toMap());
+    }
+
+    public DatabaseReference getRatSpotting(String ratID) {
+        Log.d(LOG_ID, "Querying Firebase to look for ratspotting with id: " + ratID);
+        return mDatabase.child(ratID);
+    }
+
+    public Query getRecentRatSpottings() {
+        Log.d(LOG_ID, "Querying Firebase to look for recent ratdata");
+        return mDatabase.orderByValue().getRef().orderByKey().limitToLast(50);
     }
 
     /**
