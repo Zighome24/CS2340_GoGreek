@@ -37,7 +37,7 @@ public class DetailRatScreenController extends AppCompatActivity {
         txt_city.setText(spot.getCity());
 
         txt_zip = findViewById(R.id.txt_RSZip);
-        txt_zip.setText(Integer.toString(spot.getZip()));
+        txt_zip.setText(Long.toString(spot.getZip()));
 
         txt_borough = findViewById(R.id.txt_RSBorough);
         txt_borough.setText(spot.getBorough());

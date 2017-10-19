@@ -41,9 +41,9 @@ public class RatSpotting implements Serializable {
     public void setLocationType(String locationType) { this.locationType = locationType;}
     public String getLocationType() { return locationType;}
 
-    private int zip;
-    public void setZip(int zip) { this.zip = zip;}
-    public int getZip() { return zip;}
+    private long zip;
+    public void setZip(long zip) { this.zip = zip;}
+    public long getZip() { return zip;}
 
     private String address;
     public void setAddress(String address) { this.address = address;}
@@ -77,7 +77,7 @@ public class RatSpotting implements Serializable {
      * @param lat the latitude where the rat spotting occurred
      * @param lon the longitude where the rat spotting occurred
      */
-    public RatSpotting(String key, String date, String locationType, int zip,
+    public RatSpotting(String key, String date, String locationType, long zip,
                        String address, String city, String borough, double lat, double lon) {
         this.key = key;
         this.date = date;

@@ -59,16 +59,16 @@ public class NewRatSpottingController extends AppCompatActivity {
                         Double.parseDouble(txt_lat.getText().toString()),
                         Double.parseDouble(txt_long.getText().toString()));
                 Log.d(LOG_ID, "onClick: creating a new rat spotting: " + rat.toString());
-                try {
-                    ratSpottingBL.addNewRatSpotting(rat);
-                } catch (Exception e) {
-                    Log.d(LOG_ID, e.getMessage());
-                }
-                Log.d("CHECK THIS OUT", getCallingActivity().getClassName());
+                ratSpottingBL.addNewRatSpotting(rat);
                 switch (getCallingActivity().getClassName()) {
                     case "edu.gatech.cs2340.rattracker2k17.Controller.WelcomeScreenController":
-                        startActivity(new Intent(NewRatSpottingController.this,
-                                WelcomeScreenController.class));
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("ratspotting", rat);
+                        Intent intent = new Intent();
+                        intent.putExtras(bundle);
+                        setResult(Integer.parseInt(rat.getKey()), intent);
+                        finish();
+                        break;
                     default:
                         Log.d(LOG_ID, "The class " + getCallingActivity().getClassName()
                                 + " called NewRatSpottingController but does not have"
