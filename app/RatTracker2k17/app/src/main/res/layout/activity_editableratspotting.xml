@@ -181,7 +181,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/btn_actionRat"
-            android:layout_marginBottom="120dp" />
+            android:layout_marginBottom="175dp" />
 
     </RelativeLayout>
 
