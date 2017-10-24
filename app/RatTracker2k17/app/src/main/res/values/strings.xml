@@ -29,7 +29,6 @@
     <string name="system_error">There has been an error.</string>
     <string name="add_spotting">Add a Rat Spotting</string>
     <string name="view_map">View Map</string>
-
     <!-- Strings related to Map -->
     <string name="title_activity_maps">Map with Marker</string>
 </resources>

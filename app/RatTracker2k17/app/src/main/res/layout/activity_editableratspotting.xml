@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="50dp"
+            android:text="Date:" />
+
+        <EditText
+            android:id="@+id/txt_ERSDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView8"
+            android:layout_below="@+id/textView8"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"
+            android:inputType="datetime|date|time"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txt_ERSDate"
+            android:layout_below="@+id/txt_ERSDate"
+            android:layout_marginTop="25dp"
+            android:text="Location Type:" />
+
+        <EditText
+            android:id="@+id/txt_ERSLocationType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView10"
+            android:layout_below="@+id/textView10"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView19"
+            android:layout_marginStart="150dp"
+            android:layout_toEndOf="@+id/textView19"
+            android:text="Zip:" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView10"
+            android:layout_below="@+id/txt_ERSLocationType"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/txt_ERSLocationType"
+            android:text="Address:" />
+
+        <EditText
+            android:id="@+id/txt_ERSAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView17"
+            android:layout_below="@+id/textView17"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/txt_ERSLocationType"
+            android:inputType="textPostalAddress"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView17"
+            android:layout_below="@+id/txt_ERSAddress"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/txt_ERSAddress"
+            android:text="City:" />
+
+        <EditText
+            android:id="@+id/txt_ERSCity"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView19"
+            android:layout_below="@+id/textView19"
+            android:layout_marginTop="20dp"
+            android:inputType="text"
+            android:text="" />
+
+        <EditText
+            android:id="@+id/txt_ERSZip"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView14"
+            android:layout_alignTop="@+id/txt_ERSCity"
+            android:layout_marginEnd="40dp"
+            android:inputType="number"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txt_ERSCity"
+            android:layout_below="@+id/txt_ERSCity"
+            android:layout_marginTop="25dp"
+            android:text="Borough:" />
+
+        <EditText
+            android:id="@+id/txt_ERSBorough"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView22"
+            android:layout_below="@+id/textView22"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txt_ERSBorough"
+            android:layout_below="@+id/txt_ERSBorough"
+            android:layout_marginTop="25dp"
+            android:text="Lat:" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView24"
+            android:layout_toEndOf="@+id/txt_ERSCity"
+            android:text="Long:" />
+
+        <EditText
+            android:id="@+id/txt_ERSLat"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView24"
+            android:layout_below="@+id/textView24"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp"
+            android:inputType="numberSigned|numberDecimal"
+            android:text="" />
+
+        <EditText
+            android:id="@+id/txt_ERSLong"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignTop="@+id/txt_ERSLat"
+            android:layout_toEndOf="@+id/txt_ERSCity"
+            android:inputType="numberSigned|numberDecimal"
+            android:text="" />
+
+        <Button
+            android:id="@+id/btn_actionRat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_ERSLat"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btn_actionRat"
+            android:layout_marginBottom="175dp" />
+
+    </RelativeLayout>
+
+</ScrollView>

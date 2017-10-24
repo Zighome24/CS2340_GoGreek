@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.rattracker2k17.Service;
 
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -11,16 +12,29 @@ import edu.gatech.cs2340.rattracker2k17.Model.User;
 
 public class UserBL {
 
+    private static final String TAG = "UserBL";
     private DatabaseReference mDataBase;
 
+    /**
+     * Constructor - Initializes the UserBL and saves the database reference to the
+     * users portion of the database.
+     */
     public UserBL() {
         mDataBase = FirebaseDatabase.getInstance().getReference("users/");
     }
 
+    /**
+     * addNewUser - adds a new user to the database
+     * @param user the user we would like to add to the database
+     */
     public void addNewUser(User user) {
         mDataBase.child(user.getUserID()).updateChildren(user.toMap());
     }
 
+    /**
+     * updateUser - updates the user in the database
+     * @param user the user we would like to add to the database
+     */
     public void updateUser(User user) {
         mDataBase.child(user.getUserID()).updateChildren(user.toMap());
     }

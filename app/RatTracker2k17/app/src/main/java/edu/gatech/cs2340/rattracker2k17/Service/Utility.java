@@ -10,6 +10,7 @@ public class Utility {
      * isNullOrWhitespace - checks to see if the string is null or whitespace
      * @param s the string we are analyzing
      * @return true if the string is empty, contains only whitespace, or is null
+     *         otherwise returns false
      */
     public static boolean isNullOrWhitespace(String s) {
         if (s == null)

@@ -4,15 +4,34 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
+
 /**
  * Created by Chris on 10/9/2017.
  */
 
 public class RatSpotting implements Serializable {
 
-    private int key;
-    public void setKey(int key) { this.key = key;}
-    public int getKey() { return key;}
+    //Static Properties
+    private static long nextKey = -1;
+    public static void generateNextKey() {
+        RatSpottingBL.getCurrentKey();
+    }
+    public static long getNextKey() {
+        nextKey++;
+        return nextKey - 1;
+    }
+    public static long seeNextKey() {
+        return nextKey;
+    }
+    public static void setNextKey(long nextKey) {
+        RatSpotting.nextKey = nextKey;
+    }
+
+    //Properties
+    private String key;
+    public void setKey(String key) { this.key = key;}
+    public String getKey() { return key;}
 
     private String date;
     public void setDate(String date) { this.date = date;}
@@ -22,9 +41,9 @@ public class RatSpotting implements Serializable {
     public void setLocationType(String locationType) { this.locationType = locationType;}
     public String getLocationType() { return locationType;}
 
-    private int zip;
-    public void setZip(int zip) { this.zip = zip;}
-    public int getZip() { return zip;}
+    private long zip;
+    public void setZip(long zip) { this.zip = zip;}
+    public long getZip() { return zip;}
 
     private String address;
     public void setAddress(String address) { this.address = address;}
@@ -46,7 +65,19 @@ public class RatSpotting implements Serializable {
     public void setLong(double lon) { this.lon = lon;}
     public double getLong() { return lon;}
 
-    public RatSpotting(int key, String date, String locationType, int zip,
+    /**
+     * Constructor - creates a new RatSpotting instance with the given params
+     * @param key the unique key for the
+     * @param date the date of the rat spotting
+     * @param locationType the type of location where the rat was spotted
+     * @param zip the zipcode of the rat spotting
+     * @param address the address where the rat was spotted
+     * @param city the city where the rat was spotted
+     * @param borough the borough of new york where the rat was spotted
+     * @param lat the latitude where the rat spotting occurred
+     * @param lon the longitude where the rat spotting occurred
+     */
+    public RatSpotting(String key, String date, String locationType, long zip,
                        String address, String city, String borough, double lat, double lon) {
         this.key = key;
         this.date = date;
@@ -59,9 +90,13 @@ public class RatSpotting implements Serializable {
         this.lon = lon;
     }
 
+    /**
+     * toMap() - maps the properties of a rat spotting to a {String, Object} mapping for use in
+     * the Firebase database.
+     * @return the map of properties for a ratSpotting instance
+     */
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        map.put("key", key);
         map.put("date", date);
         map.put("locationType", locationType);
         map.put("zip", zip);
@@ -73,8 +108,12 @@ public class RatSpotting implements Serializable {
         return map;
     }
 
+    /**
+     * toString - the toString override for a ratSpotting instance
+     * @return the string representation of a ratSpotting instance
+     */
     @Override
     public String toString() {
         return date + " " + locationType + " " + borough;
-     }
+    }
 }
