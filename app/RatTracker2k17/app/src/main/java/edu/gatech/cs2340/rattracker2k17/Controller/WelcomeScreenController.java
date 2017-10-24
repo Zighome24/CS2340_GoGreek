@@ -124,5 +124,10 @@ public class WelcomeScreenController extends AppCompatActivity {
         Intent intent = new Intent(this, HomeScreenController.class);
         startActivity(intent);
     }
+
+    public void viewMap(View view) {
+        Intent intent = new Intent(this, MapScreenController.class);
+        startActivity(intent);
+    }
 }
 

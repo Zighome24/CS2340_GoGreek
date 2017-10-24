@@ -51,12 +51,13 @@
         android:text="@string/logout" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/view_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btn_logout"
         android:layout_alignBottom="@+id/btn_logout"
         android:layout_marginEnd="7dp"
         android:layout_toStartOf="@+id/textView"
+        android:onClick="viewMap"
         android:text="@string/view_map" />
 </RelativeLayout>
