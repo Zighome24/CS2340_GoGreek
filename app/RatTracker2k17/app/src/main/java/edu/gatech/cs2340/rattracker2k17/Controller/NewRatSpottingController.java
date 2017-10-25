@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
@@ -27,7 +30,9 @@ public class NewRatSpottingController extends AppCompatActivity {
                 getCallingActivity().getShortClassName() : "Does not have a calling class");
 
         Button btn_AddRat = findViewById(R.id.btn_actionRat);
-        btn_AddRat.setText(R.string.addRatSpotting);
+        btn_AddRat.setText(R.string.add_spotting);
+
+        Button btn_Date = findViewById(R.id.btn_date);
 
         txt_date = findViewById(R.id.txt_ERSDate);
 
@@ -74,6 +79,26 @@ public class NewRatSpottingController extends AppCompatActivity {
                                 + " called NewRatSpottingController but does not have"
                                 + " a switch case to launch the activity. Please add one");
                 }
+            }
+        });
+
+        btn_Date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                String time =
+                        (Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)).length() == 1 ?
+                                "0" + Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)) :
+                                Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)))
+                        + ":" + (Integer.toString(calendar.get(Calendar.MINUTE)).length() == 1 ?
+                                "0" + Integer.toString(calendar.get(Calendar.MINUTE)) :
+                                Integer.toString(calendar.get(Calendar.MINUTE)));
+                String date = String.format(Locale.getDefault(), "%d/%d/%d %s",
+                        (1 + calendar.get(Calendar.MONTH)),
+                        calendar.get(Calendar.DATE),
+                        calendar.get(Calendar.YEAR),
+                        time);
+                txt_date.setText(date);
             }
         });
     }

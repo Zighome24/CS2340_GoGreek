@@ -31,4 +31,13 @@
     <string name="view_map">View Map</string>
     <!-- Strings related to Map -->
     <string name="title_activity_maps">Map with Marker</string>
+    <string name="address">Address:</string>
+    <string name="borough">Borough:</string>
+    <string name="city">City:</string>
+    <string name="date">Date:</string>
+    <string name="lat">Lat:</string>
+    <string name="location_type">Location Type:</string>
+    <string name="longitude">Long:</string>
+    <string name="today">Today</string>
+    <string name="zip">Zip:</string>
 </resources>
