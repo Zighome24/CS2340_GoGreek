@@ -33,7 +33,7 @@ public class DetailRatScreenController extends AppCompatActivity {
             txt_key.setText(spot.getKey());
 
             txt_date = findViewById(R.id.txt_RSDate);
-            txt_date.setText(spot.getDate());
+            txt_date.setText(spot.getDateString());
 
             txt_location = findViewById(R.id.txt_RSLocationType);
             txt_location.setText(spot.getLocationType());

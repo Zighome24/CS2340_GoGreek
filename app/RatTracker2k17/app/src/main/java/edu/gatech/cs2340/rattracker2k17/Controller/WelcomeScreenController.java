@@ -18,10 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
+import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
  * Created by wepperson on 9/24/17.
@@ -107,7 +109,7 @@ public class WelcomeScreenController extends AppCompatActivity {
                         Log.d(LOG_ID, dataSnapshot.toString());
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             Log.d(LOG_ID, data.toString());
-                            RatSpotting rat = getRatSpottingFromSnapshot(data);
+                            RatSpotting rat = Utility.getRatSpottingFromSnapshot(data);
                             Log.d(LOG_ID, rat.toString());
                             ratAdapter.add(rat);
                         }
@@ -161,28 +163,10 @@ public class WelcomeScreenController extends AppCompatActivity {
         }
     }
 
-    private RatSpotting getRatSpottingFromSnapshot(DataSnapshot data) {
-        return new RatSpotting(
-                data.getKey(),
-                (String) data.child("Date").getValue(),
-                (String) data.child("LocationType").getValue(),
-                Long.parseLong(data.child("Zip").getValue() != null
-                        ? data.child("Zip").getValue().toString() : "10000"),
-                (String) data.child("Address").getValue(),
-                (String) data.child("City").getValue(),
-                (String) data.child("Borough").getValue(),
-                Double.parseDouble(data.child("Latitude")
-                        .getValue() != null ?
-                        data.child("Latitude").getValue().toString() : "0.0"),
-                Double.parseDouble(data.child("Longitude")
-                        .getValue() != null ?
-                        data.child("Latitude").getValue().toString() : "0.0")
-        );
-    }
-
     public void viewMap(View view) {
-        Intent intent = new Intent(this, MapScreenController.class);
+        Intent intent = new Intent(this, DateSelectionScreenController.class);
         startActivity(intent);
+        finish();
     }
 }
 

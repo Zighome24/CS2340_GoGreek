@@ -12,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 
 /**
@@ -61,14 +63,42 @@ public class RatSpottingBL {
         mDatabase.child(ratSpotting.getKey()).updateChildren(ratSpotting.toMap());
     }
 
+    /**
+     * getRatSpotting - obtains a ratspotting based on a unique ID
+     * @param ratID the unique ID of the ratspotting we are looking for
+     * @return the database reference to the rat spotting we are looking for
+     */
     public DatabaseReference getRatSpotting(String ratID) {
         Log.d(LOG_ID, "Querying Firebase to look for ratspotting with id: " + ratID);
         return mDatabase.child(ratID);
     }
 
+    /**
+     * getRecentRatSpottings - returns the last 50 rat spottings based on date
+     * @return a Query providing the datasnapshot of the 50 most recent rat spottings
+     */
     public Query getRecentRatSpottings() {
         Log.d(LOG_ID, "Querying Firebase to look for recent ratdata");
-        return mDatabase.orderByValue().getRef().orderByKey().limitToLast(50);
+        return mDatabase.limitToFirst(50).orderByChild("date");
+    }
+
+    public Query getRatSpottingsBetween(Calendar from, Calendar to, int limit) {
+        Query query;
+        if (from == null && to == null) {
+            query = mDatabase.orderByChild("date");
+        } else if (from == null) {
+            query = mDatabase.orderByChild("date").endAt(to.getTimeInMillis());
+        } else if (to == null) {
+            query = mDatabase.orderByChild("date").startAt(from.getTimeInMillis());
+        } else {
+            query = mDatabase.orderByChild("date")
+                    .startAt(from.getTimeInMillis()).endAt(to.getTimeInMillis());
+        }
+        if (limit != 0) {
+            return query.limitToLast(50);
+        } else {
+            return query;
+        }
     }
 
     /**
