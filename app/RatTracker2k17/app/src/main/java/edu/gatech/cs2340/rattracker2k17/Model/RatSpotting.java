@@ -24,6 +24,7 @@ public class RatSpotting implements Serializable {
     }
     public static long getNextKey() {
         nextKey++;
+        RatSpottingBL.pushCurrentKey();
         return nextKey - 1;
     }
     public static long seeNextKey() {
@@ -192,7 +193,7 @@ public class RatSpotting implements Serializable {
      */
     @Override
     public String toString() {
-        return getDateString() + " : " + locationType + " : " + borough + " : Lat= "
+        return key + " : " + getDateString() + " : " + locationType + " : " + borough + " : Lat= "
                 + lat + " : Long= " + lon;
     }
 }

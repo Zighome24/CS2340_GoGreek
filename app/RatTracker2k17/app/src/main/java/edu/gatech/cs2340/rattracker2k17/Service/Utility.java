@@ -35,27 +35,32 @@ public class Utility {
 
     public static Calendar parseStringDate(String s) {
         try {
+            Calendar calendar = Calendar.getInstance();
             String[] parts = s.split(" ");
             String[] d = parts[0].split("/");
             int month = Integer.parseInt(d[0]);
             int day = Integer.parseInt(d[1]);
             int year = Integer.parseInt(d[2]);
 
-            int hour, minute;
-            String[] time = parts[1].split(":");
-            minute = Integer.parseInt(time[1]);
-            hour = Integer.parseInt(time[0]);
-            if (parts.length > 2) {
-                if (parts[2].equalsIgnoreCase("AM")) {
-                    if (Integer.parseInt(time[0]) == 12) {
-                        hour = 0;
+
+            if (!(parts.length < 2)) {
+                int hour, minute;
+                String[] time = parts[1].split(":");
+                minute = Integer.parseInt(time[1]);
+                hour = Integer.parseInt(time[0]);
+                if (parts.length > 2) {
+                    if (parts[2].equalsIgnoreCase("AM")) {
+                        if (Integer.parseInt(time[0]) == 12) {
+                            hour = 0;
+                        }
+                    } else {
+                        hour = (hour != 12) ? hour + 12 : hour;
                     }
-                } else {
-                    hour = (hour != 12) ? hour + 12 : hour;
                 }
+                calendar.set(year, month - 1, day, hour, minute);
+            } else {
+                calendar.set(year, month - 1, day);
             }
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month - 1, day, hour, minute);
             Log.d(LOG_ID, "Successfully set the date to: " + calendar.toString());
             return calendar;
         } catch (NullPointerException ex) {
@@ -73,7 +78,7 @@ public class Utility {
      */
     public static RatSpotting getRatSpottingFromSnapshot(DataSnapshot data) {
         Calendar calendar = Calendar.getInstance();
-        Long date = (Long) data.child("Date").getValue();
+        Long date = (Long) data.child("date").getValue();
         if (date != null) {
             calendar.setTimeInMillis(date);
         }

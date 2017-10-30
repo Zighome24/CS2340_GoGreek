@@ -79,7 +79,7 @@ public class RatSpottingBL {
      */
     public Query getRecentRatSpottings() {
         Log.d(LOG_ID, "Querying Firebase to look for recent ratdata");
-        return mDatabase.limitToFirst(50).orderByChild("date");
+        return mDatabase.limitToLast(50).orderByChild("date");
     }
 
     public Query getRatSpottingsBetween(Calendar from, Calendar to, int limit) {

@@ -39,30 +39,35 @@ public class DateSelectionScreenController extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, WelcomeScreenController.class));
+    }
+
     public void toMap(View view) {
         TextView txt_fromDate, txt_toDate;
         Calendar fromDate = null, toDate = null;
-        boolean fromDateExists = false, toDateExists = false;
 
         txt_fromDate = findViewById(R.id.txt_date1);
         txt_toDate = findViewById(R.id.txt_date2);
 
         if (txt_fromDate.getText() != null
-                || !Utility.isNullOrWhitespace(txt_fromDate.getText().toString())) {
+                && !Utility.isNullOrWhitespace(txt_fromDate.getText().toString())) {
+            Log.d(LOG_ID, "%%" + txt_fromDate.getText().toString() + "%%");
             fromDate = Utility.parseStringDate(txt_fromDate.getText().toString());
-            fromDateExists = true;
         }
 
         if (txt_toDate.getText() != null
-                || !Utility.isNullOrWhitespace(txt_toDate.getText().toString())) {
+                && !Utility.isNullOrWhitespace(txt_toDate.getText().toString())) {
+            Log.d(LOG_ID, "%%" + txt_toDate.getText().toString() + "%%");
             toDate = Utility.parseStringDate(txt_toDate.getText().toString());
-            toDateExists = true;
         }
-
-        Log.d(LOG_ID, "From Date: " + Utility.getDateString(fromDate)
-                + " in Millis: " + fromDate.getTimeInMillis());
-        Log.d(LOG_ID, "To Date: " + Utility.getDateString(toDate)
-                + " in Millis: " + toDate.getTimeInMillis());
 
         RatSpottingBL ratBL = new RatSpottingBL();
         progressBar.setVisibility(View.VISIBLE);

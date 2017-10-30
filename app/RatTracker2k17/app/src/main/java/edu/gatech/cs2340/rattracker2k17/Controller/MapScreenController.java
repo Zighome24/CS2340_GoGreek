@@ -62,7 +62,7 @@ public class MapScreenController extends AppCompatActivity implements OnMapReady
             for (RatSpotting rat : ratSpottings) {
                 if (!(rat.getLat() == 0.0 || rat.getLong() == 0.0)) {
                     LatLng ratLL = new LatLng(rat.getLat(), rat.getLong());
-                    googleMap.addMarker(new MarkerOptions().position(ratLL).title(rat.getKey()));
+                    googleMap.addMarker(new MarkerOptions().position(ratLL).title(rat.toString()));
                 }
 
             }
