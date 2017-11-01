@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.gatech.cs2340.rattracker2k17.Controller.HomeScreenController"
+    tools:context="edu.gatech.cs2340.rattracker2k17.Controller.WelcomeScreenController"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -35,30 +35,31 @@
         android:id="@+id/btn_addRSP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_spotting"
         android:layout_above="@+id/btn_logout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp"
-        android:onClick="newRatSpotting"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="15dp"
+        android:onClick="newRatSpotting"
+        android:text="@string/add_spotting" />
 
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        android:layout_toEndOf="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="56dp"
         android:onClick="logout"
         android:text="@string/logout" />
 
     <Button
-        android:id="@+id/view_map"
+        android:id="@+id/view_spottings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btn_logout"
-        android:layout_alignBottom="@+id/btn_logout"
-        android:layout_marginEnd="7dp"
-        android:layout_toStartOf="@+id/textView"
-        android:onClick="viewMap"
-        android:text="@string/view_map" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/btn_addRSP"
+        android:layout_marginStart="15dp"
+        android:onClick="viewRatSpottings"
+        android:text="@string/view_ratspottings" />
+
 </RelativeLayout>

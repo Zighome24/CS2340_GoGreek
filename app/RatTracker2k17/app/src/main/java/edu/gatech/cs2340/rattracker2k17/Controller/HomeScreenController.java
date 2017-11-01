@@ -8,19 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
 
 public class HomeScreenController extends AppCompatActivity {
 
     private static final String LOG_ID = "HomeScreenController";
-
-
     private Button btn_Login, btn_NewUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         setContentView(R.layout.activity_open);
         RatSpotting.generateNextKey();
         Log.d(LOG_ID, "onCreate:HomeScreenController");

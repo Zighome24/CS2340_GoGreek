@@ -18,6 +18,7 @@ import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 public class RatSpotting implements Serializable {
 
     //Static Properties
+    // TODO: 10/31/2017 Need to convert the currentNextKey thing into a transaction with Firebase
     private static long nextKey = -1;
     public static void generateNextKey() {
         RatSpottingBL.getCurrentKey();

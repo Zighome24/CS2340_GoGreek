@@ -71,7 +71,7 @@ public class NewRatSpottingController extends AppCompatActivity {
                         bundle.putSerializable("ratspotting", rat);
                         Intent intent = new Intent();
                         intent.putExtras(bundle);
-                        setResult(Integer.parseInt(rat.getKey()), intent);
+                        setResult(RESULT_OK, intent);
                         finish();
                         break;
                     default:

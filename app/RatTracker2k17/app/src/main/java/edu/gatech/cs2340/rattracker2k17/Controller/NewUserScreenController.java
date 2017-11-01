@@ -78,7 +78,7 @@ public class NewUserScreenController extends AppCompatActivity {
 
         if (!ValidateForm(nUser)) {
             Toast.makeText(this, "Not all of the fields listed above are filled out, please "
-                    + "fill them all out before you create a new user.", Toast.LENGTH_SHORT);
+                    + "fill them all out before you create a new user.", Toast.LENGTH_SHORT).show();
             return;
         }
 

@@ -94,10 +94,12 @@ public class RatSpottingBL {
             query = mDatabase.orderByChild("date")
                     .startAt(from.getTimeInMillis()).endAt(to.getTimeInMillis());
         }
-        if (limit != 0) {
+        if (limit < 0) {
+            return query;
+        } else if (limit == 0) {
             return query.limitToLast(50);
         } else {
-            return query;
+            return query.limitToLast(limit);
         }
     }
 

@@ -124,7 +124,6 @@ public class WelcomeScreenController extends AppCompatActivity {
         );
     }
 
-
     /**
      * logout - logs the user out and returns to the homescreen
      * @param view - the view object that is calling the logout method()
@@ -163,10 +162,13 @@ public class WelcomeScreenController extends AppCompatActivity {
         }
     }
 
-    public void viewMap(View view) {
+    /**
+     * viewRatSpottings
+     * @param view
+     */
+    public void viewRatSpottings(View view) {
         Intent intent = new Intent(this, DateSelectionScreenController.class);
         startActivity(intent);
-        finish();
     }
 }
 

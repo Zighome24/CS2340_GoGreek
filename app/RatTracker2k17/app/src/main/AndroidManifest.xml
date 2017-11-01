@@ -56,7 +56,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controller.NewRatSpottingController" />
-        <activity android:name=".Controller.DateSelectionScreenController"></activity>
+        <activity android:name=".Controller.DateSelectionScreenController" />
+        <activity android:name=".Controller.GraphScreenController">
+        </activity>
     </application>
 
 </manifest>

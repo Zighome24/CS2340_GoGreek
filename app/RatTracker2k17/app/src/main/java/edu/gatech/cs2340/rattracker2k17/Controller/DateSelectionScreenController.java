@@ -50,7 +50,7 @@ public class DateSelectionScreenController extends AppCompatActivity {
         startActivity(new Intent(this, WelcomeScreenController.class));
     }
 
-    public void toMap(View view) {
+    public void action(View view) {
         TextView txt_fromDate, txt_toDate;
         Calendar fromDate = null, toDate = null;
 
@@ -68,26 +68,39 @@ public class DateSelectionScreenController extends AppCompatActivity {
             Log.d(LOG_ID, "%%" + txt_toDate.getText().toString() + "%%");
             toDate = Utility.parseStringDate(txt_toDate.getText().toString());
         }
-
+        final int option = view.getId() == R.id.btn_dateToMap ? 1 : 2;
+        Log.d(LOG_ID, "The selected view was " + option);
         RatSpottingBL ratBL = new RatSpottingBL();
         progressBar.setVisibility(View.VISIBLE);
-        ratBL.getRatSpottingsBetween(fromDate, toDate, 5)
+        ratBL.getRatSpottingsBetween(fromDate, toDate, option == 1 ? 100 : 500)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     List<RatSpotting> rats = new ArrayList<>();
+                    Log.d(LOG_ID, "Incoming Rat Data");
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        Log.d(LOG_ID, data.toString());
                         RatSpotting rat = Utility.getRatSpottingFromSnapshot(data);
-                        Log.d(LOG_ID, rat.toString());
                         rats.add(rat);
                     }
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("rats", new RatSpottingsServiceTransfer(rats));
-                    Intent intent = new Intent(DateSelectionScreenController.this,
-                            MapScreenController.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    switch (option) {
+                        case 1:
+                            Intent intentMap = new Intent(DateSelectionScreenController.this,
+                                    MapScreenController.class);
+                            intentMap.putExtras(bundle);
+                            startActivity(intentMap);
+                            break;
+                        case 2:
+                            Intent intentGraph = new Intent(DateSelectionScreenController.this,
+                                    GraphScreenController.class);
+                            intentGraph.putExtras(bundle);
+                            startActivity(intentGraph);
+                            break;
+                        default:
+                            Log.d(LOG_ID,"The switch statement action:getRatSpottingsBetween\"Listener\":onDataChange fell through."
+                                + " Check the option selection in the log.");
+                    }
                 }
 
                 @Override
