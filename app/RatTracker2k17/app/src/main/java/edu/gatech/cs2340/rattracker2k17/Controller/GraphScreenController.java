@@ -9,7 +9,6 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
@@ -49,6 +48,9 @@ public class GraphScreenController extends AppCompatActivity {
 
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
         BarDataSet dataSet = new BarDataSet(entries, "# of spottings");
+        dataSet.setValueTextColor(getResources().getColor(R.color.colorAccent));
+        dataSet.setValueTextSize(24f);
+        dataSet.setColor(getResources().getColor(R.color.black));
         Log.d(LOG_ID, dataSet.toString());
         ArrayList<String> labels = new ArrayList<>(mapValues.keySet());
         BarChart chart = new BarChart(this);
@@ -57,7 +59,7 @@ public class GraphScreenController extends AppCompatActivity {
         chart.getXAxis().setGranularity(1f);
         chart.getXAxis().setGranularityEnabled(true);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
-        chart.getXAxis().setTextColor(R.color.colorAccent);
+        chart.getXAxis().setTextColor(getResources().getColor(R.color.colorAccent));
         chart.getDescription().setEnabled(false);
         chart.invalidate();
         setContentView(chart);
