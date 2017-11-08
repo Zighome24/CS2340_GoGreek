@@ -49,7 +49,7 @@ public class RatSpotting implements Serializable {
 
     private String locationType;
     public void setLocationType(String locationType) { this.locationType = locationType;}
-    public String getLocationType() { return locationType;}
+    public CharSequence getLocationType() { return locationType;}
 
     private long zip;
     public void setZip(long zip) { this.zip = zip;}
@@ -57,11 +57,11 @@ public class RatSpotting implements Serializable {
 
     private String address;
     public void setAddress(String address) { this.address = address;}
-    public String getAddress() { return address;}
+    public CharSequence getAddress() { return address;}
 
     private String city;
     public void setCity(String city) { this.city = city;}
-    public String getCity() { return city;}
+    public CharSequence getCity() { return city;}
 
     private String borough;
     public void setBorough(String borough) { this.borough = borough;}
@@ -170,7 +170,7 @@ public class RatSpotting implements Serializable {
         return map;
     }
 
-    public String getDateString() {
+    public CharSequence getDateString() {
         String time =
                 (Integer.toString(date.get(Calendar.HOUR_OF_DAY)).length() == 1 ?
                         "0" + Integer.toString(date.get(Calendar.HOUR_OF_DAY)) :
