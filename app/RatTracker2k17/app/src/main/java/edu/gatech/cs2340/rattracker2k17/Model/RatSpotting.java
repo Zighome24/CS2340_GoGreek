@@ -11,9 +11,6 @@ import java.util.Map;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
-/**
- * Created by Chris on 10/9/2017.
- */
 
 public class RatSpotting implements Serializable {
 

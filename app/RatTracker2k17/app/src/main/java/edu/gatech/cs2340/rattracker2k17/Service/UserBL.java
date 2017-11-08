@@ -6,9 +6,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import edu.gatech.cs2340.rattracker2k17.Model.User;
 
-/**
- * Created by Justin on 10/1/2017.
- */
 
 public class UserBL {
 

@@ -9,9 +9,6 @@ import java.util.Locale;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 
-/**
- * Created by Justin on 10/3/2017.
- */
 
 public class Utility {
 

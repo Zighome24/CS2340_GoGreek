@@ -22,6 +22,8 @@ public class DetailRatScreenController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ratspottingdetails);
+        // Always pass a bundle to this class from the calling activities,
+        // getExtras() will never be null
         RatSpotting spot = (RatSpotting) getIntent().getExtras().getSerializable("spotting");
 
         if (spot == null) {

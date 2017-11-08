@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by Justin on 10/27/2017.
- */
-
 public class RatSpottingsServiceTransfer implements Serializable {
 
     private static final String LOG_ID = "RatSpottingsServiceTran";

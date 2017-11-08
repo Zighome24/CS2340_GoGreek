@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection -->
+<!--suppress AndroidDomInspection, AndroidDomInspection, AndroidDomInspection,
+AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection,
+AndroidDomInspection, AndroidDomInspection -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.gatech.cs2340.rattracker2k17">
 
@@ -16,29 +18,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.TranslucentDecor">
-        <activity android:name=".Controller.HomeScreenController">
+        <activity android:name=".Controller$HomeScreenController">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.LogInScreenController">
+        <activity android:name=".Controller$LogInScreenController">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.WelcomeScreenController">
+        <activity android:name=".Controller$WelcomeScreenController">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.NewUserScreenController">
+        <activity android:name=".Controller$NewUserScreenController">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.DetailRatScreenController" />
+        <activity android:name=".Controller$DetailRatScreenController" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -48,7 +50,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Controller.MapScreenController"
+            android:name=".Controller$MapScreenController"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,9 +58,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.NewRatSpottingController" />
-        <activity android:name=".Controller.DateSelectionScreenController" />
-        <activity android:name=".Controller.GraphScreenController">
+        <activity android:name=".Controller$NewRatSpottingController" />
+        <activity android:name=".Controller$DateSelectionScreenController" />
+        <activity android:name=".Controller$GraphScreenController">
         </activity>
     </application>
 

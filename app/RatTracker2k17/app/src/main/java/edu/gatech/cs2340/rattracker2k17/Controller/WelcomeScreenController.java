@@ -26,9 +26,6 @@ import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
-/**
- * Created by wepperson on 9/24/17.
- */
 
 public class WelcomeScreenController extends AppCompatActivity {
 
@@ -44,7 +41,7 @@ public class WelcomeScreenController extends AppCompatActivity {
         setContentView(R.layout.activity_welcomescreen);
 
         listView = findViewById(R.id.list_view);
-        ratAdapter = new RatSpottingAdapter(this, new ArrayList<RatSpotting>());
+        ratAdapter = new RatSpottingAdapter(this, new ArrayList<>());
 
         ratSpottingBL = new RatSpottingBL();
 
@@ -72,10 +69,12 @@ public class WelcomeScreenController extends AppCompatActivity {
             final RatSpotting spot = getItem(position);
 
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_rat, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_rat,
+                        parent, false);
                 convertView.setOnClickListener(v -> {
                     Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
-                    Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
+                    Intent intent = new Intent(WelcomeScreenController.this,
+                            DetailRatScreenController.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("spotting", spot);
                     intent.putExtras(bundle);

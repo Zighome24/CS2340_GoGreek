@@ -1,8 +1,5 @@
 package edu.gatech.cs2340.rattracker2k17.Data;
 
-/**
- * Created by Justin on 9/23/2017.
- */
 
 public class Types {
 

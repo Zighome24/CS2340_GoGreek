@@ -31,9 +31,6 @@ import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
-/**
- * Created by wepperson on 9/24/17.
- */
 
 @SuppressWarnings("FeatureEnvy")
 public class NewUserScreenController extends AppCompatActivity {
@@ -123,7 +120,8 @@ public class NewUserScreenController extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             });
-                            dialogueBuilderD.setNegativeButton("No Thanks", (dialog, id) -> dialog.dismiss());
+                            dialogueBuilderD.setNegativeButton("No Thanks", (dialog, id)
+                                    -> dialog.dismiss());
                             AlertDialog dialogD = dialogueBuilderD.create();
                             dialogD.show();
                             break;

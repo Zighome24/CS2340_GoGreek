@@ -99,7 +99,8 @@ public class DateSelectionScreenController extends AppCompatActivity {
                             startActivity(intentGraph);
                             break;
                         default:
-                            Log.d(LOG_ID,"The switch statement action:getRatSpottingsBetween\"Listener\":onDataChange fell through."
+                            Log.d(LOG_ID,"The switch statement action:getRatSpottingsBetween" +
+                                    "\"Listener\":onDataChange fell through."
                                 + " Check the option selection in the log.");
                     }
                 }

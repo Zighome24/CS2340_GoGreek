@@ -26,9 +26,6 @@ import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
-/**
- * Created by wepperson on 9/24/17.
- */
 
 public class LogInScreenController extends AppCompatActivity {
 
@@ -51,7 +48,8 @@ public class LogInScreenController extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             EditText txt_email = findViewById(R.id.txt_LoginEmail);
-            txt_email.setText(getIntent().getExtras().getString("email"), TextView.BufferType.EDITABLE);
+            txt_email.setText(getIntent().getExtras().getString("email"),
+                    TextView.BufferType.EDITABLE);
         }
 
         Log.d(LOG_ID, "LogInScreenController:onCreate: login screen created");
@@ -84,13 +82,16 @@ public class LogInScreenController extends AppCompatActivity {
                         finish();
                     } else {
                         try {
+                            // Fire API will never throw a null
                             throw task.getException();
                         } catch (FirebaseAuthInvalidUserException eUser) {
                             switch (eUser.getErrorCode()) {
                                 case "ERROR_USER_DISABLED":
-                                    AlertDialog.Builder dialogueBuilderD = new AlertDialog.Builder(LogInScreenController.this);
-                                    dialogueBuilderD.setMessage("The account associated with the email " + str_email + " is disabled."
-                                            + " Would you like to be redirected to the user creation screen")
+                                    AlertDialog.Builder dialogueBuilderD = new AlertDialog.Builder(
+                                            LogInScreenController.this);
+                                    dialogueBuilderD.setMessage("The account associated with the " +
+                                            "email " + str_email + " is disabled. Would you like " +
+                                            "to be redirected to the user creation screen")
                                             .setTitle("Error");
 
                                     dialogueBuilderD.setPositiveButton("OK", (dialog, id) -> {
@@ -99,16 +100,18 @@ public class LogInScreenController extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     });
-                                    dialogueBuilderD.setNegativeButton("No Thanks", (dialog, id) -> dialog.dismiss());
+                                    dialogueBuilderD.setNegativeButton("No Thanks",
+                                            (dialog, id) -> dialog.dismiss());
                                     AlertDialog dialogD = dialogueBuilderD.create();
                                     dialogD.show();
                                     break;
                                 case "ERROR_USER_NOT_FOUND":
-                                    AlertDialog.Builder dialogueBuilderNF = new AlertDialog.Builder(LogInScreenController.this);
+                                    AlertDialog.Builder dialogueBuilderNF = new AlertDialog.Builder(
+                                            LogInScreenController.this);
                                     dialogueBuilderNF.setMessage("The email " + str_email
                                             + " does not have an associated account."
-                                            + " Would you like to be redirected to the user creation screen")
-                                            .setTitle("Error");
+                                            + " Would you like to be redirected to the user " +
+                                            "creation screen").setTitle("Error");
 
                                     dialogueBuilderNF.setPositiveButton("OK", (dialog, id) -> {
                                         Intent intent = new Intent(LogInScreenController.this,
@@ -123,12 +126,14 @@ public class LogInScreenController extends AppCompatActivity {
                                     dialog_NF.show();
                                     break;
                                 default:
-                                    Toast.makeText(LogInScreenController.this, R.string.system_error, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LogInScreenController.this,
+                                            R.string.system_error, Toast.LENGTH_LONG).show();
                                     Log.d(LOG_ID, "Unexpected Error Code: " + eUser.getErrorCode()
                                             + " with message: " + eUser.getMessage());
                             }
                         } catch (FirebaseAuthInvalidCredentialsException eCred) {
-                            Toast.makeText(LogInScreenController.this, eCred.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInScreenController.this, eCred.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
                         } catch (FirebaseAuthException eAuth) {
                             Log.d(LOG_ID, "Unexpected Firebase Auth error, message: "
                                     + eAuth.getMessage() + ", Error code: " + eAuth.getErrorCode());

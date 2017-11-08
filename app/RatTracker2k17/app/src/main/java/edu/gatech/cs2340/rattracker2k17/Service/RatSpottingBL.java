@@ -16,9 +16,6 @@ import java.util.Calendar;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 
-/**
- * Created by Justin on 10/12/2017.
- */
 
 @SuppressWarnings("FeatureEnvy")
 public class RatSpottingBL {

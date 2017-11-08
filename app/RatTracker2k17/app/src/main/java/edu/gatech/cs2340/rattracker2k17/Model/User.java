@@ -31,7 +31,8 @@ public class User {
     public String getEmail() { return this.email;}
 
     private Types.SecurityLevel securityLevel;
-    public void setSecurityLevel(Types.SecurityLevel securityLevel) { this.securityLevel = securityLevel;}
+    public void setSecurityLevel(Types.SecurityLevel securityLevel) {
+        this.securityLevel = securityLevel; }
     public void setSecurityLevel(int securityLevel) {
         this.securityLevel = Types.SecurityLevel.parseSecurityLevel(securityLevel);
     }

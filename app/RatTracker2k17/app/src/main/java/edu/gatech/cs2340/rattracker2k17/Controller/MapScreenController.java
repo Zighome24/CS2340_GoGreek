@@ -18,9 +18,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by Chris on 10/24/17.
- */
 
 public class MapScreenController extends AppCompatActivity implements OnMapReadyCallback {
 
