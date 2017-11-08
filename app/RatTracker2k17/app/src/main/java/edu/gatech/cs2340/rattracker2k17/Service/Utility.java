@@ -9,6 +9,11 @@ import java.util.Locale;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 
+/**
+ * Utility functions
+ * @author Justin Z
+ * @version 1.0
+ */
 
 public class Utility {
 
@@ -30,6 +35,11 @@ public class Utility {
         return true;
     }
 
+    /**
+     * Parse string
+     * @param s the date
+     * @return Calendar type for date
+     */
     public static Calendar parseStringDate(String s) {
         try {
             Calendar calendar = Calendar.getInstance();
@@ -97,6 +107,11 @@ public class Utility {
         );
     }
 
+    /**
+     * Turn Calendar to String
+     * @param date the date
+     * @return String representation
+     */
     public static String getDateString(Calendar date) {
         String time =
                 (Integer.toString(date.get(Calendar.HOUR_OF_DAY)).length() == 1 ?

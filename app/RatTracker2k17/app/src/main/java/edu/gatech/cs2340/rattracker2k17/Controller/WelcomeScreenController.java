@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
@@ -26,6 +25,11 @@ import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
+/**
+ * Controller for welcome screen
+ * @author Justin Z
+ * @version 1.0
+ */
 
 public class WelcomeScreenController extends AppCompatActivity {
 
@@ -162,7 +166,7 @@ public class WelcomeScreenController extends AppCompatActivity {
 
     /**
      * viewRatSpottings
-     * @param view
+     * @param view current view
      */
     public void viewRatSpottings(View view) {
         Intent intent = new Intent(this, DateSelectionScreenController.class);

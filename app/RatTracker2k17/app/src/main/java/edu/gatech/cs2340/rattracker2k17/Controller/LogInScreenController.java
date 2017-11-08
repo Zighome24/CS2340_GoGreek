@@ -1,21 +1,15 @@
 package edu.gatech.cs2340.rattracker2k17.Controller;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -26,7 +20,10 @@ import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
-
+/** Controller for log in
+ * @author Will E
+ * @version 1.0
+ */
 public class LogInScreenController extends AppCompatActivity {
 
     private static final String LOG_ID = "LogInScreenController";
@@ -55,7 +52,10 @@ public class LogInScreenController extends AppCompatActivity {
         Log.d(LOG_ID, "LogInScreenController:onCreate: login screen created");
     }
 
-    // log in
+    /**
+     * Do log in
+     * @param view the current view
+     */
     public void login(View view) {
 
         EditText email = findViewById(R.id.txt_LoginEmail);
@@ -144,7 +144,11 @@ public class LogInScreenController extends AppCompatActivity {
                 });
     }
 
-    // change view back home (connect in the "onClick" field in layout)
+
+    /**
+     * Change view back home (connect in the "onClick" field in layout)
+     * @param view current view
+     */
     public void backHome(View view) {
         Intent intent = new Intent(this, HomeScreenController.class);
         startActivity(intent);

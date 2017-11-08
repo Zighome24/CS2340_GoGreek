@@ -22,6 +22,10 @@ import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpottingsServiceTransfer;
 import edu.gatech.cs2340.rattracker2k17.R;
 
+/** Controller for graph screen
+ * @author Justin Z
+ * @version 1.0
+ */
 public class GraphScreenController extends AppCompatActivity {
     private static final String LOG_ID = "GraphScreenController";
     private List<RatSpotting> ratSpottings;

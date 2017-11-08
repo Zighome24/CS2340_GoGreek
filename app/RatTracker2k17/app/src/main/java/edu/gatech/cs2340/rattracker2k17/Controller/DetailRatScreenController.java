@@ -6,10 +6,13 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
+
+/** Controller for detail rat screen
+ * @author Justin Z
+ * @version 1.0
+ */
 
 public class DetailRatScreenController extends AppCompatActivity {
     private static final String LOG_ID = "DetailRatScreenContr";

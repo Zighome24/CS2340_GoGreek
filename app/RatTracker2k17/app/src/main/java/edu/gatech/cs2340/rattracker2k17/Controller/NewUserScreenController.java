@@ -1,29 +1,19 @@
 package edu.gatech.cs2340.rattracker2k17.Controller;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-
-import java.util.Arrays;
-
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
@@ -31,7 +21,10 @@ import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
-
+/** Controller for New User
+ * @author Justin Z
+ * @version 1.0
+ */
 @SuppressWarnings("FeatureEnvy")
 public class NewUserScreenController extends AppCompatActivity {
 
@@ -61,14 +54,21 @@ public class NewUserScreenController extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    // change view back home (connect in the "onClick" field in layout)
+    /**
+     * Change view back home (connect in the "onClick" field in layout)
+     * @param view current view
+     */
     public void back(View view) {
         Intent intent = new Intent(this, HomeScreenController.class);
         startActivity(intent);
         finish();
     }
 
-    // creates a new User (connect in the "onClick" field in layout)
+
+    /**
+     * Creates a new User (connect in the "onClick" field in layout)
+     * @param view current view
+     */
     public void createUser(View view) {
         final User nUser = new User(firstName.getText().toString(), lastName.getText().toString(),
                                 email.getText().toString(), Types.SecurityLevel.User, User.NO_UID,

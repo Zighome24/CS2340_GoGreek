@@ -1,10 +1,6 @@
 package edu.gatech.cs2340.rattracker2k17.Service;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,7 +12,11 @@ import java.util.Calendar;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 
-
+/**
+ * Logic of Rat spotting
+ * @author Justin Z
+ * @version 1.0
+ */
 @SuppressWarnings("FeatureEnvy")
 public class RatSpottingBL {
 
@@ -77,6 +77,13 @@ public class RatSpottingBL {
         return mDatabase.limitToLast(50).orderByChild("date");
     }
 
+    /**
+     * Get spottings in range
+     * @param from start date
+     * @param to end date
+     * @param limit num results
+     * @return the query
+     */
     public Query getRatSpottingsBetween(Calendar from, Calendar to, int limit) {
         Query query;
         if (from == null && to == null) {

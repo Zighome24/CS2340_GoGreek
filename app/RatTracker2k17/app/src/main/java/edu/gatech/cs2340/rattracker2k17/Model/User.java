@@ -19,35 +19,108 @@ public class User {
 
     //Properties
     private String firstName;
+
+    /**
+     * Setter for first name
+     * @param firstName name
+     */
     public void setFirstName(String firstName) { this.firstName = firstName;}
+
+    /**
+     * Getter for first name
+     * @return name
+     */
     public String getFirstName() { return this.firstName;}
 
     private String lastName;
+
+    /**
+     * Setter for last name
+     * @param lastName name
+     */
     public void setLastName(String lastName) { this.lastName = lastName;}
+
+    /**
+     * Getter for last name
+     * @return name
+     */
     public String getLastName() { return this.lastName;}
 
     private String email;
+
+    /**
+     * Set email
+     * @param email the email
+     */
     public void setEmail(String email) { this.email = email;}
+
+    /**
+     * Get email
+     * @return email
+     */
     public String getEmail() { return this.email;}
 
     private Types.SecurityLevel securityLevel;
+
+    /**
+     * Set security level
+     * @param securityLevel security level type
+     */
     public void setSecurityLevel(Types.SecurityLevel securityLevel) {
-        this.securityLevel = securityLevel; }
+        this.securityLevel = securityLevel;
+    }
+
+    /**
+     * Set security level
+     * @param securityLevel int representing security level
+     */
     public void setSecurityLevel(int securityLevel) {
         this.securityLevel = Types.SecurityLevel.parseSecurityLevel(securityLevel);
     }
+
+    /**
+     * Getter for security level
+     * @return the level
+     */
     public Types.SecurityLevel getSecurityLevel() { return this.securityLevel;}
 
     private String userID;
+
+    /**
+     * Set ID
+     * @param userID string ID
+     */
     public void setUserID(String userID) { this.userID = userID;}
+
+    /**
+     * Get ID
+     * @return the ID
+     */
     public String getUserID() { return this.userID;}
 
     private String password;
+
+    /**
+     * Set password
+     * @param password the new password
+     */
     public void setPassword(String password) { this.password = password;}
+
+    /**
+     * Get password
+     * @return the password
+     */
     public String getPassword() { return this.password;}
 
-    public User() {}
-
+    /**
+     * Constructor for User
+     * @param firstName name
+     * @param lastName name
+     * @param email email
+     * @param securityLevel level
+     * @param userID ID
+     * @param password user's password
+     */
     public User(String firstName, String lastName, String email,
                 Types.SecurityLevel securityLevel, String userID, String password) {
         this.firstName = firstName;
@@ -58,6 +131,11 @@ public class User {
         this.password = password;
     }
 
+    /**
+     * Constructor for user for minimal attributes
+     * @param email email
+     * @param password password
+     */
     public User(String email, String password) {
         this.email = email;
         this.password = password;
@@ -69,6 +147,10 @@ public class User {
                 + ", UserID: " + userID;
     }
 
+    /**
+     * Map User to map
+     * @return map
+     */
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
         map.put("email", email);

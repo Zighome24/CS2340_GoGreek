@@ -3,7 +3,6 @@ package edu.gatech.cs2340.rattracker2k17.Controller;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpottingsServiceTransfer;
 import edu.gatech.cs2340.rattracker2k17.R;
@@ -13,12 +12,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-
+/** Controller for map
+ * @author Chris O
+ * @version 1.0
+ */
 public class MapScreenController extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String LOG_ID = "MapScreenController";
