@@ -20,11 +20,12 @@ import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
  * Created by Justin on 10/12/2017.
  */
 
+@SuppressWarnings("FeatureEnvy")
 public class RatSpottingBL {
 
     private static final String LOG_ID = "RatSpottingBL";
 
-    private DatabaseReference mDatabase;
+    private final DatabaseReference mDatabase;
 
     /**
      * Constructor - instantiates the mDatabase value to the ratspotting portion of the database
@@ -43,14 +44,11 @@ public class RatSpottingBL {
         }
         Log.d(LOG_ID, "Adding rat: " + ratSpotting.getKey() + " to the database");
         mDatabase.child(ratSpotting.getKey()).updateChildren(ratSpotting.toMap())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(LOG_ID, "The RatSpotting has been added to the database.");
-                        } else {
-                            Log.d(LOG_ID, task.getException().getMessage());
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(LOG_ID, "The RatSpotting has been added to the database.");
+                    } else {
+                        Log.d(LOG_ID, task.getException().getMessage());
                     }
                 });
     }

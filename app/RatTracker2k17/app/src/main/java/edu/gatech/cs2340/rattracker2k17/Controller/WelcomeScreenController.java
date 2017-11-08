@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
@@ -59,8 +60,9 @@ public class WelcomeScreenController extends AppCompatActivity {
         listView.setAdapter(ratAdapter);
     }
 
+    @SuppressWarnings("FeatureEnvy")
     private class RatSpottingAdapter extends ArrayAdapter<RatSpotting> {
-        private RatSpottingAdapter(Context context, ArrayList<RatSpotting> spots) {
+        private RatSpottingAdapter(Context context, List<RatSpotting> spots) {
             super(context, 0, spots);
         }
 
@@ -71,16 +73,13 @@ public class WelcomeScreenController extends AppCompatActivity {
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_rat, parent, false);
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
-                        Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("spotting", spot);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+                convertView.setOnClickListener(v -> {
+                    Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
+                    Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("spotting", spot);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 });
             }
 

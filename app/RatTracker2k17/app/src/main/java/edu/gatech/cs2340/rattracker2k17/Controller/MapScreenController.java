@@ -49,6 +49,7 @@ public class MapScreenController extends AppCompatActivity implements OnMapReady
         }
     }
 
+    @SuppressWarnings("FeatureEnvy")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // Move the map to New York

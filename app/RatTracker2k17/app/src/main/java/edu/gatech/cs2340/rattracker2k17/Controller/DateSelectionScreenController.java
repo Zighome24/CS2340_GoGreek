@@ -50,6 +50,7 @@ public class DateSelectionScreenController extends AppCompatActivity {
         startActivity(new Intent(this, WelcomeScreenController.class));
     }
 
+    @SuppressWarnings("FeatureEnvy")
     public void action(View view) {
         TextView txt_fromDate, txt_toDate;
         Calendar fromDate = null, toDate = null;

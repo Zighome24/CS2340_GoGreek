@@ -93,19 +93,13 @@ public class LogInScreenController extends AppCompatActivity {
                                             + " Would you like to be redirected to the user creation screen")
                                             .setTitle("Error");
 
-                                    dialogueBuilderD.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(LogInScreenController.this,
-                                                    NewUserScreenController.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
+                                    dialogueBuilderD.setPositiveButton("OK", (dialog, id) -> {
+                                        Intent intent = new Intent(LogInScreenController.this,
+                                                NewUserScreenController.class);
+                                        startActivity(intent);
+                                        finish();
                                     });
-                                    dialogueBuilderD.setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.dismiss();
-                                        }
-                                    });
+                                    dialogueBuilderD.setNegativeButton("No Thanks", (dialog, id) -> dialog.dismiss());
                                     AlertDialog dialogD = dialogueBuilderD.create();
                                     dialogD.show();
                                     break;
@@ -116,14 +110,12 @@ public class LogInScreenController extends AppCompatActivity {
                                             + " Would you like to be redirected to the user creation screen")
                                             .setTitle("Error");
 
-                                    dialogueBuilderNF.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent intent = new Intent(LogInScreenController.this,
-                                                    NewUserScreenController.class);
-                                            intent.putExtra("email", str_email);
-                                            startActivity(intent);
-                                            finish();
-                                        }
+                                    dialogueBuilderNF.setPositiveButton("OK", (dialog, id) -> {
+                                        Intent intent = new Intent(LogInScreenController.this,
+                                                NewUserScreenController.class);
+                                        intent.putExtra("email", str_email);
+                                        startActivity(intent);
+                                        finish();
                                     });
                                     dialogueBuilderNF.setNegativeButton("No Thanks",
                                             (dialog, id) -> dialog.dismiss());

@@ -27,11 +27,11 @@ public class RatSpottingsServiceTransfer implements Serializable {
         Log.d(LOG_ID, "Created at... " + callDate.toString());
     }
 
-    private List<RatSpotting> ratSpottings;
+    private final List<RatSpotting> ratSpottings;
     public List<RatSpotting> getRatSpottings() {
         Log.d(LOG_ID, "RatSpottings have been requested.");
         return ratSpottings;
     }
 
-    private Calendar callDate;
+    private final Calendar callDate;
 }

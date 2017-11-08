@@ -65,6 +65,7 @@ public class GraphScreenController extends AppCompatActivity {
         setContentView(chart);
     }
 
+    @SuppressWarnings("FeatureEnvy")
     private Map<String, Integer> parseRatData() {
         Log.d(LOG_ID, "onCreate():parseRatData(): has been started");
         Map<String, Integer> map = new HashMap<>();

@@ -20,7 +20,7 @@ import edu.gatech.cs2340.rattracker2k17.Model.User;
 
 public class LoginBL {
 
-    private FirebaseAuth mAuth;
+    private final FirebaseAuth mAuth;
     private static final String TAG = "LoginBL";
 
     public LoginBL() {
@@ -37,6 +37,7 @@ public class LoginBL {
     }
 
 
+    @SuppressWarnings("FeatureEnvy")
     public Task<AuthResult> createUser(User user) {
         Log.d(TAG, "Creating a new user: " + user.toString());
         return mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword());

@@ -17,6 +17,7 @@ public class DetailRatScreenController extends AppCompatActivity {
             txt_key, txt_date, txt_location, txt_address,
             txt_city, txt_zip, txt_borough, txt_lat, txt_long;
 
+    @SuppressWarnings("FeatureEnvy")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

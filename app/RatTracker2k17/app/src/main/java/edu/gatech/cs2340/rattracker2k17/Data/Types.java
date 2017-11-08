@@ -14,7 +14,7 @@ public class Types {
         //  If you create a new Security Level make sure you add it to the parseSecurityLevel
         //  method, so the method does not break our app.
 
-        private int _level;
+        private final int _level;
         public int getLevel() {return _level;}
 
         SecurityLevel(int level) {
