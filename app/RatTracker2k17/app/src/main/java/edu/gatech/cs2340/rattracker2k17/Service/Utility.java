@@ -22,7 +22,7 @@ public class Utility {
      * @return true if the string is empty, contains only whitespace, or is null
      *         otherwise returns false
      */
-    public static boolean isNullOrWhitespace(String s) {
+    public static boolean isNullOrWhitespace(CharSequence s) {
         if (s == null)
             return true;
         for (int i = 0; i < s.length(); i++) {
