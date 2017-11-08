@@ -28,6 +28,19 @@
     <string name="return_home">Return to Home Screen</string>
     <string name="system_error">There has been an error.</string>
     <string name="add_spotting">Add a Rat Spotting</string>
+    <string name="view_ratspottings">View Spottings</string>
+    <string name="view_graph">View Graph</string>
     <string name="view_map">View Map</string>
-    <string name="addRatSpotting">Add Rat Spotting</string>
+    <!-- Strings related to Map -->
+    <string name="title_activity_maps">Map with Marker</string>
+    <string name="address">Address:</string>
+    <string name="borough">Borough:</string>
+    <string name="city">City:</string>
+    <string name="date">Date:</string>
+    <string name="lat">Lat:</string>
+    <string name="location_type">Location Type:</string>
+    <string name="longitude">Long:</string>
+    <string name="today">Today</string>
+    <string name="zip">Zip:</string>
+    <string name="date_format">MM/DD/YYYY HH:MM</string>
 </resources>

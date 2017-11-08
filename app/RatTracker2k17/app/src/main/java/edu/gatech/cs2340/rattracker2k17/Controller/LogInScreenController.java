@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
+import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
@@ -59,93 +60,80 @@ public class LogInScreenController extends AppCompatActivity {
     // log in
     public void login(View view) {
 
-        EditText email = (EditText) findViewById(R.id.txt_LoginEmail);
-        EditText password = (EditText) findViewById(R.id.txt_LoginPassword);
+        EditText email = findViewById(R.id.txt_LoginEmail);
+        EditText password = findViewById(R.id.txt_LoginPassword);
 
         final String str_email = email.getText().toString();
 
-        if (!ValidateForm(str_email, password.getText().toString())) {
+        if (!validateForm(str_email, password.getText().toString())) {
             Toast.makeText(this, "Not all of the fields listed above are filled out, please "
-                    + "fill them all out before you login.", Toast.LENGTH_SHORT);
+                    + "fill them all out before you login.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         LoginBL loginBL = new LoginBL(mAuth);
         loginBL.login(str_email, password.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(LOG_ID, "loginUser:onComplete:" + task.isSuccessful());
-                        if (task.isSuccessful()) {
-                            Log.d(LOG_ID, "User Logged in: " + task.getResult().getUser().toString());
-                            Intent intent = new Intent(LogInScreenController.this,
-                                    WelcomeScreenController.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            try {
-                                throw task.getException();
-                            } catch (FirebaseAuthInvalidUserException eUser) {
-                                switch (eUser.getErrorCode()) {
-                                    case "ERROR_USER_DISABLED":
-                                        AlertDialog.Builder dialogueBuilderD = new AlertDialog.Builder(LogInScreenController.this);
-                                        dialogueBuilderD.setMessage("The account associated with the email " + str_email + " is disabled."
-                                                + " Would you like to be redirected to the user creation screen")
-                                                .setTitle("Error");
+                .addOnCompleteListener(this, task -> {
+                    Log.d(LOG_ID, "loginUser:onComplete:" + task.isSuccessful());
+                    if (task.isSuccessful()) {
+                        Log.d(LOG_ID, "User Logged in: " + task.getResult().getUser().toString());
+                        RatSpotting.generateNextKey();
+                        Intent intent = new Intent(LogInScreenController.this,
+                                WelcomeScreenController.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthInvalidUserException eUser) {
+                            switch (eUser.getErrorCode()) {
+                                case "ERROR_USER_DISABLED":
+                                    AlertDialog.Builder dialogueBuilderD = new AlertDialog.Builder(LogInScreenController.this);
+                                    dialogueBuilderD.setMessage("The account associated with the email " + str_email + " is disabled."
+                                            + " Would you like to be redirected to the user creation screen")
+                                            .setTitle("Error");
 
-                                        dialogueBuilderD.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                Intent intent = new Intent(LogInScreenController.this,
-                                                        NewUserScreenController.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-                                        dialogueBuilderD.setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                        AlertDialog dialogD = dialogueBuilderD.create();
-                                        dialogD.show();
-                                        break;
-                                    case "ERROR_USER_NOT_FOUND":
-                                        AlertDialog.Builder dialogueBuilderNF = new AlertDialog.Builder(LogInScreenController.this);
-                                        dialogueBuilderNF.setMessage("The email " + str_email
-                                                + " does not have an associated account."
-                                                + " Would you like to be redirected to the user creation screen")
-                                                .setTitle("Error");
+                                    dialogueBuilderD.setPositiveButton("OK", (dialog, id) -> {
+                                        Intent intent = new Intent(LogInScreenController.this,
+                                                NewUserScreenController.class);
+                                        startActivity(intent);
+                                        finish();
+                                    });
+                                    dialogueBuilderD.setNegativeButton("No Thanks", (dialog, id) -> dialog.dismiss());
+                                    AlertDialog dialogD = dialogueBuilderD.create();
+                                    dialogD.show();
+                                    break;
+                                case "ERROR_USER_NOT_FOUND":
+                                    AlertDialog.Builder dialogueBuilderNF = new AlertDialog.Builder(LogInScreenController.this);
+                                    dialogueBuilderNF.setMessage("The email " + str_email
+                                            + " does not have an associated account."
+                                            + " Would you like to be redirected to the user creation screen")
+                                            .setTitle("Error");
 
-                                        dialogueBuilderNF.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                Intent intent = new Intent(LogInScreenController.this,
-                                                        NewUserScreenController.class);
-                                                intent.putExtra("email", str_email);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-                                        dialogueBuilderNF.setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                        AlertDialog dialog_NF = dialogueBuilderNF.create();
-                                        dialog_NF.show();
-                                        break;
-                                    default:
-                                        Toast.makeText(LogInScreenController.this, R.string.system_error, Toast.LENGTH_LONG).show();
-                                        Log.d(LOG_ID, "Unexpected Error Code: " + eUser.getErrorCode()
-                                                + " with message: " + eUser.getMessage());
-                                }
-                            } catch (FirebaseAuthInvalidCredentialsException eCred) {
-                                Toast.makeText(LogInScreenController.this, eCred.getMessage(), Toast.LENGTH_SHORT).show();
-                            } catch (FirebaseAuthException eAuth) {
-                                Log.d(LOG_ID, "Unexpected Firebase Auth error, message: "
-                                        + eAuth.getMessage() + ", Error code: " + eAuth.getErrorCode());
-                            } catch (Exception e) {
-                                Log.d(LOG_ID, "Unexpected Error, message: " + e.getMessage());
+                                    dialogueBuilderNF.setPositiveButton("OK", (dialog, id) -> {
+                                        Intent intent = new Intent(LogInScreenController.this,
+                                                NewUserScreenController.class);
+                                        intent.putExtra("email", str_email);
+                                        startActivity(intent);
+                                        finish();
+                                    });
+                                    dialogueBuilderNF.setNegativeButton("No Thanks",
+                                            (dialog, id) -> dialog.dismiss());
+                                    AlertDialog dialog_NF = dialogueBuilderNF.create();
+                                    dialog_NF.show();
+                                    break;
+                                default:
+                                    Toast.makeText(LogInScreenController.this, R.string.system_error, Toast.LENGTH_LONG).show();
+                                    Log.d(LOG_ID, "Unexpected Error Code: " + eUser.getErrorCode()
+                                            + " with message: " + eUser.getMessage());
                             }
+                        } catch (FirebaseAuthInvalidCredentialsException eCred) {
+                            Toast.makeText(LogInScreenController.this, eCred.getMessage(), Toast.LENGTH_SHORT).show();
+                        } catch (FirebaseAuthException eAuth) {
+                            Log.d(LOG_ID, "Unexpected Firebase Auth error, message: "
+                                    + eAuth.getMessage() + ", Error code: " + eAuth.getErrorCode());
+                        } catch (Exception e) {
+                            Log.d(LOG_ID, "Unexpected Error, message: " + e.getMessage());
                         }
                     }
                 });
@@ -158,27 +146,14 @@ public class LogInScreenController extends AppCompatActivity {
         finish();
     }
 
-    private boolean ValidateForm(String email, String password) {
+    /**
+     * ValidateForm - validates whether the provided email and password are valid
+     * @param email the given email
+     * @param password the given password
+     * @return true if the form is valid, false if the form is invalid
+     */
+    private boolean validateForm(String email, String password) {
         return !(Utility.isNullOrWhitespace(email)
                 | Utility.isNullOrWhitespace(password));
-    }
-
-    /**
-     * We will utilize this later on to count the number of tries and do requests
-     * like reset your password or other requests
-     */
-    public void badLogOn() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Invalid username / password").setTitle("Error");
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-            }
-        });
-
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 }

@@ -13,7 +13,7 @@ import edu.gatech.cs2340.rattracker2k17.Model.User;
 public class UserBL {
 
     private static final String TAG = "UserBL";
-    private DatabaseReference mDataBase;
+    private final DatabaseReference mDataBase;
 
     /**
      * Constructor - Initializes the UserBL and saves the database reference to the

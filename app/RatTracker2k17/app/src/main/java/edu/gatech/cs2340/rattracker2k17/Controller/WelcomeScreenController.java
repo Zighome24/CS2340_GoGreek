@@ -18,10 +18,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
+import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
  * Created by wepperson on 9/24/17.
@@ -57,8 +60,9 @@ public class WelcomeScreenController extends AppCompatActivity {
         listView.setAdapter(ratAdapter);
     }
 
+    @SuppressWarnings("FeatureEnvy")
     private class RatSpottingAdapter extends ArrayAdapter<RatSpotting> {
-        private RatSpottingAdapter(Context context, ArrayList<RatSpotting> spots) {
+        private RatSpottingAdapter(Context context, List<RatSpotting> spots) {
             super(context, 0, spots);
         }
 
@@ -69,16 +73,13 @@ public class WelcomeScreenController extends AppCompatActivity {
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_rat, parent, false);
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
-                        Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("spotting", spot);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+                convertView.setOnClickListener(v -> {
+                    Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
+                    Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("spotting", spot);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 });
             }
 
@@ -107,7 +108,7 @@ public class WelcomeScreenController extends AppCompatActivity {
                         Log.d(LOG_ID, dataSnapshot.toString());
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             Log.d(LOG_ID, data.toString());
-                            RatSpotting rat = getRatSpottingFromSnapshot(data);
+                            RatSpotting rat = Utility.getRatSpottingFromSnapshot(data);
                             Log.d(LOG_ID, rat.toString());
                             ratAdapter.add(rat);
                         }
@@ -121,7 +122,6 @@ public class WelcomeScreenController extends AppCompatActivity {
                 }
         );
     }
-
 
     /**
      * logout - logs the user out and returns to the homescreen
@@ -161,23 +161,13 @@ public class WelcomeScreenController extends AppCompatActivity {
         }
     }
 
-    private RatSpotting getRatSpottingFromSnapshot(DataSnapshot data) {
-        return new RatSpotting(
-                data.getKey(),
-                (String) data.child("Date").getValue(),
-                (String) data.child("LocationType").getValue(),
-                Long.parseLong(data.child("Zip").getValue() != null
-                        ? data.child("Zip").getValue().toString() : "10000"),
-                (String) data.child("Address").getValue(),
-                (String) data.child("City").getValue(),
-                (String) data.child("Borough").getValue(),
-                Double.parseDouble(data.child("Latitude")
-                        .getValue() != null ?
-                        data.child("Latitude").getValue().toString() : "0.0"),
-                Double.parseDouble(data.child("Longitude")
-                        .getValue() != null ?
-                        data.child("Latitude").getValue().toString() : "0.0")
-        );
+    /**
+     * viewRatSpottings
+     * @param view
+     */
+    public void viewRatSpottings(View view) {
+        Intent intent = new Intent(this, DateSelectionScreenController.class);
+        startActivity(intent);
     }
 }
 

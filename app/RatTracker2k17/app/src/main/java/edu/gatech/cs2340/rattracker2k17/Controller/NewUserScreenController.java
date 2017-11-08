@@ -35,6 +35,7 @@ import edu.gatech.cs2340.rattracker2k17.Service.Utility;
  * Created by wepperson on 9/24/17.
  */
 
+@SuppressWarnings("FeatureEnvy")
 public class NewUserScreenController extends AppCompatActivity {
 
     private static final String LOG_ID = "NewUserScreenController";
@@ -78,7 +79,7 @@ public class NewUserScreenController extends AppCompatActivity {
 
         if (!ValidateForm(nUser)) {
             Toast.makeText(this, "Not all of the fields listed above are filled out, please "
-                    + "fill them all out before you create a new user.", Toast.LENGTH_SHORT);
+                    + "fill them all out before you create a new user.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -87,67 +88,59 @@ public class NewUserScreenController extends AppCompatActivity {
         final UserBL userBL = new UserBL();
 
         LoginBL loginBL = new LoginBL(mAuth);
-        loginBL.createUser(nUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(LOG_ID, "createUser:onComplete:" + task.isSuccessful());
-                if (task.isSuccessful()) {
-                    Log.d(LOG_ID, "New User Log: " + task.getResult().getUser().toString());
-                    try {
-                        nUser.setUserID(task.getResult().getUser().getUid());
-                        userBL.addNewUser(nUser);
-                    } catch (Exception e) {
-                        Log.d(LOG_ID, e.getMessage());
-                    }
-                    Intent intent = new Intent(NewUserScreenController.this,
-                            WelcomeScreenController.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    try {
-                        throw task.getException();
-                    } catch (FirebaseAuthUserCollisionException eUser) {
-                        switch (eUser.getErrorCode()) {
-                            case "ERROR_EMAIL_ALREADY_IN_USE":
-                                AlertDialog.Builder dialogueBuilderD =
-                                        new AlertDialog.Builder(NewUserScreenController.this);
-                                dialogueBuilderD.setMessage("The email " + nUser.getEmail()
-                                        + " is already associated with an account."
-                                        + " Would you like to be redirected to the login screen")
-                                        .setTitle("Error");
+        //noinspection FeatureEnvy
+        loginBL.createUser(nUser).addOnCompleteListener(task -> {
+            Log.d(LOG_ID, "createUser:onComplete:" + task.isSuccessful());
+            if (task.isSuccessful()) {
+                Log.d(LOG_ID, "New User Log: " + task.getResult().getUser().toString());
+                try {
+                    nUser.setUserID(task.getResult().getUser().getUid());
+                    userBL.addNewUser(nUser);
+                } catch (Exception e) {
+                    Log.d(LOG_ID, e.getMessage());
+                }
+                Intent intent = new Intent(NewUserScreenController.this,
+                        WelcomeScreenController.class);
+                startActivity(intent);
+                finish();
+            } else {
+                try {
+                    throw task.getException();
+                } catch (FirebaseAuthUserCollisionException eUser) {
+                    switch (eUser.getErrorCode()) {
+                        case "ERROR_EMAIL_ALREADY_IN_USE":
+                            AlertDialog.Builder dialogueBuilderD =
+                                    new AlertDialog.Builder(NewUserScreenController.this);
+                            dialogueBuilderD.setMessage("The email " + nUser.getEmail()
+                                    + " is already associated with an account."
+                                    + " Would you like to be redirected to the login screen")
+                                    .setTitle("Error");
 
-                                dialogueBuilderD.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Intent intent = new Intent(NewUserScreenController.this,
-                                                LogInScreenController.class);
-                                        intent.putExtra("email", nUser.getEmail());
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
-                                dialogueBuilderD.setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                AlertDialog dialogD = dialogueBuilderD.create();
-                                dialogD.show();
-                                break;
-                            default:
-                                Toast.makeText(NewUserScreenController.this, R.string.system_error,
-                                        Toast.LENGTH_LONG).show();
-                                Log.d(LOG_ID, "Unexpected Error Code: " + eUser.getErrorCode()
-                                        + " with message: " + eUser.getMessage());
-                        }
-                    } catch (FirebaseAuthInvalidCredentialsException eCred) {
-                        Toast.makeText(NewUserScreenController.this,
-                                eCred.getMessage(), Toast.LENGTH_SHORT).show();
-                    } catch (FirebaseAuthException eAuth) {
-                        Log.d(LOG_ID, "Unexpected Firebase Auth error, message: "
-                                + eAuth.getMessage() + ", Error code: " + eAuth.getErrorCode());
-                    } catch (Exception e) {
-                        Log.d(LOG_ID, "Unexpected Error, message: " + e.getMessage());
+                            dialogueBuilderD.setPositiveButton("OK", (dialog, id) -> {
+                                Intent intent = new Intent(NewUserScreenController.this,
+                                        LogInScreenController.class);
+                                intent.putExtra("email", nUser.getEmail());
+                                startActivity(intent);
+                                finish();
+                            });
+                            dialogueBuilderD.setNegativeButton("No Thanks", (dialog, id) -> dialog.dismiss());
+                            AlertDialog dialogD = dialogueBuilderD.create();
+                            dialogD.show();
+                            break;
+                        default:
+                            Toast.makeText(NewUserScreenController.this, R.string.system_error,
+                                    Toast.LENGTH_LONG).show();
+                            Log.d(LOG_ID, "Unexpected Error Code: " + eUser.getErrorCode()
+                                    + " with message: " + eUser.getMessage());
                     }
+                } catch (FirebaseAuthInvalidCredentialsException eCred) {
+                    Toast.makeText(NewUserScreenController.this,
+                            eCred.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (FirebaseAuthException eAuth) {
+                    Log.d(LOG_ID, "Unexpected Firebase Auth error, message: "
+                            + eAuth.getMessage() + ", Error code: " + eAuth.getErrorCode());
+                } catch (Exception e) {
+                    Log.d(LOG_ID, "Unexpected Error, message: " + e.getMessage());
                 }
             }
         });
