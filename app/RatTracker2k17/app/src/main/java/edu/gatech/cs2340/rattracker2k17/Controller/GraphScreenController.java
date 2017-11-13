@@ -112,5 +112,4 @@ public class GraphScreenController extends AppCompatActivity {
         return list;
     }
 
-
 }
