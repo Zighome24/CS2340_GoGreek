@@ -26,22 +26,22 @@ AndroidDomInspection, AndroidDomInspection -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller$LogInScreenController">
+        <activity android:name=".Controller.LogInScreenController">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller$WelcomeScreenController">
+        <activity android:name=".Controller.WelcomeScreenController">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller$NewUserScreenController">
+        <activity android:name=".Controller.NewUserScreenController">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller$DetailRatScreenController" />
+        <activity android:name=".Controller.DetailRatScreenController" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -59,9 +59,9 @@ AndroidDomInspection, AndroidDomInspection -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller$NewRatSpottingController" />
-        <activity android:name=".Controller$DateSelectionScreenController" />
-        <activity android:name=".Controller$GraphScreenController">
+        <activity android:name=".Controller.NewRatSpottingController" />
+        <activity android:name=".Controller.DateSelectionScreenController" />
+        <activity android:name=".Controller.GraphScreenController">
         </activity>
     </application>
 

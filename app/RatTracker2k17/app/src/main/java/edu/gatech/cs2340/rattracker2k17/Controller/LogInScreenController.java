@@ -35,13 +35,6 @@ public class LogInScreenController extends AppCompatActivity {
         setContentView(R.layout.activity_loginscreen);
 
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() != null) {
-            Log.d(LOG_ID, mAuth.getCurrentUser().getEmail());
-            Intent intent = new Intent(this,
-                    WelcomeScreenController.class);
-            startActivity(intent);
-            finish();
-        }
 
         if (getIntent().getExtras() != null) {
             EditText txt_email = findViewById(R.id.txt_LoginEmail);
