@@ -112,7 +112,16 @@ public class Utility {
      * @param date the date
      * @return String representation
      */
-    public static String getDateString(Calendar date) {
+    public static String getDateString(Calendar date) throws NoSuchFieldException {
+
+        // calender rolls over date, so being safe
+        if (date ==null || !date.isSet(Calendar.MONTH) || !date.isSet(Calendar.DATE)
+                || !date.isSet(Calendar.YEAR) || !date.isSet(Calendar.HOUR_OF_DAY)
+                || !date.isSet(Calendar.MINUTE)) {
+
+            throw new NoSuchFieldException("Month, date, year, hour, and minute must be non-null");
+        }
+
         String time =
                 (Integer.toString(date.get(Calendar.HOUR_OF_DAY)).length() == 1 ?
                         "0" + Integer.toString(date.get(Calendar.HOUR_OF_DAY)) :
@@ -121,7 +130,7 @@ public class Utility {
                         "0" + Integer.toString(date.get(Calendar.MINUTE)) :
                         Integer.toString(date.get(Calendar.MINUTE)));
         return String.format(Locale.getDefault(), "%d/%d/%d %s",
-                (1 + date.get(Calendar.MONTH)),
+                date.get(Calendar.MONTH),
                 date.get(Calendar.DATE),
                 date.get(Calendar.YEAR),
                 time);
