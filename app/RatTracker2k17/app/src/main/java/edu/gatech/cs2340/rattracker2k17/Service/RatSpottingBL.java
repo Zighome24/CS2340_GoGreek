@@ -36,6 +36,10 @@ public class RatSpottingBL {
         mDatabase = FirebaseDatabase.getInstance().getReference("ratspottings/");
     }
 
+    /**
+     * Constructor - constructs the class, used only in testing environments
+     * @param thing
+     */
     public RatSpottingBL(boolean thing) {
         mDatabase = null;
     }
@@ -116,8 +120,9 @@ public class RatSpottingBL {
 
     /**
      * Parses the given rat data into a map with the month/year and the number of rats spottings that month.
-     * @param rats
-     * @return
+     * @param rats The passed in ratspottings
+     * @return A map containing the months and the corresponding number of ratspottings
+     * @throws InvalidParameterException
      */
     @SuppressWarnings("FeatureEnvy")
     public Map<String, Integer> parseRatData(List<RatSpotting> rats) throws InvalidParameterException {

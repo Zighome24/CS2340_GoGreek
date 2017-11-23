@@ -7,8 +7,6 @@ import static edu.gatech.cs2340.rattracker2k17.Service.Utility.isNullOrWhitespac
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import edu.gatech.cs2340.rattracker2k17.*;
-
 
 /**
  * Created by 16nworthington on 11/13/2017.

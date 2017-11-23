@@ -92,11 +92,7 @@ public class RatSpottingTest {
             assertFalse(longitudeNull);
             assertTrue(noNull);
 
-        } catch (NoSuchMethodException e) {
-            System.out.println(e.getMessage());
-        } catch (IllegalAccessException e) {
-            System.out.println(e.getMessage());
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             System.out.println(e.getMessage());
         }
 

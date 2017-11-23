@@ -13,8 +13,6 @@ import static org.junit.Assert.*;
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.User;
 
-import static org.junit.Assert.assertTrue;
-
 /**
  * Created by wepperson on 11/13/17.
  */

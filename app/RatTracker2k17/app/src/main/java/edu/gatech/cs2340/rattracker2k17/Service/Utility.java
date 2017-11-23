@@ -111,6 +111,7 @@ public class Utility {
      * Turn Calendar to String
      * @param date the date
      * @return String representation
+     * @throws NoSuchFieldException
      */
     public static String getDateString(Calendar date) throws NoSuchFieldException {
 
