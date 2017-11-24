@@ -121,8 +121,8 @@ public class RatSpottingBL {
     /**
      * Parses the given rat data into a map with the month/year and the number of rats spottings that month.
      * @param rats The passed in ratspottings
-     * @return A map containing the months and the corresponding number of ratspottings
-     * @throws InvalidParameterException
+     * @return A map containing the months and the corresponding number of rat spottings
+     * @throws InvalidParameterException rats cannot be null, throws if @param rats == null
      */
     @SuppressWarnings("FeatureEnvy")
     public Map<String, Integer> parseRatData(List<RatSpotting> rats) throws InvalidParameterException {
