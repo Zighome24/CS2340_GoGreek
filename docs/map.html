@@ -18,6 +18,14 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Map styling -->
+    <style>
+       #map {
+        height: 500px;
+        width: 100%;
+       }
+    </style>
 </head>
 
 <body>
@@ -41,10 +49,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li>
                         <a href="home.html"><i class="fa fa-fw fa-bar-chart-o"></i> List View</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="map.html"><i class="fa fa-fw fa-map-marker"></i> Map View</a>
                     </li>
                     <li>
@@ -60,29 +68,27 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row" style="margin-top:0px;">
+                <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header" id="dataHeader">
-                            List of Spottings
+                            Map
                         </h1>
                     </div>
                 </div>
-                <div class="row" style="margin-bottom:10px;">
-                    <div class="col-lg-12">
-                        <button type="button" class="btn btn-primary" id="alcButton">Filter 1</button>
-                        <button type="button" class="btn btn-primary" id="tobaccoButton">Filter 2</button>
-                        <button type="button" class="btn btn-primary" id="lifeButton">Filter 3</button>
+
+                <div class="row">
+                    <div class="col-lg-12" id="input">
+                        put filters here
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="well">
-                            <div id="map"></div>
+                    <div class="col-lg-12" id="input">
+                        <div id="map"> map</div>
                     </div>
                 </div>
 
             </div>
-
-
             <!-- /.container-fluid -->
 
         </div>
@@ -97,9 +103,48 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-    <!-- D3 -->
-    <script src="http://d3js.org/d3.v4.min.js"></script>
-    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <!-- MAPPYYY -->
+    <script>
+
+      var map;
+      function initMap() {
+        var start_pos = {lat: 40.7128, lng: -74.0060};
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: start_pos
+        });
+        var marker = new google.maps.Marker({
+          position: start_pos,
+          map: map
+        });
+
+          // Create a <script> tag and set the USGS URL as the source.
+          var script = document.createElement('script');
+          // This example uses a local copy of the GeoJSON stored at
+          // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
+          script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
+          document.getElementsByTagName('head')[0].appendChild(script);
+        }
+
+        // Loop through the results array and place a marker for each
+        // set of coordinates.
+        window.eqfeed_callback = function(results) {
+          for (var i = 0; i < results.features.length; i++) {
+            var coords = results.features[i].geometry.coordinates;
+            var latLng = new google.maps.LatLng(coords[1],coords[0]);
+            var marker = new google.maps.Marker({
+              position: latLng,
+              map: map
+            });
+          }
+        }
+
+    </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwe0g7YQS3TS1ZBCdxg1LiQ3du712xty4&callback=initMap">
+    </script>
 
 </body>
+
 </html>

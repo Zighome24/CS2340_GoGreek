@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rat Tracker 2k17">
+    <meta name="author" content="Team 41: Go Greek">
+
+    <title>Rat Tracker 2k17</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="home.html">Rat Tracker 2k17</a>
+            </div>
+            <!-- Top Menu Items -->
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="home.html"><i class="fa fa-fw fa-bar-chart-o"></i> List View</a>
+                    </li>
+                    <li>
+                        <a href="map.html"><i class="fa fa-fw fa-map-marker"></i> Map View</a>
+                    </li>
+                    <li class="active">
+                        <a href="add_spotting.html"><i class="fa fa-fw fa-plus-square"></i> Add New Spotting</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header" id="dataHeader">
+                            Add New Rat Spotting
+                        </h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12" id="input">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="date">Date</label>
+                                  <input type="date" class="form-control" id="date">
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="locationType">Location Type</label>
+                                  <input type="text" class="form-control" id="locationType">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                  <label for="address">Address</label>
+                                  <input type="text" class="form-control" id="address">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                  <div class="form-group col-md-4">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city">
+                                  </div>
+                                  <div class="form-group col-md-4">
+                                    <label for="zip">Zip</label>
+                                    <input type="text" class="form-control" id="zip">
+                                  </div>
+                                  <div class="form-group col-md-4">
+                                    <label for="borough">Borough</label>
+                                    <input type="text" class="form-control" id="borough">
+                                  </div>
+                             </div>
+                          <div class="form-row">
+                             <div class="form-group col-md-3">
+                                <label for="lat">Lat.</label>
+                                <input type="text" class="form-control" id="lat">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="long">Long.</label>
+                                <input type="text" class="form-control" id="long">
+                            </div>
+                          </div>
+                          <div class="form-row">
+                              <div class="form-group col-md-12">
+                                  <button type="submit" class="btn btn-primary" onclick="onSubmit()">Submit</button>
+                             </div>
+                          </div>
+
+                      </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Our Junk -->
+
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
+
+    <script>
+    var config = {
+      apiKey: "AIzaSyBuAYus-0pVXPmQOon1GnMcdTpviXy3_pA",
+      authDomain: "rat-tracker-2k17.firebaseapp.com",
+      databaseURL: "https://rat-tracker-2k17.firebaseio.com",
+      projectId: "rat-tracker-2k17",
+      storageBucket: "rat-tracker-2k17.appspot.com",
+      messagingSenderId: "667069571681"
+    };
+
+    firebase.initializeApp(config);
+
+    function onSubmit() {
+        debugger;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        if (isNullOrWhitespace(email) || isNullOrWhitespace(password)) {
+            alert("Neither the email or password can be empty or whitespace");
+            return;
+        }
+
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // [START_EXCLUDE]
+              if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+              } else {
+                alert(errorMessage);
+              }
+              console.log(error);
+              document.getElementById('quickstart-sign-in').disabled = false;
+              // [END_EXCLUDE]
+        });
+    }
+
+    // firebase.auth().onAuthStateChanged(function (user) {
+    //     if (user) {
+    //         window.location = 'home.html'
+    //     }
+    // })
+
+    function isNullOrWhitespace( input ) {
+
+        if (typeof input === 'undefined' || input == null) return true;
+
+        return input.replace(/\s/g, '').length < 1;
+    }
+    </script>
+
+
+</body>
+
+</html>
