@@ -18,6 +18,9 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- JQuery css -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css">
 </head>
 
 <body>
@@ -68,16 +71,40 @@
                     </div>
                 </div>
                 <div class="row" style="margin-bottom:10px;">
-                    <div class="col-lg-12">
-                        <button type="button" class="btn btn-primary" id="alcButton">Filter 1</button>
-                        <button type="button" class="btn btn-primary" id="tobaccoButton">Filter 2</button>
-                        <button type="button" class="btn btn-primary" id="lifeButton">Filter 3</button>
+                    <div class="col-md-12">
+
+                        <form class="form-inline">
+                              <label class="sr-only" for="startDate">Start Date</label>
+                              <input type="datetime" class="form-control mb-2 mr-sm-2 mb-sm-0" id="startDate" placeholder="Start Date">
+
+                              <label class="sr-only" for="endDate">End Date</label>
+                              <input type="datetime" class="form-control mb-2 mr-sm-2 mb-sm-0" id="endDate" placeholder="End Date">
+
+                              <button type="button" class="btn btn-primary" id="dateSubmit">Submit</button>
+                        </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="well">
-                            <div id="map"></div>
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" id="50Button">See Recent 50</button>
+                        <button type="button" class="btn btn-primary" id="100Button">See Recent 100</button>
                     </div>
+                </div>
+                <div class="row col-md-8">
+                    <table class="table table-striped" id="data-table">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Zip</th>
+                            <th>Borough</th>
+                            <th>Location Type</th>
+                          </tr>
+                        </thead>
+                        <tbody id="data-enter">
+                        </tbody>
+
+                     </table>
+
                 </div>
 
             </div>
@@ -93,13 +120,100 @@
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-    <!-- D3 -->
-    <script src="http://d3js.org/d3.v4.min.js"></script>
-    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
+
+    <script>
+    var config = {
+      apiKey: "AIzaSyBuAYus-0pVXPmQOon1GnMcdTpviXy3_pA",
+      authDomain: "rat-tracker-2k17.firebaseapp.com",
+      databaseURL: "https://rat-tracker-2k17.firebaseio.com",
+      projectId: "rat-tracker-2k17",
+      storageBucket: "rat-tracker-2k17.appspot.com",
+      messagingSenderId: "667069571681"
+    };
+
+    firebase.initializeApp(config);
+
+    var database = firebase.database();
+    populate(50);
+
+    $(function() {
+        $("#50Button").click( function() {
+            populate(50);
+        });
+
+        $("#100Button").click( function() {
+            populate(100);
+        });
+
+        $("#dateSubmit").click( function() {
+            var start = new Date($('#startDate').val());
+            var end = new Date($('#endDate').val());
+            populateWithRange(start.getTime(), end.getTime());
+        });
+
+        $( "#startDate" ).datepicker();
+        $( "#endDate" ).datepicker();
+    });
+
+
+    function populate(limit) {
+        $('#data-enter').empty();
+
+        database.ref('ratspottings').limitToLast(limit).orderByChild("date").on("value", function(snapshot) {
+            if(snapshot.exists()){
+                var content = '';
+
+                snapshot.forEach(function(data){
+                    var val = data.val();
+
+                    content +='<tr>';
+                    var calDate = new Date(val.date);
+                    content += '<td>' + calDate + '</td>';
+                    content += '<td>' + val.zip + '</td>';
+                    content += '<td>' + val.borough + '</td>';
+                    content += '<td>' + val.locationType + '</td>';
+                    content += '</tr>';
+                });
+                $('#data-enter').append(content);
+            }
+        });
+    }
+
+    function populateWithRange(startDate, endDate) {
+        $('#data-enter').empty();
+
+        database.ref('ratspottings').orderByChild("date").startAt(startDate).endAt(endDate).on("value", function(snapshot) {
+            if(snapshot.exists()){
+                var content = '';
+
+                snapshot.forEach(function(data){
+                    var val = data.val();
+
+
+                    content +='<tr>';
+                    var calDate = new Date(val.date);
+                    content += '<td>' + calDate + '</td>';
+                    content += '<td>' + val.zip + '</td>';
+                    content += '<td>' + val.borough + '</td>';
+                    content += '<td>' + val.locationType + '</td>';
+                    content += '</tr>';
+                });
+                $('#data-enter').append(content);
+            }
+        });
+    }
+
+
+    </script>
 
 </body>
 </html>
