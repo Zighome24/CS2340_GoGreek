@@ -21,6 +21,14 @@
 
     <!-- JQuery css -->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css">
+
+    <!-- Map styling -->
+    <style>
+       #map {
+        height: 500px;
+        width: 100%;
+       }
+    </style>
 </head>
 
 <body>
@@ -44,10 +52,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li>
                         <a href="home.html"><i class="fa fa-fw fa-bar-chart-o"></i> List View</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="map.html"><i class="fa fa-fw fa-map-marker"></i> Map View</a>
                     </li>
                     <li>
@@ -63,13 +71,14 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row" style="margin-top:0px;">
+                <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header" id="dataHeader">
-                            List of Spottings
+                            Map
                         </h1>
                     </div>
                 </div>
+
                 <div class="row" style="margin-bottom:10px;">
                     <div class="col-md-12">
 
@@ -90,26 +99,14 @@
                         <button type="button" class="btn btn-primary" id="100Button">See Recent 100</button>
                     </div>
                 </div>
-                <div class="row col-md-8">
-                    <table class="table table-striped" id="data-table">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Zip</th>
-                            <th>Borough</th>
-                            <th>Location Type</th>
-                          </tr>
-                        </thead>
-                        <tbody id="data-enter">
-                        </tbody>
 
-                     </table>
-
+                <div class="row">
+                    <div class="col-lg-12" id="input">
+                        <div id="map"> map</div>
+                    </div>
                 </div>
 
             </div>
-
-
             <!-- /.container-fluid -->
 
         </div>
@@ -130,90 +127,108 @@
     <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
 
+    <!-- MAPPYYY -->
     <script>
-    var config = {
-      apiKey: "AIzaSyBuAYus-0pVXPmQOon1GnMcdTpviXy3_pA",
-      authDomain: "rat-tracker-2k17.firebaseapp.com",
-      databaseURL: "https://rat-tracker-2k17.firebaseio.com",
-      projectId: "rat-tracker-2k17",
-      storageBucket: "rat-tracker-2k17.appspot.com",
-      messagingSenderId: "667069571681"
-    };
 
-    firebase.initializeApp(config);
+      var map;
+      var markers = [];
 
-    var database = firebase.database();
-    populate(50);
+      function initMap() {
+            var start_pos = {lat: 40.7128, lng: -74.0060};
+            map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 10,
+              center: start_pos
+            });
+        }
 
-    $(function() {
-        $("#50Button").click( function() {
-            populate(50);
+        var config = {
+          apiKey: "AIzaSyBuAYus-0pVXPmQOon1GnMcdTpviXy3_pA",
+          authDomain: "rat-tracker-2k17.firebaseapp.com",
+          databaseURL: "https://rat-tracker-2k17.firebaseio.com",
+          projectId: "rat-tracker-2k17",
+          storageBucket: "rat-tracker-2k17.appspot.com",
+          messagingSenderId: "667069571681"
+        };
+
+        firebase.initializeApp(config);
+
+        var database = firebase.database();
+        //populate(50);
+
+        $(function() {
+            $("#50Button").click( function() {
+                populate(50);
+            });
+
+            $("#100Button").click( function() {
+                populate(100);
+            });
+
+            $("#dateSubmit").click( function() {
+                var start = new Date($('#startDate').val());
+                var end = new Date($('#endDate').val());
+                populateWithRange(start.getTime(), end.getTime());
+            });
+
+            $( "#startDate" ).datepicker();
+            $( "#endDate" ).datepicker();
         });
 
-        $("#100Button").click( function() {
-            populate(100);
-        });
 
-        $("#dateSubmit").click( function() {
-            var start = new Date($('#startDate').val());
-            var end = new Date($('#endDate').val());
-            populateWithRange(start.getTime(), end.getTime());
-        });
-
-        $( "#startDate" ).datepicker();
-        $( "#endDate" ).datepicker();
-    });
-
-
-    function populate(limit) {
-        $('#data-enter').empty();
-
-        database.ref('ratspottings').limitToLast(limit).orderByChild("date").on("value", function(snapshot) {
-            if(snapshot.exists()){
-                var content = '';
-
-                snapshot.forEach(function(data){
-                    var val = data.val();
-
-                    content +='<tr>';
-                    var calDate = new Date(val.date);
-                    content += '<td>' + calDate + '</td>';
-                    content += '<td>' + val.zip + '</td>';
-                    content += '<td>' + val.borough + '</td>';
-                    content += '<td>' + val.locationType + '</td>';
-                    content += '</tr>';
-                });
-                $('#data-enter').append(content);
+        function populate(limit) {
+            // clear old markers
+            for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(null);
             }
-        });
-    }
+            markers = [];
 
-    function populateWithRange(startDate, endDate) {
-        $('#data-enter').empty();
+            // add new markers
+            database.ref('ratspottings').limitToLast(limit).orderByChild("date").on("value", function(snapshot) {
+                if(snapshot.exists()){
+                    snapshot.forEach(function(data){
+                        var val = data.val();
+                        var latLng = new google.maps.LatLng(val.latitude,val.longitude);
+                        var marker = new google.maps.Marker({
+                          position: latLng,
+                          map: map
+                        });
+                        markers.push(marker);
+                    });
+                }
+            });
+        }
 
-        database.ref('ratspottings').orderByChild("date").startAt(startDate).endAt(endDate).on("value", function(snapshot) {
-            if(snapshot.exists()){
-                var content = '';
-
-                snapshot.forEach(function(data){
-                    var val = data.val();
-
-
-                    content +='<tr>';
-                    var calDate = new Date(val.date);
-                    content += '<td>' + calDate + '</td>';
-                    content += '<td>' + val.zip + '</td>';
-                    content += '<td>' + val.borough + '</td>';
-                    content += '<td>' + val.locationType + '</td>';
-                    content += '</tr>';
-                });
-                $('#data-enter').append(content);
+        function populateWithRange(startDate, endDate) {
+            // clear old markers
+            for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(null);
             }
-        });
-    }
+            markers = [];
 
+            // add new
+            database.ref('ratspottings').orderByChild("date").startAt(startDate).endAt(endDate).on("value", function(snapshot) {
+                if(snapshot.exists()){
+                    snapshot.forEach(function(data){
+                        var val = data.val();
+                        var latLng = new google.maps.LatLng(val.latitude,val.longitude);
+                        console.log(val.latitude);
+                        var marker = new google.maps.Marker({
+                          position: latLng,
+                          map: map
+                        });
+                        markers.push(marker);
+                    });
+                }
+            });
+
+        }
 
     </script>
 
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwe0g7YQS3TS1ZBCdxg1LiQ3du712xty4&callback=initMap">
+    </script>
+
 </body>
+
 </html>
