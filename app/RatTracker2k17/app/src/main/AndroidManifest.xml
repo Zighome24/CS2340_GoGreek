@@ -51,7 +51,7 @@ AndroidDomInspection, AndroidDomInspection -->
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Controller$MapScreenController"
+            android:name=".Controller.MapScreenController"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
