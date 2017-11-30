@@ -172,7 +172,7 @@ public class RatSpottingBL {
                 Log.d(LOG_ID, "getCurrentKey():onDataChange():dataSnapshot -> "
                         + dataSnapshot.toString());
                 RatSpotting.setNextKey(dataSnapshot.getValue() != null
-                        ? (Long) dataSnapshot.getValue() : 1);
+                        ? (Long) dataSnapshot.getValue() : -1);
                 Log.d(LOG_ID, "The next key has been set to " + RatSpotting.seeNextKey());
             }
 
@@ -189,7 +189,11 @@ public class RatSpottingBL {
      * pushCurrentKey() - pushes the current unique key for RatSpottings to the server
      */
     public static void pushCurrentKey() {
-        FirebaseDatabase.getInstance().getReference().child("nextUniqueKey")
-                .setValue(RatSpotting.seeNextKey());
+        if (RatSpotting.seeNextKey() < 0) {
+            getCurrentKey();
+        } else {
+            FirebaseDatabase.getInstance().getReference().child("nextUniqueKey")
+                    .setValue(RatSpotting.seeNextKey());
+        }
     }
 }
