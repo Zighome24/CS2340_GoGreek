@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Rat Tracker 2k17</string>
+    <string name="app_name">Rat Tracker</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="new_user">New User</string>
-    <string name="login_guest">Login as a guest!</string>
+    <string name="login_guest">Login as guest</string>
     <string name="title_activity_login">Sign in</string>
     <string name="get_rat_data">Get rat data</string>
 
@@ -25,7 +25,7 @@
     <string name="welcome">Welcome!</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="return_home">Return to Home Screen</string>
+    <string name="return_home">Return</string>
     <string name="system_error">There has been an error.</string>
     <string name="add_spotting">Add a Rat Spotting</string>
     <string name="view_ratspottings">View Spottings</string>
@@ -43,4 +43,6 @@
     <string name="today">Today</string>
     <string name="zip">Zip:</string>
     <string name="date_format">MM/DD/YYYY HH:MM</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
 </resources>
