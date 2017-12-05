@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Rat Tracker 2k17">
-    <meta name="author" content="Team 41: Go Greek">
+    <meta name="author" content="Will Epperson">
 
     <title>Rat Tracker 2k17</title>
 
@@ -20,7 +20,7 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- JQuery css -->
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
 </head>
 
 <body>
@@ -39,16 +39,22 @@
                 </button>
                 <a class="navbar-brand" href="home.html">Rat Tracker 2k17</a>
             </div>
+            <div class="nav navbar-nav navbar-right">
+                <button type="button" class="btn" id="logOut" style="background-color:#9d9d9d; margin-right:25px; margin-top:7px;">Log Out</button>
+            </div>
             <!-- Top Menu Items -->
 
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="home.html"><i class="fa fa-fw fa-bar-chart-o"></i> List View</a>
+                        <a href="home.html"><i class="fa fa-fw fa-bars"></i> List View</a>
                     </li>
                     <li>
                         <a href="map.html"><i class="fa fa-fw fa-map-marker"></i> Map View</a>
+                    </li>
+                    <li>
+                        <a href="chart.html"><i class="fa fa-fw fa-bar-chart-o"></i> Graph View</a>
                     </li>
                     <li class="active">
                         <a href="add_spotting.html"><i class="fa fa-fw fa-plus-square"></i> Add New Spotting</a>
@@ -77,7 +83,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                   <label for="date">Date</label>
-                                  <input type="date" class="form-control" id="date" placeholder="E.g. 1/1/17">
+                                  <input type="datetime" class="form-control" id="date" placeholder="E.g. 1/1/17">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="locationType">Location Type</label>
@@ -119,17 +125,13 @@
                                   <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                              </div>
                           </div>
-
                       </form>
                     </div>
                 </div>
-
             </div>
             <!-- /.container-fluid -->
-
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
@@ -159,10 +161,14 @@
     firebase.initializeApp(config);
 
     $(function() {
-        $( "#date" ).datepicker();
+        $("#date").datepicker();
 
         $("#submitButton").click( function() {
             pushNewSpotting();
+        });
+
+        $("#logOut").click( function() {
+            logOut();
         });
     });
 
@@ -191,6 +197,14 @@
          return ref.update(updates);
     }
 
+    function logOut() {
+        firebase.auth().signOut().then(function() {
+          console.log('Signed Out');
+          window.location = 'index.html'
+        }, function(error) {
+          console.error('Sign Out Error', error);
+        });
+    }
     </script>
 
 </body>
