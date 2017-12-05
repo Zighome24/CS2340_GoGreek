@@ -31,7 +31,7 @@ public class LoginBL {
     }
 
     /**
-     * Log in the user on firebase
+     * LogReport in the user on firebase
      * @param email user email
      * @param password user password
      * @return result of login

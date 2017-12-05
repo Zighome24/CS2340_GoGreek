@@ -3,6 +3,7 @@
 AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection,
 AndroidDomInspection, AndroidDomInspection -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="edu.gatech.cs2340.rattracker2k17">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -36,12 +37,14 @@ AndroidDomInspection, AndroidDomInspection -->
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.NewUserScreenController">
+        <activity android:name=".Controller.NewUserScreenController"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.DetailRatScreenController" />
+        <activity android:name=".Controller.DetailRatScreenController"
+            tools:ignore="InnerclassSeparator" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -49,19 +52,26 @@ AndroidDomInspection, AndroidDomInspection -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".Controller.MapScreenController"
-            android:label="@string/title_activity_maps">
+            android:label="@string/title_activity_maps"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.NewRatSpottingController" />
-        <activity android:name=".Controller.DateSelectionScreenController" />
-        <activity android:name=".Controller.GraphScreenController">
+        <activity android:name=".Controller.NewRatSpottingController"
+            tools:ignore="InnerclassSeparator" />
+        <activity android:name=".Controller.DateSelectionScreenController"
+            tools:ignore="InnerclassSeparator" />
+        <activity android:name=".Controller.GraphScreenController"
+            tools:ignore="InnerclassSeparator">
         </activity>
     </application>
 

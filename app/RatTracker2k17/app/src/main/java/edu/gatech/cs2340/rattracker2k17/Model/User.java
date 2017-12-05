@@ -147,6 +147,10 @@ public class User {
                 + ", UserID: " + userID;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     /**
      * Map User to map
      * @return map

@@ -16,7 +16,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.User;
+import edu.gatech.cs2340.rattracker2k17.Model.UserLogReport;
 import edu.gatech.cs2340.rattracker2k17.R;
+import edu.gatech.cs2340.rattracker2k17.Service.LogReportBL;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
@@ -89,7 +91,9 @@ public class NewUserScreenController extends AppCompatActivity {
         loginBL.createUser(nUser).addOnCompleteListener(task -> {
             Log.d(LOG_ID, "createUser:onComplete:" + task.isSuccessful());
             if (task.isSuccessful()) {
-                Log.d(LOG_ID, "New User Log: " + task.getResult().getUser().toString());
+                Log.d(LOG_ID, "New User LogReport: " + task.getResult().getUser().toString());
+                LogReportBL reportBL = new LogReportBL();
+                reportBL.pushReport(new UserLogReport(Types.Logging.UserCreation, task.getResult().getUser()));
                 try {
                     nUser.setUserID(task.getResult().getUser().getUid());
                     userBL.addNewUser(nUser);

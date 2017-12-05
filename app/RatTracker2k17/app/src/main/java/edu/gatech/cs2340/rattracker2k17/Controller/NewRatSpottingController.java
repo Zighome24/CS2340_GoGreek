@@ -10,8 +10,11 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Locale;
 
+import edu.gatech.cs2340.rattracker2k17.Data.Types;
+import edu.gatech.cs2340.rattracker2k17.Model.RatLogReport;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
+import edu.gatech.cs2340.rattracker2k17.Service.LogReportBL;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 /** Controller for new rat spotting
  * @author Justin Z
@@ -64,6 +67,8 @@ public class NewRatSpottingController extends AppCompatActivity {
                     Double.parseDouble(txt_lat.getText().toString()),
                     Double.parseDouble(txt_long.getText().toString()));
             Log.d(LOG_ID, "onClick: creating a new rat spotting: " + rat.toString());
+            LogReportBL reportBL = new LogReportBL();
+            reportBL.pushReport(new RatLogReport(Types.Logging.Create, rat));
             ratSpottingBL.addNewRatSpotting(rat);
             switch (getCallingActivity().getClassName()) {
                 case "edu.gatech.cs2340.rattracker2k17.Controller.WelcomeScreenController":

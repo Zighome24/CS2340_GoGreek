@@ -3,10 +3,13 @@ package edu.gatech.cs2340.rattracker2k17.Service;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.Locale;
 
+import edu.gatech.cs2340.rattracker2k17.Model.LogReport;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 
 /**
@@ -135,5 +138,10 @@ public class Utility {
                 date.get(Calendar.DATE),
                 date.get(Calendar.YEAR),
                 time);
+    }
+
+    public static void submitLoggingReport(LogReport logReport) {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef.child(logReport.getLocation()).push().updateChildren(logReport.toMap());
     }
 }

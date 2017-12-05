@@ -15,8 +15,11 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
+import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
+import edu.gatech.cs2340.rattracker2k17.Model.UserLogReport;
 import edu.gatech.cs2340.rattracker2k17.R;
+import edu.gatech.cs2340.rattracker2k17.Service.LogReportBL;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
@@ -68,6 +71,8 @@ public class LogInScreenController extends AppCompatActivity {
                     Log.d(LOG_ID, "loginUser:onComplete:" + task.isSuccessful());
                     if (task.isSuccessful()) {
                         Log.d(LOG_ID, "User Logged in: " + task.getResult().getUser().toString());
+                        LogReportBL reportBL = new LogReportBL();
+                        reportBL.pushReport(new UserLogReport(Types.Logging.Login, task.getResult().getUser()));
                         RatSpotting.generateNextKey();
                         Intent intent = new Intent(LogInScreenController.this,
                                 WelcomeScreenController.class);
