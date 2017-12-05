@@ -20,7 +20,7 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- JQuery css -->
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
 </head>
 
 <body>
@@ -45,10 +45,13 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="home.html"><i class="fa fa-fw fa-bar-chart-o"></i> List View</a>
+                        <a href="home.html"><i class="fa fa-fw fa-bars"></i> List View</a>
                     </li>
                     <li>
                         <a href="map.html"><i class="fa fa-fw fa-map-marker"></i> Map View</a>
+                    </li>
+                    <li>
+                        <a href="chart.html"><i class="fa fa-fw fa-bar-chart-o"></i> Graph View</a>
                     </li>
                     <li>
                         <a href="add_spotting.html"><i class="fa fa-fw fa-plus-square"></i> Add New Spotting</a>
@@ -185,6 +188,8 @@
                 });
                 $('#data-enter').append(content);
             }
+        }, function(error) {
+            console.log(error);
         });
     }
 

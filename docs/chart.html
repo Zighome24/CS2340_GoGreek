@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rat Tracker 2k17">
+    <meta name="author" content="Team 41: Go Greek">
+
+    <title>Rat Tracker 2k17</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- JQuery css -->
+    <link rel="stylesheet" href="css/jquery-ui.css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="home.html">Rat Tracker 2k17</a>
+            </div>
+            <!-- Top Menu Items -->
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="home.html"><i class="fa fa-fw fa-bars"></i> List View</a>
+                    </li>
+                    <li>
+                        <a href="map.html"><i class="fa fa-fw fa-map-marker"></i> Map View</a>
+                    </li>
+                    <li class="active">
+                        <a href="chart.html"><i class="fa fa-fw fa-bar-chart-o"></i> Graph View</a>
+                    </li>
+                    <li>
+                        <a href="add_spotting.html"><i class="fa fa-fw fa-plus-square"></i> Add New Spotting</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row" style="margin-top:0px;">
+                    <div class="col-lg-12">
+                        <h1 class="page-header" id="dataHeader">
+                            Graph of Spottings for 2017
+                        </h1>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-md-12">
+                        <form class="form-inline">
+                              <label class="sr-only" for="year">Select Year</label>
+                              <input type="datetime" class="form-control mb-2 mr-sm-2 mb-sm-0" id="year" placeholder="Year">
+                              <button type="button" class="btn btn-primary" id="dateSubmit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="chartArea">
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
+
+    <!-- D3 -->
+    <script charset="utf-8" type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+
+
+    <script>
+    var config = {
+      apiKey: "AIzaSyBuAYus-0pVXPmQOon1GnMcdTpviXy3_pA",
+      authDomain: "rat-tracker-2k17.firebaseapp.com",
+      databaseURL: "https://rat-tracker-2k17.firebaseio.com",
+      projectId: "rat-tracker-2k17",
+      storageBucket: "rat-tracker-2k17.appspot.com",
+      messagingSenderId: "667069571681"
+    };
+    firebase.initializeApp(config);
+
+    // init vars
+    var database = firebase.database();
+    var monthCountData = [0,0,0,0,0,0,0,0,0,0,0,0];
+    var monthNameData = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+    var height = 500;
+    var width = 900;
+
+    // on load
+    $(function() {
+        // on button press
+        $("#dateSubmit").click( function() {
+            var start = new Date("1/1/" + $('#year').val());
+            var end = new Date("12/31/" + $('#year').val());
+            populateWithRange(start.getTime(), end.getTime());
+            $('#dataHeader').empty();
+            $('#dataHeader').text("Graph of Spottings for " + $('#year').val());
+        });
+
+        console.log("loaded?");
+        // init
+        var startInit = new Date("1/1/17");
+        var endInit = new Date("12/31/17");
+        populateWithRange(startInit.getTime(), endInit.getTime());
+    });
+
+    // set up Graph
+    var svg = d3.select("#chartArea") //selecting by id
+        .append("svg")
+        .attr("id", "svg1")
+        .attr("height", height)
+        .attr("width", width)
+        .attr("color", "red");
+
+
+    // populate graph
+    function populateWithRange(startDate, endDate) {
+        $('#year').empty();
+        $('svg').empty();
+
+
+        monthCountData = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+        database.ref('ratspottings').orderByChild("date").startAt(startDate).endAt(endDate).on("value", function(snapshot) {
+            snapshot.forEach(function(data){
+                var val = data.val();
+                var calDate = new Date(val.date);
+                var month = calDate.getMonth();
+                monthCountData[month] += 1;
+            });
+
+            // PUT in callback to make sure array is populated
+            console.log("In database" + monthCountData);
+
+            // zip data
+            var data = monthNameData.map(function(e, i) {
+              return [e, monthCountData[i]];
+            });
+
+            console.log(data);
+
+            // put data in graph
+            var bars = svg.append('g');
+            var xScale = d3.scale.linear().range([0, width - 50]);
+            var yScale = d3.scale.ordinal().rangeRoundBands([0, height], 0.3);
+            var yAxis = d3.svg.axis().scale(yScale).orient('left');
+
+            // scale
+            xScale.domain([0, d3.max(data, function(d) {
+                return d[1];
+            })]);
+            yScale.domain(monthNameData);
+
+            // append y axis
+            bars.append('g')
+                .attr('class', 'y axis')
+                .attr('transform', 'translate(50, 0)')
+                .call(yAxis);
+
+            bars.append('g')
+                .selectAll('.bar')
+                .data(data)
+                .enter()
+                .append('rect')
+                    .attr('class', 'bar')
+                    .attr('x', 50)
+                    .attr('y', function(d) {
+                        return yScale(d[0]);
+                    })
+                    .attr('width', function(d) {
+                        // xScale will map any number and return a number
+                        // within the output range we specified earlier.
+                        console.log(d[1]);
+                        return xScale(d[1]);
+                    })
+                    .attr('height', function(d) {
+                        // Remember how we set the yScale to be an ordinal scale
+                        // with bands from 0 to height? And then we set the domain
+                        // to contain all the letters in the alphabet?
+                        return yScale.rangeBand();
+                    })
+                    .style('fill', 'steelblue');
+
+                    // .append("text")
+                    //     .attr("class", "value")
+                    //     .attr('y', function(d) {
+                    //         return yScale(d[0]);
+                    //     })
+                    //     .attr('x', 60)
+                    //     .attr("text-anchor", "end")
+                    //     .text(function(d){
+                    //         return d[1];
+                    //     })
+
+            // put labels
+            bars.append('g')
+                .selectAll('.label')
+                .data(data)
+                .enter()
+                .append("text")
+                    .attr("class", "value")
+                    .attr('y', function(d) {
+                        return (yScale(d[0]) + 17);
+                    })
+                    .attr('x', 75)
+                    .attr("text-anchor", "end")
+                    .text(function(d){
+                        return d[1];
+                    });
+
+        });
+
+    }
+
+    </script>
+
+</body>
+</html>
