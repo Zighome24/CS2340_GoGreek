@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,7 +13,10 @@ import java.util.Locale;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
-
+/** Controller for new rat spotting
+ * @author Justin Z
+ * @version 1.0
+ */
 public class NewRatSpottingController extends AppCompatActivity {
 
     private static final String LOG_ID = "NewRatSpottingContr.";

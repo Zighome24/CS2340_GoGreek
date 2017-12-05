@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +22,12 @@ import edu.gatech.cs2340.rattracker2k17.Model.RatSpottingsServiceTransfer;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
+
+/**
+ * Controller for date selection screen
+ * @author Justin Z
+ * @version 1.0
+ */
 
 public class DateSelectionScreenController extends AppCompatActivity {
 
@@ -50,6 +55,10 @@ public class DateSelectionScreenController extends AppCompatActivity {
         startActivity(new Intent(this, WelcomeScreenController.class));
     }
 
+    /**
+     * Perform action on view
+     * @param view the actionable view
+     */
     @SuppressWarnings("FeatureEnvy")
     public void action(View view) {
         TextView txt_fromDate, txt_toDate;
@@ -99,7 +108,8 @@ public class DateSelectionScreenController extends AppCompatActivity {
                             startActivity(intentGraph);
                             break;
                         default:
-                            Log.d(LOG_ID,"The switch statement action:getRatSpottingsBetween\"Listener\":onDataChange fell through."
+                            Log.d(LOG_ID,"The switch statement action:getRatSpottingsBetween" +
+                                    "\"Listener\":onDataChange fell through."
                                 + " Check the option selection in the log.");
                     }
                 }
@@ -112,6 +122,10 @@ public class DateSelectionScreenController extends AppCompatActivity {
         });
     }
 
+    /**
+     * Get today
+     * @param view the view to be to
+     */
     public void today(View view) {
         Calendar calendar = Calendar.getInstance();
         String time =

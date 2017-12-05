@@ -1,10 +1,6 @@
 package edu.gatech.cs2340.rattracker2k17.Service;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,14 +8,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.InvalidParameterException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 
 /**
- * Created by Justin on 10/12/2017.
+ * Logic of Rat spotting
+ * @author Justin Z
+ * @version 1.0
  */
-
 @SuppressWarnings("FeatureEnvy")
 public class RatSpottingBL {
 
@@ -32,6 +34,14 @@ public class RatSpottingBL {
      */
     public RatSpottingBL() {
         mDatabase = FirebaseDatabase.getInstance().getReference("ratspottings/");
+    }
+
+    /**
+     * Constructor - constructs the class, used only in testing environments
+     * @param thing
+     */
+    public RatSpottingBL(boolean thing) {
+        mDatabase = null;
     }
 
     /**
@@ -80,6 +90,13 @@ public class RatSpottingBL {
         return mDatabase.limitToLast(50).orderByChild("date");
     }
 
+    /**
+     * Get spottings in range
+     * @param from start date
+     * @param to end date
+     * @param limit num results
+     * @return the query
+     */
     public Query getRatSpottingsBetween(Calendar from, Calendar to, int limit) {
         Query query;
         if (from == null && to == null) {
@@ -99,6 +116,48 @@ public class RatSpottingBL {
         } else {
             return query.limitToLast(limit);
         }
+    }
+
+    /**
+     * Parses the given rat data into a map with the month/year and the number of rats spottings that month.
+     * @param rats The passed in ratspottings
+     * @return A map containing the months and the corresponding number of rat spottings
+     * @throws InvalidParameterException rats cannot be null, throws if @param rats == null
+     */
+    @SuppressWarnings("FeatureEnvy")
+    public Map<String, Integer> parseRatData(List<RatSpotting> rats) throws InvalidParameterException {
+        if (rats == null) {
+            throw new InvalidParameterException("The passed list to parseRatData cannot be null");
+        }
+        //Log.d(LOG_ID, "onCreate():parseRatData(): has been started");
+        Map<String, Integer> map = new HashMap<>();
+        // Sort ratSpottings in descending order
+        rats.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        //Log.d(LOG_ID, "ratSpottings size(): " + rats.size());
+        for (int i = 0; i < rats.size();) {
+            //Log.d(LOG_ID, rats.get(i).toString());
+            Calendar date = rats.get(i).getDate();
+            int year = date.get(Calendar.YEAR);
+            RatSpotting rat = rats.get(i);
+            while (year == rat.getDate().get(Calendar.YEAR) && i < rats.size()) {
+                //Log.d(LOG_ID, Integer.toString(i));
+                String key = String.format(Locale.getDefault(),"%s %d",
+                        rat.getDate().getDisplayName(
+                                Calendar.MONTH, Calendar.LONG, Locale.getDefault()),
+                        year);
+                if (map.containsKey(key)) {
+                    map.put(key, map.get(key) + 1);
+                } else {
+                    map.put(key, 1);
+                }
+                i++;
+                if (i < rats.size()) {
+                    rat = rats.get(i);
+                }
+            }
+        }
+        //Log.d(LOG_ID, "parseRatData():map: " + map.toString());
+        return map;
     }
 
     /**

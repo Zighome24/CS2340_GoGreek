@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
@@ -27,7 +26,9 @@ import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
- * Created by wepperson on 9/24/17.
+ * Controller for welcome screen
+ * @author Justin Z
+ * @version 1.0
  */
 
 public class WelcomeScreenController extends AppCompatActivity {
@@ -44,7 +45,7 @@ public class WelcomeScreenController extends AppCompatActivity {
         setContentView(R.layout.activity_welcomescreen);
 
         listView = findViewById(R.id.list_view);
-        ratAdapter = new RatSpottingAdapter(this, new ArrayList<RatSpotting>());
+        ratAdapter = new RatSpottingAdapter(this, new ArrayList<>());
 
         ratSpottingBL = new RatSpottingBL();
 
@@ -72,10 +73,12 @@ public class WelcomeScreenController extends AppCompatActivity {
             final RatSpotting spot = getItem(position);
 
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_rat, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_rat,
+                        parent, false);
                 convertView.setOnClickListener(v -> {
                     Log.d(LOG_ID, "Clicking on a certain rat spotting: " + spot.toString());
-                    Intent intent = new Intent(WelcomeScreenController.this, DetailRatScreenController.class);
+                    Intent intent = new Intent(WelcomeScreenController.this,
+                            DetailRatScreenController.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("spotting", spot);
                     intent.putExtras(bundle);
@@ -163,7 +166,7 @@ public class WelcomeScreenController extends AppCompatActivity {
 
     /**
      * viewRatSpottings
-     * @param view
+     * @param view current view
      */
     public void viewRatSpottings(View view) {
         Intent intent = new Intent(this, DateSelectionScreenController.class);

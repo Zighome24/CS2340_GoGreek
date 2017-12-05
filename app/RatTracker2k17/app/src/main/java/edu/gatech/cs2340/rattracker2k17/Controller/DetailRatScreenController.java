@@ -6,10 +6,13 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.R;
+
+/** Controller for detail rat screen
+ * @author Justin Z
+ * @version 1.0
+ */
 
 public class DetailRatScreenController extends AppCompatActivity {
     private static final String LOG_ID = "DetailRatScreenContr";
@@ -22,6 +25,8 @@ public class DetailRatScreenController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ratspottingdetails);
+        // Always pass a bundle to this class from the calling activities,
+        // getExtras() will never be null
         RatSpotting spot = (RatSpotting) getIntent().getExtras().getSerializable("spotting");
 
         if (spot == null) {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection -->
+<!--suppress AndroidDomInspection, AndroidDomInspection, AndroidDomInspection,
+AndroidDomInspection, AndroidDomInspection, AndroidDomInspection, AndroidDomInspection,
+AndroidDomInspection, AndroidDomInspection -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.gatech.cs2340.rattracker2k17">
 

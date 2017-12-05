@@ -1,7 +1,9 @@
 package edu.gatech.cs2340.rattracker2k17.Data;
 
 /**
- * Created by Justin on 9/23/2017.
+ * Type definitions
+ * @author Justin Z
+ * @version 1.0
  */
 
 public class Types {
@@ -15,6 +17,11 @@ public class Types {
         //  method, so the method does not break our app.
 
         private final int _level;
+
+        /**
+         * Get level
+         * @return the level
+         */
         public int getLevel() {return _level;}
 
         SecurityLevel(int level) {
