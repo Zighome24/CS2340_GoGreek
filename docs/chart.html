@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Rat Tracker 2k17">
-    <meta name="author" content="Team 41: Go Greek">
+    <meta name="author" content="Will Epperson">
 
     <title>Rat Tracker 2k17</title>
 
@@ -38,6 +38,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="home.html">Rat Tracker 2k17</a>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                <button type="button" class="btn" id="logOut" style="background-color:#9d9d9d; margin-right:25px; margin-top:7px;">Log Out</button>
             </div>
             <!-- Top Menu Items -->
 
@@ -136,7 +139,10 @@
             $('#dataHeader').text("Graph of Spottings for " + $('#year').val());
         });
 
-        console.log("loaded?");
+        $("#logOut").click( function() {
+            logOut();
+        });
+
         // init
         var startInit = new Date("1/1/17");
         var endInit = new Date("12/31/17");
@@ -220,17 +226,6 @@
                     })
                     .style('fill', 'steelblue');
 
-                    // .append("text")
-                    //     .attr("class", "value")
-                    //     .attr('y', function(d) {
-                    //         return yScale(d[0]);
-                    //     })
-                    //     .attr('x', 60)
-                    //     .attr("text-anchor", "end")
-                    //     .text(function(d){
-                    //         return d[1];
-                    //     })
-
             // put labels
             bars.append('g')
                 .selectAll('.label')
@@ -249,6 +244,15 @@
 
         });
 
+    }
+
+    function logOut() {
+        firebase.auth().signOut().then(function() {
+          console.log('Signed Out');
+          window.location = 'index.html'
+        }, function(error) {
+          console.error('Sign Out Error', error);
+        });
     }
 
     </script>

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Rat Tracker 2k17">
-    <meta name="author" content="Team 41: Go Greek">
+    <meta name="author" content="Will Epperson">
 
     <title>Rat Tracker 2k17</title>
 
@@ -38,6 +38,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="home.html">Rat Tracker 2k17</a>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                <button type="button" class="btn" id="logOut" style="background-color:#9d9d9d; margin-right:25px; margin-top:7px;">Log Out</button>
             </div>
             <!-- Top Menu Items -->
 
@@ -107,17 +110,11 @@
                         </tbody>
 
                      </table>
-
                 </div>
-
             </div>
-
-
             <!-- /.container-fluid -->
-
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
@@ -157,6 +154,10 @@
             populate(100);
         });
 
+        $("#logOut").click( function() {
+            logOut();
+        });
+
         $("#dateSubmit").click( function() {
             var start = new Date($('#startDate').val());
             var end = new Date($('#endDate').val());
@@ -185,8 +186,10 @@
                     content += '<td>' + val.borough + '</td>';
                     content += '<td>' + val.locationType + '</td>';
                     content += '</tr>';
+                    $('#data-enter').prepend(content);
+                    content = '';
                 });
-                $('#data-enter').append(content);
+
             }
         }, function(error) {
             console.log(error);
@@ -203,7 +206,6 @@
                 snapshot.forEach(function(data){
                     var val = data.val();
 
-
                     content +='<tr>';
                     var calDate = new Date(val.date);
                     content += '<td>' + calDate + '</td>';
@@ -217,8 +219,14 @@
         });
     }
 
-
+    function logOut() {
+        firebase.auth().signOut().then(function() {
+          console.log('Signed Out');
+          window.location = 'index.html'
+        }, function(error) {
+          console.error('Sign Out Error', error);
+        });
+    }
     </script>
-
 </body>
 </html>
