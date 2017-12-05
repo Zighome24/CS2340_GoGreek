@@ -44,6 +44,24 @@ public class Types {
         }
     }
 
+    public enum Logging {
+        Login("/logs/users/login", "logged in."),
+        Logout("/logs/users/logout", "logged out"),
+        UserCreation("/logs/users", "was created"),
+        Create("logs/create", "created a ratspotting"),
+        Delete("logs/delete", "deleted a ratspotting"),
+        Other("logs/other", "");
+
+        private String _location, _message;
+
+        public String getLocation() {return _location;}
+
+        public String getMessage() {return _message;}
+
+        Logging(String location, String message) { _location = location; _message = message;}
+
+    }
+
 
 }
 

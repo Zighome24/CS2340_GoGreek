@@ -3,6 +3,7 @@ package edu.gatech.cs2340.rattracker2k17.Service;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import edu.gatech.cs2340.rattracker2k17.Model.User;
 
@@ -39,5 +40,14 @@ public class UserBL {
      */
     public void updateUser(User user) {
         mDataBase.child(user.getUserID()).updateChildren(user.toMap());
+    }
+
+    /**
+     * method that obtains an asynchronous query that can retrieve the user with a given UID
+     * @param uID the user ID of the user we want to obtain
+     * @return an asynchronous query that can be used to obtain the user.
+     */
+    public Query getUser(String uID) {
+        return mDataBase.orderByChild(uID).limitToFirst(1);
     }
 }

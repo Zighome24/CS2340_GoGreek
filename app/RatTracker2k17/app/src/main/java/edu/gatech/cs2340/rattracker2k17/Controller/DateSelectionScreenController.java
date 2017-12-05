@@ -82,7 +82,7 @@ public class DateSelectionScreenController extends AppCompatActivity {
         Log.d(LOG_ID, "The selected view was " + option);
         RatSpottingBL ratBL = new RatSpottingBL();
         progressBar.setVisibility(View.VISIBLE);
-        ratBL.getRatSpottingsBetween(fromDate, toDate, option == 1 ? 100 : 500)
+        ratBL.getRatSpottingsBetween(fromDate, toDate, option == 1 ? 100 : -1)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

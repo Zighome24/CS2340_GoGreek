@@ -129,18 +129,18 @@ public class RatSpottingBL {
         if (rats == null) {
             throw new InvalidParameterException("The passed list to parseRatData cannot be null");
         }
-        //Log.d(LOG_ID, "onCreate():parseRatData(): has been started");
+        //LogReport.d(LOG_ID, "onCreate():parseRatData(): has been started");
         Map<String, Integer> map = new HashMap<>();
         // Sort ratSpottings in descending order
         rats.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        //Log.d(LOG_ID, "ratSpottings size(): " + rats.size());
+        //LogReport.d(LOG_ID, "ratSpottings size(): " + rats.size());
         for (int i = 0; i < rats.size();) {
-            //Log.d(LOG_ID, rats.get(i).toString());
+            //LogReport.d(LOG_ID, rats.get(i).toString());
             Calendar date = rats.get(i).getDate();
             int year = date.get(Calendar.YEAR);
             RatSpotting rat = rats.get(i);
             while (year == rat.getDate().get(Calendar.YEAR) && i < rats.size()) {
-                //Log.d(LOG_ID, Integer.toString(i));
+                //LogReport.d(LOG_ID, Integer.toString(i));
                 String key = String.format(Locale.getDefault(),"%s %d",
                         rat.getDate().getDisplayName(
                                 Calendar.MONTH, Calendar.LONG, Locale.getDefault()),
@@ -156,7 +156,7 @@ public class RatSpottingBL {
                 }
             }
         }
-        //Log.d(LOG_ID, "parseRatData():map: " + map.toString());
+        //LogReport.d(LOG_ID, "parseRatData():map: " + map.toString());
         return map;
     }
 
