@@ -107,7 +107,7 @@
     <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
 
     <!-- D3 -->
-    <script charset="utf-8" type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="js/d3.v3.min.js"></script>
 
 
     <script>
@@ -175,14 +175,12 @@
             });
 
             // PUT in callback to make sure array is populated
-            console.log("In database" + monthCountData);
 
             // zip data
             var data = monthNameData.map(function(e, i) {
               return [e, monthCountData[i]];
             });
 
-            console.log(data);
 
             // put data in graph
             var bars = svg.append('g');
@@ -215,7 +213,6 @@
                     .attr('width', function(d) {
                         // xScale will map any number and return a number
                         // within the output range we specified earlier.
-                        console.log(d[1]);
                         return xScale(d[1]);
                     })
                     .attr('height', function(d) {
@@ -248,7 +245,6 @@
 
     function logOut() {
         firebase.auth().signOut().then(function() {
-          console.log('Signed Out');
           window.location = 'index.html'
         }, function(error) {
           console.error('Sign Out Error', error);

@@ -219,7 +219,6 @@
                     snapshot.forEach(function(data){
                         var val = data.val();
                         var latLng = new google.maps.LatLng(val.latitude,val.longitude);
-                        console.log(val.latitude);
                         var marker = new google.maps.Marker({
                           position: latLng,
                           map: map
@@ -233,7 +232,6 @@
 
         function logOut() {
             firebase.auth().signOut().then(function() {
-              console.log('Signed Out');
               window.location = 'index.html'
             }, function(error) {
               console.error('Sign Out Error', error);
