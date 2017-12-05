@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.google.firebase.database.FirebaseDatabase;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
+import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
 
 /** Controller for home screen
@@ -53,7 +54,10 @@ public class HomeScreenController extends AppCompatActivity {
      * @param view current view
      */
     public void launchGuestUser(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", User.getGuest());
         Intent intent = new Intent(this, WelcomeScreenController.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

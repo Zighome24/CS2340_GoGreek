@@ -1,5 +1,6 @@
 package edu.gatech.cs2340.rattracker2k17.Model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,13 +13,19 @@ import edu.gatech.cs2340.rattracker2k17.Data.Types;
  * security level, and userID (a unique identifier for every user).
  */
 
-public class User {
+public class User implements Serializable {
 
     //Constants
     public static final String NO_UID = "NO_UID";
 
     //Properties
     private String firstName;
+    private static User guest = new User(
+            "Guest", "","", Types.SecurityLevel.Guest,
+            "guest", "");
+    public static User getGuest() {
+        return guest;
+    }
 
     /**
      * Setter for first name

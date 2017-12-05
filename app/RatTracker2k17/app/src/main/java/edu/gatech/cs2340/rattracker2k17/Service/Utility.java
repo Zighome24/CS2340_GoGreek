@@ -9,8 +9,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
 import java.util.Locale;
 
+import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.LogReport;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
+import edu.gatech.cs2340.rattracker2k17.Model.User;
 
 /**
  * Utility functions
@@ -107,6 +109,23 @@ public class Utility {
                 Double.parseDouble(data.child("longitude")
                         .getValue() != null ?
                         data.child("longitude").getValue().toString() : "0.0")
+        );
+    }
+
+    /**
+     * getUserFromSnapshot - parses a data input into a User instance.
+     * @param data The data returned from the Firebase Query
+     * @return a User instance created from the parsed data
+     */
+    public static User getUserFromSnapshot(DataSnapshot data) {
+        Log.d(LOG_ID, "First Name: " + data.child("firstName").getValue());
+        return new User(
+                (String) data.child("firstName").getValue(),
+                (String) data.child("lastName").getValue(),
+                (String) data.child("email").getValue(),
+                Types.SecurityLevel.parseSecurityLevel((long) data.child("securityLevel").getValue()),
+                (String) data.child("userID").getValue(),
+                (String) data.child("password").getValue()
         );
     }
 

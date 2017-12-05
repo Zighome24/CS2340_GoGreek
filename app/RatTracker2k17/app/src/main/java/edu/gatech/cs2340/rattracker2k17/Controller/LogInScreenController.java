@@ -14,13 +14,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
+import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.Model.UserLogReport;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LogReportBL;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
+import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /** Controller for log in
@@ -74,10 +82,33 @@ public class LogInScreenController extends AppCompatActivity {
                         LogReportBL reportBL = new LogReportBL();
                         reportBL.pushReport(new UserLogReport(Types.Logging.Login, task.getResult().getUser()));
                         RatSpotting.generateNextKey();
-                        Intent intent = new Intent(LogInScreenController.this,
-                                WelcomeScreenController.class);
-                        startActivity(intent);
-                        finish();
+
+                        UserBL userBL = new UserBL();
+                        Log.d("Cob", "mAuth Uid: " + mAuth.getUid());
+                        userBL.getUser(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                List<User> users = new ArrayList<>();
+                                Log.d("Cob", "Data snapshot: " + dataSnapshot.toString());
+                                User user = Utility.getUserFromSnapshot(dataSnapshot);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("user", user);
+
+                                Intent intent = new Intent(LogInScreenController.this,
+                                        WelcomeScreenController.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.d(LOG_ID, "The request for login() has been canceled, "
+                                        + "message: " + databaseError.getDetails());
+                            }
+                        });
+
+
                     } else {
                         try {
                             // Fire API will never throw a null

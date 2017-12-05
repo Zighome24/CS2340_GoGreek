@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.gatech.cs2340.rattracker2k17.Controller.DateSelectionScreenMapController">
+
+    <EditText
+        android:id="@+id/txt_date1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/txt_date2"
+        android:layout_marginTop="108dp"
+        android:ems="10"
+        android:hint="@string/date_format"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/txt_date2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_date1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="109dp"
+        android:ems="10"
+        android:hint="@string/date_format"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btn_dateToMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_date2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"
+        android:onClick="action"
+        android:text="@string/view_map" />
+
+    <TextView
+        android:id="@+id/textview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/txt_date1"
+        android:layout_marginTop="61dp"
+        android:text="From:" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_date1"
+        android:layout_marginTop="28dp"
+        android:layout_toStartOf="@+id/prog_DateSelect"
+        android:text="To: (optional)" />
+
+    <Button
+        android:id="@+id/btn_date1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txt_date1"
+        android:layout_below="@+id/txt_date1"
+        android:onClick="today"
+        android:text="@string/today" />
+
+    <Button
+        android:id="@+id/btn_date2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txt_date2"
+        android:layout_below="@+id/txt_date2"
+        android:onClick="today"
+        android:text="@string/today" />
+
+    <ProgressBar
+        android:id="@+id/prog_DateSelect"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_dateToMap"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:indeterminate="true" />
+
+</RelativeLayout>

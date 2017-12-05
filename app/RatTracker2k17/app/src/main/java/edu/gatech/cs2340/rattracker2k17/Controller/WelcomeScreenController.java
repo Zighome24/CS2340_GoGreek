@@ -1,7 +1,5 @@
 package edu.gatech.cs2340.rattracker2k17.Controller;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +20,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
+import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
@@ -48,6 +48,8 @@ public class WelcomeScreenController extends AppCompatActivity {
     private RatSpottingAdapter ratAdapter;
     private ListView listView;
     private RatSpottingBL ratSpottingBL;
+    private TextView userName;
+    private String name;
 
     private static String TAG = WelcomeScreenController.class.getSimpleName();
     ListView mDrawerList;
@@ -65,14 +67,28 @@ public class WelcomeScreenController extends AppCompatActivity {
         listView = findViewById(R.id.list_view);
         ratAdapter = new RatSpottingAdapter(this, new ArrayList<>());
 
+        if (getIntent().getExtras() != null) {
+            User user = (User) getIntent().getExtras().getSerializable("user");
+            if (user != null) {
+                name = user.getFullName();
+                userName = (TextView)findViewById(R.id.storedUserName);
+                userName.setText(name);
+            } else {
+                Log.d(LOG_ID, "The User was null.");
+            }
+        } else {
+            Log.d(LOG_ID, "The calling Intent did not pass in any extras");
+        }
+
         ratSpottingBL = new RatSpottingBL();
 
         mAuth = FirebaseAuth.getInstance();
         getRatData();
 
-        mNavItems.add(new NavItem("Map", "View map view of spottings", R.drawable.ic_media_play_light));
-        mNavItems.add(new NavItem("Graph", "View graph of spottings", R.drawable.ic_media_play_light));
-        mNavItems.add(new NavItem("Logout", "", R.drawable.ic_media_play_light));
+        mNavItems.add(new NavItem("Map", "View map view of spottings", R.drawable.ic_map_black_24dp));
+        mNavItems.add(new NavItem("Graph", "View graph of spottings", R.drawable.ic_timeline_black_24dp));
+        mNavItems.add(new NavItem("New Spotting", "Add a new rat spotting", R.drawable.ic_add_location_black_24dp));
+        mNavItems.add(new NavItem("Logout", "Return to homescreen", R.drawable.ic_swap_horiz_black_24dp));
 
         // DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -168,17 +184,21 @@ public class WelcomeScreenController extends AppCompatActivity {
 
         switch (position) {
             case 0:
-                Intent intent1 = new Intent(this, DateSelectionScreenController.class);
+                Intent intent1 = new Intent(this, DateSelectionScreenMapController.class);
                 startActivity(intent1);
                 break;
             case 1:
-                Intent intent2 = new Intent(this, DateSelectionScreenController.class);
+                Intent intent2 = new Intent(this, DateSelectionScreenGraphController.class);
                 startActivity(intent2);
                 break;
             case 2:
+                Intent intent3 = new Intent(this, NewRatSpottingController.class);
+                startActivityForResult(intent3, 1);
+                break;
+            case 3:
                 mAuth.signOut();
-                Intent intent = new Intent(this, HomeScreenController.class);
-                startActivity(intent);
+                Intent intent4 = new Intent(this, HomeScreenController.class);
+                startActivity(intent4);
                 RatSpottingBL.pushCurrentKey();
                 finish();
                 break;
@@ -314,7 +334,7 @@ public class WelcomeScreenController extends AppCompatActivity {
      * @param view current view
      */
     public void viewRatSpottings(View view) {
-        Intent intent = new Intent(this, DateSelectionScreenController.class);
+        Intent intent = new Intent(this, DateSelectionScreenMapController.class);
         startActivity(intent);
     }
 }

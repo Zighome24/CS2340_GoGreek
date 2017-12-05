@@ -33,8 +33,8 @@ public class Types {
          * @param level the integer representation of the security level you are trying to obtain
          * @return the SecurityLevel enumerated value
          */
-        public static SecurityLevel parseSecurityLevel(int level) {
-            switch(level) {
+        public static SecurityLevel parseSecurityLevel(long level) {
+            switch((int)level) {
                 case 1: return Guest;
                 case 5: return User;
                 case 25: return Admin;
