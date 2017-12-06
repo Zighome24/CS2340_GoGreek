@@ -31,14 +31,14 @@ import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 public class DateSelectionScreenGraphController extends AppCompatActivity {
 
-    private static final String LOG_ID = "DateSelectionScreenCon";
+    private static final String LOG_ID = "DateSelectionGraphScreen";
 
     private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mapdateselectionscreen);
+        setContentView(R.layout.activity_graphdateselectionscreen);
 
         progressBar = findViewById(R.id.prog_DateSelect);
         progressBar.setVisibility(View.INVISIBLE);

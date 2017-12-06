@@ -31,7 +31,7 @@ import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 public class DateSelectionScreenMapController extends AppCompatActivity {
 
-    private static final String LOG_ID = "DateSelectionScreenCon";
+    private static final String LOG_ID = "DateSelectionMapScreen";
 
     private ProgressBar progressBar;
 

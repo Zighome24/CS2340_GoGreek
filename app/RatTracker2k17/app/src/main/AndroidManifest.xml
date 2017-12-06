@@ -68,12 +68,15 @@ AndroidDomInspection, AndroidDomInspection -->
         </activity>
         <activity android:name=".Controller.NewRatSpottingController"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".Controller.DateSelectionScreenController"
+        <activity android:name=".Controller.DateSelectionScreenGraphController"
+            tools:ignore="InnerclassSeparator" />
+        <activity android:name=".Controller.DateSelectionScreenMapController"
             tools:ignore="InnerclassSeparator" />
         <activity android:name=".Controller.GraphScreenController"
             tools:ignore="InnerclassSeparator">
         </activity>
-        <activity android:name=".Controller.EditProfileScreenController">
+        <activity android:name=".Controller.EditProfileScreenController"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
