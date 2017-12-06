@@ -318,7 +318,6 @@ public class WelcomeScreenController extends AppCompatActivity {
                                 EditProfileScreenController.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        finish();
                     }
 
                     @Override
