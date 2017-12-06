@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import edu.gatech.cs2340.rattracker2k17.Service.Utility;
+
 /**
  * Service transfer handler
  * @author Justin Z
@@ -21,7 +24,12 @@ public class RatSpottingsServiceTransfer implements Serializable {
     public RatSpottingsServiceTransfer() {
         ratSpottings = new ArrayList<>();
         callDate = Calendar.getInstance();
-        Log.d(LOG_ID, "Created at... " + callDate.toString());
+
+        try {
+            Log.d(LOG_ID, "Created at... " + Utility.getDateString(callDate));
+        } catch (NoSuchFieldException ex) {
+            Log.d(LOG_ID, "Fields were missing from the calendar object");
+        }
     }
 
     /**

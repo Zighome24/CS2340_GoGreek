@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
@@ -53,8 +55,8 @@ public class WelcomeScreenController extends AppCompatActivity {
     private User user;
     private TextView userName;
     private String name;
+    private LinkedList<RatSpotting> ratList;
 
-    private static String TAG = WelcomeScreenController.class.getSimpleName();
     ListView mDrawerList;
     RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -66,6 +68,8 @@ public class WelcomeScreenController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomescreen);
+
+        ratList = new LinkedList<>();
 
         listView = findViewById(R.id.list_view);
         ratAdapter = new RatSpottingAdapter(this, new ArrayList<>());
@@ -96,21 +100,16 @@ public class WelcomeScreenController extends AppCompatActivity {
         mNavItems.add(new NavItem("Logout", "Return to homescreen", R.drawable.ic_swap_horiz_black_24dp));
 
         // DrawerLayout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mDrawerLayout = findViewById(R.id.drawerLayout);
 
         // Populate the Navigtion Drawer with options
-        mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
-        mDrawerList = (ListView) findViewById(R.id.navList);
+        mDrawerPane = findViewById(R.id.drawerPane);
+        mDrawerList = findViewById(R.id.navList);
         DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
         mDrawerList.setAdapter(adapter);
 
         // Drawer Item click listeners
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItemFromDrawer(position);
-            }
-        });
+        mDrawerList.setOnItemClickListener((parent, view, position, id) -> selectItemFromDrawer(position));
 
 
         Log.d(LOG_ID, "WelcomeScreenController:onCreate: welcome screen created");
@@ -290,8 +289,9 @@ public class WelcomeScreenController extends AppCompatActivity {
                             Log.d(LOG_ID, data.toString());
                             RatSpotting rat = Utility.getRatSpottingFromSnapshot(data);
                             Log.d(LOG_ID, rat.toString());
-                            ratAdapter.add(rat);
+                            ratList.addFirst(rat);
                         }
+                        ratAdapter.addAll(ratList);
                         listView.setAdapter(ratAdapter);
                     }
 
@@ -367,7 +367,9 @@ public class WelcomeScreenController extends AppCompatActivity {
             if (rat != null) {
                 Log.d(LOG_ID, "NewRatSpottingController has returned RatSpotting: "
                         + rat.getKey() + " toString(): " + rat.toString());
-                ratAdapter.add(rat);
+                ratList.addFirst(rat);
+                ratAdapter.clear();
+                ratAdapter.addAll(ratList);
             } else {
                 Log.d(LOG_ID, "NewRatSpottingController has returned a null RatSpotting");
             }
