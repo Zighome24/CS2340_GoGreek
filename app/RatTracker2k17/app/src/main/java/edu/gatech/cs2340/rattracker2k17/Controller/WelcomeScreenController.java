@@ -115,39 +115,6 @@ public class WelcomeScreenController extends AppCompatActivity {
         // Drawer Item click listeners
         mDrawerList.setOnItemClickListener((parent, view, position, id) -> selectItemFromDrawer(position));
 
-        FirebaseDatabase.getInstance().getReference("ratspottings/")
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Log.d(LOG_ID, "A child has been added, the snapshot....");
-                        Log.d(LOG_ID, dataSnapshot.toString());
-                        RatSpotting rat = Utility.getRatSpottingFromSnapshot(dataSnapshot);
-                        ratList.addFirst(rat);
-                        ratAdapter.clear();
-                        ratAdapter.addAll(ratList);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
         Log.d(LOG_ID, "WelcomeScreenController:onCreate: welcome screen created");
     }
 
