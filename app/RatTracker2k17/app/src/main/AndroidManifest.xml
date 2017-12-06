@@ -73,6 +73,11 @@ AndroidDomInspection, AndroidDomInspection -->
         <activity android:name=".Controller.GraphScreenController"
             tools:ignore="InnerclassSeparator">
         </activity>
+        <activity android:name=".Controller.EditProfileScreenController">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

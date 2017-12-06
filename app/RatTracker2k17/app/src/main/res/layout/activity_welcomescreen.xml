@@ -49,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@color/material_blue_grey_800"
-            android:padding="8dp" >
+            android:padding="8dp"
+            android:onClick="editProfile">
 
             <ImageView
                 android:id="@+id/avatar"
@@ -74,6 +75,13 @@
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/editProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Profile"
+                    android:textColor="#fff"
+                    android:textSize="12sp" />
 
             </LinearLayout>
         </RelativeLayout>

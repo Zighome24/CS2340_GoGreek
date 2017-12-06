@@ -33,6 +33,7 @@ import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
 import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
+import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
@@ -289,6 +290,36 @@ public class WelcomeScreenController extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void editProfile(View view) {
+        try {
+            UserBL userBL = new UserBL();
+            if (userBL.getUser(mAuth.getUid()) != null) {
+                userBL.getUser(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = Utility.getUserFromSnapshot(dataSnapshot);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("user", user);
+
+                        Intent intent = new Intent(WelcomeScreenController.this,
+                                EditProfileScreenController.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(LOG_ID, "The request for login() has been canceled, "
+                                + "message: " + databaseError.getDetails());
+                    }
+                });
+            }
+        } catch (NullPointerException e) {
+            Log.d(LOG_ID, e.getMessage());
+        }
     }
 
     /**

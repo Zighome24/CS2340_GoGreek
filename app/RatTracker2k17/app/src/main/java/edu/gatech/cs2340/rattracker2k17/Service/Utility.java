@@ -118,7 +118,6 @@ public class Utility {
      * @return a User instance created from the parsed data
      */
     public static User getUserFromSnapshot(DataSnapshot data) {
-        Log.d(LOG_ID, "First Name: " + data.child("firstName").getValue());
         return new User(
                 (String) data.child("firstName").getValue(),
                 (String) data.child("lastName").getValue(),

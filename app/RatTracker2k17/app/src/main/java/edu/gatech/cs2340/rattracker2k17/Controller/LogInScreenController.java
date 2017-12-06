@@ -84,12 +84,9 @@ public class LogInScreenController extends AppCompatActivity {
                         RatSpotting.generateNextKey();
 
                         UserBL userBL = new UserBL();
-                        Log.d("Cob", "mAuth Uid: " + mAuth.getUid());
                         userBL.getUser(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                List<User> users = new ArrayList<>();
-                                Log.d("Cob", "Data snapshot: " + dataSnapshot.toString());
                                 User user = Utility.getUserFromSnapshot(dataSnapshot);
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("user", user);

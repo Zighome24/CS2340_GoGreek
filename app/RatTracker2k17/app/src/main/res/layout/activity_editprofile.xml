@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_image">
+
+    <RelativeLayout
+        android:id="@+id/layout_loginWrapper"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/cast_intro_overlay_background_color"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/txt_EditFirstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="42dp"
+            android:ems="10"
+            android:fontFamily="@font/ubuntu"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/txt_EditLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txt_EditFirstName"
+            android:layout_below="@+id/txt_EditFirstName"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:fontFamily="@font/ubuntu"
+            android:hint="@string/last_name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/txt_EditEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txt_EditLastName"
+            android:layout_below="@+id/txt_EditLastName"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:fontFamily="@font/ubuntu"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/txt_EditPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txt_EditEmail"
+            android:layout_below="@+id/txt_EditEmail"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:fontFamily="@font/ubuntu"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@android:style/Widget.Holo.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_EditPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/ubuntu"
+            android:onClick="save"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@android:style/Widget.Holo.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_save"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ubuntu"
+            android:onClick="back"
+            android:drawableLeft="?attr/homeAsUpIndicator"
+            android:text="@string/cancel" />
+    </RelativeLayout>
+
+</RelativeLayout>
