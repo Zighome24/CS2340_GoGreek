@@ -50,6 +50,7 @@ public class WelcomeScreenController extends AppCompatActivity {
     private RatSpottingAdapter ratAdapter;
     private ListView listView;
     private RatSpottingBL ratSpottingBL;
+    private User user;
     private TextView userName;
     private String name;
 
@@ -70,7 +71,7 @@ public class WelcomeScreenController extends AppCompatActivity {
         ratAdapter = new RatSpottingAdapter(this, new ArrayList<>());
 
         if (getIntent().getExtras() != null) {
-            User user = (User) getIntent().getExtras().getSerializable("user");
+            user = (User) getIntent().getExtras().getSerializable("user");
             if (user != null) {
                 name = user.getFullName();
                 userName = (TextView)findViewById(R.id.storedUserName);
@@ -89,7 +90,9 @@ public class WelcomeScreenController extends AppCompatActivity {
 
         mNavItems.add(new NavItem("Map", "View map view of spottings", R.drawable.ic_map_black_24dp));
         mNavItems.add(new NavItem("Graph", "View graph of spottings", R.drawable.ic_timeline_black_24dp));
-        mNavItems.add(new NavItem("New Spotting", "Add a new rat spotting", R.drawable.ic_add_location_black_24dp));
+        if (user != null && user.canAddSpottings()) {
+            mNavItems.add(new NavItem("New Spotting", "Add a new rat spotting", R.drawable.ic_add_location_black_24dp));
+        }
         mNavItems.add(new NavItem("Logout", "Return to homescreen", R.drawable.ic_swap_horiz_black_24dp));
 
         // DrawerLayout
@@ -194,9 +197,11 @@ public class WelcomeScreenController extends AppCompatActivity {
                 startActivity(intent2);
                 break;
             case 2:
-                Intent intent3 = new Intent(this, NewRatSpottingController.class);
-                startActivityForResult(intent3, 1);
-                break;
+                if (user != null && user.canAddSpottings()) {
+                    Intent intent3 = new Intent(this, NewRatSpottingController.class);
+                    startActivityForResult(intent3, 1);
+                    break;
+                }
             case 3:
                 mAuth.signOut();
                 Intent intent4 = new Intent(this, HomeScreenController.class);

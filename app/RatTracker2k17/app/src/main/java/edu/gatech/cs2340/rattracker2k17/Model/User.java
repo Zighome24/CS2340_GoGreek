@@ -158,6 +158,8 @@ public class User implements Serializable {
         return firstName + " " + lastName;
     }
 
+    public boolean canAddSpottings() { return securityLevel.getLevel() >= 5; }
+
     /**
      * Map User to map
      * @return map
