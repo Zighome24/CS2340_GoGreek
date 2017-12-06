@@ -20,17 +20,21 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp"
             android:fontFamily="@font/ubuntu"
-            android:text="@string/welcome"
-            android:textColor="@android:color/holo_green_dark"
+            android:text="Recent Sightings"
+            android:textColor="#3E68C1"
             android:textSize="30sp"
             android:textStyle="bold" />
 
         <ListView
             android:id="@+id/list_view"
+            style="@android:style/Widget.Holo.ExpandableListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView" />
+            android:layout_below="@+id/textView"
+            android:padding="6dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="20dp" />
 
     </RelativeLayout>
 
@@ -49,13 +53,14 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@color/material_blue_grey_800"
-            android:padding="8dp" >
+            android:padding="8dp"
+            android:onClick="editProfile">
 
             <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_media_pause_dark"
+                android:src="@drawable/ic_perm_identity_white_24dp"
                 android:layout_marginTop="15dp" />
 
             <LinearLayout
@@ -67,23 +72,21 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/userName"
+                    android:id="@+id/storedUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/first_name"
+                    android:text=""
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
                 <TextView
-                    android:id="@+id/desc"
+                    android:id="@+id/editProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginTop="4dp"
-                    android:text="View Profile"
+                    android:text="Edit Profile"
                     android:textColor="#fff"
                     android:textSize="12sp" />
+
             </LinearLayout>
         </RelativeLayout>
 

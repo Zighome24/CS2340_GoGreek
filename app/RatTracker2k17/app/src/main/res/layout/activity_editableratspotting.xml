@@ -191,7 +191,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/btn_actionRat"
-            android:layout_marginBottom="175dp" />
+            android:layout_marginBottom="275dp" />
 
         <Button
             android:id="@+id/btn_date"

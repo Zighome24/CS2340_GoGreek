@@ -4,15 +4,25 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/ratHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_above="@+id/textView5"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginBottom="25dp"
+        android:fontFamily="@font/ubuntu"
+        android:text="Information"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView8"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_alignStart="@+id/textView10"
         android:text="Key:"
-        android:textSize="14sp"
-        android:id="@+id/textView5" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSKey"
@@ -21,18 +31,22 @@
         android:layout_alignStart="@+id/textView5"
         android:layout_below="@+id/textView5"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
         android:autoText="false"
         android:editable="true"
-        android:text="none" />
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_RSKey"
-        android:layout_below="@+id/txt_RSKey"
-        android:layout_marginTop="30dp"
-        android:text="Date:" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="135dp"
+        android:text="Date:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSDate"
@@ -40,17 +54,21 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView8"
         android:layout_below="@+id/textView8"
+        android:layout_toEndOf="@+id/txt_RSKey"
         android:layout_marginTop="20dp"
-        android:text="none" />
+        android:layout_marginEnd="10dp"
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_RSDate"
-        android:layout_below="@+id/txt_RSDate"
-        android:layout_marginTop="25dp"
-        android:text="Location Type:" />
+        android:layout_alignBaseline="@+id/textView17"
+        android:layout_alignBottom="@+id/textView17"
+        android:layout_toEndOf="@+id/ratHeader"
+        android:text="Location Type:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSLocationType"
@@ -59,26 +77,29 @@
         android:layout_alignStart="@+id/textView10"
         android:layout_below="@+id/textView10"
         android:layout_marginTop="20dp"
-        android:text="none" />
+        android:layout_marginEnd="10dp"
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView19"
-        android:layout_marginStart="150dp"
-        android:layout_toEndOf="@+id/textView19"
-        android:text="Zip:" />
+        android:layout_above="@+id/txt_RSCity"
+        android:layout_alignStart="@+id/txt_RSLocationType"
+        android:text="Zip:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView10"
-        android:layout_below="@+id/txt_RSLocationType"
-        android:layout_marginTop="25dp"
-        android:layout_toEndOf="@+id/txt_RSLocationType"
-        android:text="Address:" />
+
+        android:layout_alignStart="@+id/txt_RSDate"
+        android:layout_below="@+id/txt_RSDate"
+        android:layout_marginTop="33dp"
+        android:text="Address:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSAddress"
@@ -87,8 +108,10 @@
         android:layout_alignStart="@+id/textView17"
         android:layout_below="@+id/textView17"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/txt_RSLocationType"
-        android:text="none" />
+        android:layout_toStartOf="@+id/txt_RSLocationType"
+        android:layout_marginEnd="10dp"
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView19"
@@ -98,7 +121,8 @@
         android:layout_below="@+id/txt_RSAddress"
         android:layout_marginTop="25dp"
         android:layout_toEndOf="@+id/txt_RSAddress"
-        android:text="City:" />
+        android:text="City:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSCity"
@@ -107,8 +131,10 @@
         android:layout_alignStart="@+id/textView19"
         android:layout_below="@+id/textView19"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/txt_RSAddress"
-        android:text="none" />
+        android:layout_toEndOf="@+id/txt_RSZip"
+        android:layout_marginEnd="10dp"
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSZip"
@@ -116,7 +142,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView14"
         android:layout_alignTop="@+id/txt_RSCity"
-        android:text="None" />
+        android:layout_marginEnd="10dp"
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView22"
@@ -125,7 +153,8 @@
         android:layout_alignStart="@+id/txt_RSCity"
         android:layout_below="@+id/txt_RSCity"
         android:layout_marginTop="25dp"
-        android:text="Borough:" />
+        android:text="Borough:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSBorough"
@@ -134,7 +163,9 @@
         android:layout_alignStart="@+id/textView22"
         android:layout_below="@+id/textView22"
         android:layout_marginTop="16dp"
-        android:text="none" />
+        android:layout_marginEnd="10dp"
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView24"
@@ -143,7 +174,8 @@
         android:layout_alignStart="@+id/txt_RSBorough"
         android:layout_below="@+id/txt_RSBorough"
         android:layout_marginTop="25dp"
-        android:text="Lat:" />
+        android:text="Lat:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView25"
@@ -151,7 +183,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/txt_RSZip"
         android:layout_alignTop="@+id/textView24"
-        android:text="Long:" />
+        android:text="Long:"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSLat"
@@ -159,8 +192,11 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView24"
         android:layout_below="@+id/textView24"
+        android:layout_toEndOf="@+id/txt_RSLong"
         android:layout_marginTop="10dp"
-        android:text="none" />
+        android:layout_marginEnd="10dp"
+        android:text="none"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txt_RSLong"
@@ -168,5 +204,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView25"
         android:layout_alignTop="@+id/txt_RSLat"
-        android:text="none" />
+        android:text="none"
+        android:layout_marginEnd="10dp"
+        android:textSize="16sp" />
 </RelativeLayout>

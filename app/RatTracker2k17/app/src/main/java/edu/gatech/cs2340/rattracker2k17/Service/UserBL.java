@@ -48,6 +48,6 @@ public class UserBL {
      * @return an asynchronous query that can be used to obtain the user.
      */
     public Query getUser(String uID) {
-        return mDataBase.orderByChild(uID).limitToFirst(1);
+        return mDataBase.child(uID).orderByValue();
     }
 }

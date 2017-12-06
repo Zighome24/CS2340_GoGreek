@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.gatech.cs2340.rattracker2k17.Controller.DateSelectionScreenController">
+    tools:context="edu.gatech.cs2340.rattracker2k17.Controller.DateSelectionScreenMapController">
 
     <EditText
         android:id="@+id/txt_date1"
@@ -31,9 +31,9 @@
         android:id="@+id/btn_dateToMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btn_date2"
         android:layout_below="@+id/btn_date2"
-        android:layout_marginTop="52dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"
         android:onClick="action"
         android:text="@string/view_map" />
 
@@ -83,12 +83,4 @@
         android:layout_marginTop="25dp"
         android:indeterminate="true" />
 
-    <Button
-        android:id="@+id/btn_dateToGraph"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btn_dateToMap"
-        android:layout_toStartOf="@+id/prog_DateSelect"
-        android:onClick="action"
-        android:text="@string/view_graph" />
 </RelativeLayout>

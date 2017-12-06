@@ -119,48 +119,6 @@ public class RatSpottingBL {
     }
 
     /**
-     * Parses the given rat data into a map with the month/year and the number of rats spottings that month.
-     * @param rats The passed in ratspottings
-     * @return A map containing the months and the corresponding number of rat spottings
-     * @throws InvalidParameterException rats cannot be null, throws if @param rats == null
-     */
-    @SuppressWarnings("FeatureEnvy")
-    public Map<String, Integer> parseRatData(List<RatSpotting> rats) throws InvalidParameterException {
-        if (rats == null) {
-            throw new InvalidParameterException("The passed list to parseRatData cannot be null");
-        }
-        //LogReport.d(LOG_ID, "onCreate():parseRatData(): has been started");
-        Map<String, Integer> map = new HashMap<>();
-        // Sort ratSpottings in descending order
-        rats.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        //LogReport.d(LOG_ID, "ratSpottings size(): " + rats.size());
-        for (int i = 0; i < rats.size();) {
-            //LogReport.d(LOG_ID, rats.get(i).toString());
-            Calendar date = rats.get(i).getDate();
-            int year = date.get(Calendar.YEAR);
-            RatSpotting rat = rats.get(i);
-            while (year == rat.getDate().get(Calendar.YEAR) && i < rats.size()) {
-                //LogReport.d(LOG_ID, Integer.toString(i));
-                String key = String.format(Locale.getDefault(),"%s %d",
-                        rat.getDate().getDisplayName(
-                                Calendar.MONTH, Calendar.LONG, Locale.getDefault()),
-                        year);
-                if (map.containsKey(key)) {
-                    map.put(key, map.get(key) + 1);
-                } else {
-                    map.put(key, 1);
-                }
-                i++;
-                if (i < rats.size()) {
-                    rat = rats.get(i);
-                }
-            }
-        }
-        //LogReport.d(LOG_ID, "parseRatData():map: " + map.toString());
-        return map;
-    }
-
-    /**
      * getCurrentKey() an asynchronous method called at startup to make sure
      * we have retrieved the next key in the
      */

@@ -14,13 +14,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.gatech.cs2340.rattracker2k17.Data.Types;
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
+import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.Model.UserLogReport;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.LogReportBL;
 import edu.gatech.cs2340.rattracker2k17.Service.LoginBL;
+import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /** Controller for log in
@@ -31,6 +39,7 @@ public class LogInScreenController extends AppCompatActivity {
 
     private static final String LOG_ID = "LogInScreenController";
     private FirebaseAuth mAuth;
+    private Map<String, Integer> loginCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,7 @@ public class LogInScreenController extends AppCompatActivity {
         }
 
         Log.d(LOG_ID, "LogInScreenController:onCreate: login screen created");
+        loginCount = new HashMap<>();
     }
 
     /**
@@ -65,6 +75,31 @@ public class LogInScreenController extends AppCompatActivity {
             return;
         }
 
+        if (loginCount.get(str_email) != null && loginCount.get(str_email) + 1 >= 5) {
+            AlertDialog.Builder dialogueBuilderReset = new AlertDialog.Builder(
+                    LogInScreenController.this);
+            dialogueBuilderReset.setMessage("You have tried to login to the account associated with "
+                    + str_email + " too many times. Would you like a recovery email to be sent to "
+                    + str_email + "?")
+                    .setTitle("Too many failed attempts");
+
+            dialogueBuilderReset.setPositiveButton("OK", (dialog, id) -> {
+                mAuth.sendPasswordResetEmail(str_email).addOnCompleteListener(task ->
+                {
+                   if (task.isSuccessful()) {
+                       Log.d(LOG_ID, "Password Recovery Email sent to " + str_email);
+                       loginCount.remove(str_email);
+                   } else {
+                       Log.d(LOG_ID, "There was an error sending the email.");
+                   }
+                });
+            });
+            dialogueBuilderReset.setNegativeButton("No Thanks",
+                    (dialog, id) -> dialog.dismiss());
+            AlertDialog dialogReset = dialogueBuilderReset.create();
+            dialogReset.show();
+        }
+
         LoginBL loginBL = new LoginBL(mAuth);
         loginBL.login(str_email, password.getText().toString())
                 .addOnCompleteListener(this, task -> {
@@ -74,10 +109,30 @@ public class LogInScreenController extends AppCompatActivity {
                         LogReportBL reportBL = new LogReportBL();
                         reportBL.pushReport(new UserLogReport(Types.Logging.Login, task.getResult().getUser()));
                         RatSpotting.generateNextKey();
-                        Intent intent = new Intent(LogInScreenController.this,
-                                WelcomeScreenController.class);
-                        startActivity(intent);
-                        finish();
+
+                        UserBL userBL = new UserBL();
+                        userBL.getUser(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User user = Utility.getUserFromSnapshot(dataSnapshot);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("user", user);
+
+                                Intent intent = new Intent(LogInScreenController.this,
+                                        WelcomeScreenController.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.d(LOG_ID, "The request for login() has been canceled, "
+                                        + "message: " + databaseError.getDetails());
+                            }
+                        });
+
+
                     } else {
                         try {
                             // Fire API will never throw a null
@@ -130,6 +185,7 @@ public class LogInScreenController extends AppCompatActivity {
                                             + " with message: " + eUser.getMessage());
                             }
                         } catch (FirebaseAuthInvalidCredentialsException eCred) {
+                            loginCount.merge(str_email, 1, (a, b) -> a + b);
                             Toast.makeText(LogInScreenController.this, eCred.getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         } catch (FirebaseAuthException eAuth) {

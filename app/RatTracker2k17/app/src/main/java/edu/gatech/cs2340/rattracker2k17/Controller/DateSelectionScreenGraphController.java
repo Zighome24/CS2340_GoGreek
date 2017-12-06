@@ -25,20 +25,20 @@ import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
  * Controller for date selection screen
- * @author Justin Z
+ * @author Chris O'Brien
  * @version 1.0
  */
 
-public class DateSelectionScreenController extends AppCompatActivity {
+public class DateSelectionScreenGraphController extends AppCompatActivity {
 
-    private static final String LOG_ID = "DateSelectionScreenCon";
+    private static final String LOG_ID = "DateSelectionGraphScreen";
 
     private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dateselectionscreen);
+        setContentView(R.layout.activity_graphdateselectionscreen);
 
         progressBar = findViewById(R.id.prog_DateSelect);
         progressBar.setVisibility(View.INVISIBLE);
@@ -54,6 +54,8 @@ public class DateSelectionScreenController extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(this, WelcomeScreenController.class));
     }
+
+
 
     /**
      * Perform action on view
@@ -78,48 +80,38 @@ public class DateSelectionScreenController extends AppCompatActivity {
             Log.d(LOG_ID, "%%" + txt_toDate.getText().toString() + "%%");
             toDate = Utility.parseStringDate(txt_toDate.getText().toString());
         }
-        final int option = view.getId() == R.id.btn_dateToMap ? 1 : 2;
+        final int option = R.id.btn_dateToGraph;
         Log.d(LOG_ID, "The selected view was " + option);
         RatSpottingBL ratBL = new RatSpottingBL();
         progressBar.setVisibility(View.VISIBLE);
-        ratBL.getRatSpottingsBetween(fromDate, toDate, option == 1 ? 100 : -1)
+        ratBL.getRatSpottingsBetween(fromDate, toDate, -1)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    List<RatSpotting> rats = new ArrayList<>();
-                    Log.d(LOG_ID, "Incoming Rat Data");
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        RatSpotting rat = Utility.getRatSpottingFromSnapshot(data);
-                        rats.add(rat);
-                    }
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("rats", new RatSpottingsServiceTransfer(rats));
-                    switch (option) {
-                        case 1:
-                            Intent intentMap = new Intent(DateSelectionScreenController.this,
-                                    MapScreenController.class);
-                            intentMap.putExtras(bundle);
-                            startActivity(intentMap);
-                            break;
-                        case 2:
-                            Intent intentGraph = new Intent(DateSelectionScreenController.this,
-                                    GraphScreenController.class);
-                            intentGraph.putExtras(bundle);
-                            startActivity(intentGraph);
-                            break;
-                        default:
-                            Log.d(LOG_ID,"The switch statement action:getRatSpottingsBetween" +
-                                    "\"Listener\":onDataChange fell through."
-                                + " Check the option selection in the log.");
-                    }
-                }
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<RatSpotting> rats = new ArrayList<>();
+                        Log.d(LOG_ID, "Incoming Rat Data");
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            RatSpotting rat = Utility.getRatSpottingFromSnapshot(data);
+                            rats.add(rat);
+                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("rats", new RatSpottingsServiceTransfer(rats));
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.d(LOG_ID, "The request for RatSpottingsBetween() has been canceled, "
-                        + "message: " + databaseError.getDetails());
-                }
-        });
+
+                        Intent intentGraph = new Intent(DateSelectionScreenGraphController.this,
+                                GraphScreenController.class);
+                        intentGraph.putExtras(bundle);
+                        startActivity(intentGraph);
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(LOG_ID, "The request for RatSpottingsBetween() has been canceled, "
+                                + "message: " + databaseError.getDetails());
+                    }
+                });
     }
 
     /**
@@ -150,7 +142,7 @@ public class DateSelectionScreenController extends AppCompatActivity {
                 break;
             default:
                 Log.d(LOG_ID, "The given id from the calling view did not match any options,"
-                    + " it was " + Integer.toString(view.getId()));
+                        + " it was " + Integer.toString(view.getId()));
         }
     }
 }

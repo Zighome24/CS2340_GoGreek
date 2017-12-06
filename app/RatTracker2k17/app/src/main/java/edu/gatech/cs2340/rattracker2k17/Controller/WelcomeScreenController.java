@@ -1,7 +1,5 @@
 package edu.gatech.cs2340.rattracker2k17.Controller;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +18,29 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.gatech.cs2340.rattracker2k17.Model.RatSpotting;
+import edu.gatech.cs2340.rattracker2k17.Model.User;
 import edu.gatech.cs2340.rattracker2k17.R;
 import edu.gatech.cs2340.rattracker2k17.Service.RatSpottingBL;
+import edu.gatech.cs2340.rattracker2k17.Service.UserBL;
 import edu.gatech.cs2340.rattracker2k17.Service.Utility;
 
 /**
@@ -48,8 +56,11 @@ public class WelcomeScreenController extends AppCompatActivity {
     private RatSpottingAdapter ratAdapter;
     private ListView listView;
     private RatSpottingBL ratSpottingBL;
+    private User user;
+    private TextView userName;
+    private String name;
+    private LinkedList<RatSpotting> ratList;
 
-    private static String TAG = WelcomeScreenController.class.getSimpleName();
     ListView mDrawerList;
     RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -62,35 +73,80 @@ public class WelcomeScreenController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomescreen);
 
+        ratList = new LinkedList<>();
+
         listView = findViewById(R.id.list_view);
         ratAdapter = new RatSpottingAdapter(this, new ArrayList<>());
+
+        if (getIntent().getExtras() != null) {
+            user = (User) getIntent().getExtras().getSerializable("user");
+            if (user != null) {
+                name = user.getFullName();
+                userName = (TextView)findViewById(R.id.storedUserName);
+                userName.setText(name);
+            } else {
+                Log.d(LOG_ID, "The User was null.");
+            }
+        } else {
+            Log.d(LOG_ID, "The calling Intent did not pass in any extras");
+        }
 
         ratSpottingBL = new RatSpottingBL();
 
         mAuth = FirebaseAuth.getInstance();
         getRatData();
 
-        mNavItems.add(new NavItem("Map", "View map view of spottings", R.drawable.ic_media_play_light));
-        mNavItems.add(new NavItem("Graph", "View graph of spottings", R.drawable.ic_media_play_light));
-        mNavItems.add(new NavItem("Logout", "", R.drawable.ic_media_play_light));
+        mNavItems.add(new NavItem("Map", "View map view of spottings", R.drawable.ic_map_black_24dp));
+        mNavItems.add(new NavItem("Graph", "View graph of spottings", R.drawable.ic_timeline_black_24dp));
+        if (user != null && user.canAddSpottings()) {
+            mNavItems.add(new NavItem("New Spotting", "Add a new rat spotting", R.drawable.ic_add_location_black_24dp));
+        }
+        mNavItems.add(new NavItem("Logout", "Return to homescreen", R.drawable.ic_swap_horiz_black_24dp));
 
         // DrawerLayout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mDrawerLayout = findViewById(R.id.drawerLayout);
 
         // Populate the Navigtion Drawer with options
-        mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
-        mDrawerList = (ListView) findViewById(R.id.navList);
+        mDrawerPane = findViewById(R.id.drawerPane);
+        mDrawerList = findViewById(R.id.navList);
         DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
         mDrawerList.setAdapter(adapter);
 
         // Drawer Item click listeners
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItemFromDrawer(position);
-            }
-        });
+        mDrawerList.setOnItemClickListener((parent, view, position, id) -> selectItemFromDrawer(position));
 
+        FirebaseDatabase.getInstance().getReference("ratspottings/")
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Log.d(LOG_ID, "A child has been added, the snapshot....");
+                        Log.d(LOG_ID, dataSnapshot.toString());
+                        RatSpotting rat = Utility.getRatSpottingFromSnapshot(dataSnapshot);
+                        ratList.addFirst(rat);
+                        ratAdapter.clear();
+                        ratAdapter.addAll(ratList);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
         Log.d(LOG_ID, "WelcomeScreenController:onCreate: welcome screen created");
     }
@@ -168,17 +224,23 @@ public class WelcomeScreenController extends AppCompatActivity {
 
         switch (position) {
             case 0:
-                Intent intent1 = new Intent(this, DateSelectionScreenController.class);
+                Intent intent1 = new Intent(this, DateSelectionScreenMapController.class);
                 startActivity(intent1);
                 break;
             case 1:
-                Intent intent2 = new Intent(this, DateSelectionScreenController.class);
+                Intent intent2 = new Intent(this, DateSelectionScreenGraphController.class);
                 startActivity(intent2);
                 break;
             case 2:
+                if (user != null && user.canAddSpottings()) {
+                    Intent intent3 = new Intent(this, NewRatSpottingController.class);
+                    startActivityForResult(intent3, 1);
+                    break;
+                }
+            case 3:
                 mAuth.signOut();
-                Intent intent = new Intent(this, HomeScreenController.class);
-                startActivity(intent);
+                Intent intent4 = new Intent(this, HomeScreenController.class);
+                startActivity(intent4);
                 RatSpottingBL.pushCurrentKey();
                 finish();
                 break;
@@ -233,11 +295,16 @@ public class WelcomeScreenController extends AppCompatActivity {
 
             TextView rsDate = convertView.findViewById(R.id.rsDate);
             TextView rsLocationType = convertView.findViewById(R.id.rsLocationType);
-            TextView rsBorough = convertView.findViewById(R.id.rsBorough);
-
-            rsDate.setText("Key: " + spot.getKey() + "    ");
-            rsLocationType.setText("Zip: " + Long.toString(spot.getZip()) + "    ");
-            rsBorough.setText("Borough: " + spot.getBorough());
+            CharSequence date = spot.getDateString();
+            if (date.length() > 5) {
+                date = date.subSequence(0, date.length() - 5);
+            }
+            rsDate.setText(date);
+            if (spot.getAddress().length() > 0) {
+                rsLocationType.setText(spot.getAddress());
+            } else {
+                rsLocationType.setText(spot.getBorough());
+            }
 
             return convertView;
         }
@@ -258,8 +325,9 @@ public class WelcomeScreenController extends AppCompatActivity {
                             Log.d(LOG_ID, data.toString());
                             RatSpotting rat = Utility.getRatSpottingFromSnapshot(data);
                             Log.d(LOG_ID, rat.toString());
-                            ratAdapter.add(rat);
+                            ratList.addFirst(rat);
                         }
+                        ratAdapter.addAll(ratList);
                         listView.setAdapter(ratAdapter);
                     }
 
@@ -269,6 +337,39 @@ public class WelcomeScreenController extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void editProfile(View view) {
+        try {
+            UserBL userBL = new UserBL();
+            if (userBL.getUser(mAuth.getUid()) != null) {
+                userBL.getUser(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = Utility.getUserFromSnapshot(dataSnapshot);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("user", user);
+
+                        Intent intent = new Intent(WelcomeScreenController.this,
+                                EditProfileScreenController.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(LOG_ID, "The request for login() has been canceled, "
+                                + "message: " + databaseError.getDetails());
+                    }
+                });
+            }
+        } catch (NullPointerException e) {
+            Context context = getApplicationContext();
+            CharSequence text = "Login to use this feature";
+            int duration = Toast.LENGTH_SHORT;
+            Toast.makeText(context, text, duration).show();
+            Log.d(LOG_ID, e.getMessage());
+        }
     }
 
     /**
@@ -301,7 +402,9 @@ public class WelcomeScreenController extends AppCompatActivity {
             if (rat != null) {
                 Log.d(LOG_ID, "NewRatSpottingController has returned RatSpotting: "
                         + rat.getKey() + " toString(): " + rat.toString());
-                ratAdapter.add(rat);
+                ratList.addFirst(rat);
+                ratAdapter.clear();
+                ratAdapter.addAll(ratList);
             } else {
                 Log.d(LOG_ID, "NewRatSpottingController has returned a null RatSpotting");
             }
@@ -314,7 +417,7 @@ public class WelcomeScreenController extends AppCompatActivity {
      * @param view current view
      */
     public void viewRatSpottings(View view) {
-        Intent intent = new Intent(this, DateSelectionScreenController.class);
+        Intent intent = new Intent(this, DateSelectionScreenMapController.class);
         startActivity(intent);
     }
 }
