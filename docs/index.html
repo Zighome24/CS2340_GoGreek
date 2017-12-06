@@ -104,6 +104,8 @@
 
     firebase.initializeApp(config);
 
+    firebase.auth().signOut();
+
     function onClickLogin() {
         debugger;
         var email = document.getElementById("email").value;
@@ -131,7 +133,7 @@
     }
 
     firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
+        if (user != null && user.) {
             window.location = 'home.html'
         }
     })
