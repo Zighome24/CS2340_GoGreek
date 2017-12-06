@@ -260,11 +260,16 @@ public class WelcomeScreenController extends AppCompatActivity {
 
             TextView rsDate = convertView.findViewById(R.id.rsDate);
             TextView rsLocationType = convertView.findViewById(R.id.rsLocationType);
-            TextView rsBorough = convertView.findViewById(R.id.rsBorough);
-
-            rsDate.setText("Key: " + spot.getKey() + "    ");
-            rsLocationType.setText("Zip: " + Long.toString(spot.getZip()) + "    ");
-            rsBorough.setText("Borough: " + spot.getBorough());
+            CharSequence date = spot.getDateString();
+            if (date.length() > 5) {
+                date = date.subSequence(0, date.length() - 5);
+            }
+            rsDate.setText(date);
+            if (spot.getAddress().length() > 0) {
+                rsLocationType.setText(spot.getAddress());
+            } else {
+                rsLocationType.setText(spot.getBorough());
+            }
 
             return convertView;
         }
