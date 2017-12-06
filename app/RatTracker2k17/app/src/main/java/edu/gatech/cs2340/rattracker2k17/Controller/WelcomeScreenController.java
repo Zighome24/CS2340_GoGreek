@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -318,6 +319,10 @@ public class WelcomeScreenController extends AppCompatActivity {
                 });
             }
         } catch (NullPointerException e) {
+            Context context = getApplicationContext();
+            CharSequence text = "Login to use this feature";
+            int duration = Toast.LENGTH_SHORT;
+            Toast.makeText(context, text, duration).show();
             Log.d(LOG_ID, e.getMessage());
         }
     }
